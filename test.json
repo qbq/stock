@@ -1,4 +1,4 @@
 {
-  name: 'abc',
-  skill: ['java', 'js']
+    "name": "abc",
+     "skill": ["java", "js"]
 }
