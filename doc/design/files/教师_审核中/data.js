@@ -1,0 +1,73 @@
+﻿$axure.loadCurrentPage({
+  "url":"教师_审核中.html",
+  "generationDate":new Date(1453341184134.38),
+  "isCanvasEnabled":false,
+  "variables":["OnLoadVariable"],
+  "page":{
+    "packageId":"d7eb5b0b2de34eb9bb82cb7644534e8c",
+    "type":"Axure:Page",
+    "name":"教师_审核中",
+    "notes":{
+},
+    "style":{
+      "baseStyle":"627587b6038d43cca051c114ac41ad32",
+      "pageAlignment":"near",
+      "fill":{
+        "fillType":"solid",
+        "color":0xFFFFFFFF},
+      "image":null,
+      "imageHorizontalAlignment":"near",
+      "imageVerticalAlignment":"near",
+      "imageRepeat":"auto",
+      "favicon":null,
+      "sketchFactor":"0",
+      "colorStyle":"appliedColor",
+      "fontName":"应用字体",
+      "borderWidth":"0"},
+    "adaptiveStyles":{
+},
+    "interactionMap":{
+},
+    "diagram":{
+      "objects":[{
+          "id":"5c328d9d23f64ec4b6c79df07e0f5720",
+          "label":"",
+          "type":"buttonShape",
+          "styleType":"paragraph",
+          "visible":true,
+          "style":{
+            "fontSize":"20px",
+            "location":{
+              "x":238,
+              "y":274},
+            "size":{
+              "width":502,
+              "height":36}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"c2378252175249a0b701bf2f861f482f",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontSize":"20px",
+                "location":{
+                  "x":238,
+                  "y":274},
+                "size":{
+                  "width":502,
+                  "height":36}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"resources/images/transparent.gif"}}]}},
+  "masters":{
+},
+  "objectPaths":{
+    "5c328d9d23f64ec4b6c79df07e0f5720":{
+      "scriptId":"u0"},
+    "c2378252175249a0b701bf2f861f482f":{
+      "scriptId":"u1"}}});

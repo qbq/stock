@@ -1,0 +1,34 @@
+{
+    "Qid": "123456",
+    "Err": 0,
+    "Counter": 1,
+    "Data": {
+        "Id": 20,
+        "RepDataQuoteDynaSingle": [
+            {
+                "Obj": "SH600000",
+                "Data": {
+                    "Id": 655361,
+                    "ShiJian": 369535629040,
+                    "ZuiXinJia": 1597,
+                    "KaiPanJia": 1579,
+                    "ZuiGaoJia": 1599,
+                    "ZuiDiJia": 1567,
+                    "ZuoShou": 1592,
+                    "JunJia": 1583,
+                    "ZhangDie": 5,
+                    "ZhangFu": 31,
+                    "ZhenFu": 201,
+                    "ChengJiaoLiang": 29226592220,
+                    "XianShou": 29226592220,
+                    "ChengJiaoE": 46276645232640,
+                    "ZongChengJiaoBiShu": 683308,
+                    "HuanShou": 77,
+                    "LiangBi": 120,
+                    "NeiPan": 15940076336,
+                    "WaiPan": 13288219820
+                }
+            }
+        ]
+    }
+}

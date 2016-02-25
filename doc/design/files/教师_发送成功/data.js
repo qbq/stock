@@ -1,0 +1,73 @@
+﻿$axure.loadCurrentPage({
+  "url":"教师_发送成功.html",
+  "generationDate":new Date(1453341184143.38),
+  "isCanvasEnabled":false,
+  "variables":["OnLoadVariable"],
+  "page":{
+    "packageId":"cca7ca71df0e4afd8bfbebd0006105c2",
+    "type":"Axure:Page",
+    "name":"教师_发送成功",
+    "notes":{
+},
+    "style":{
+      "baseStyle":"627587b6038d43cca051c114ac41ad32",
+      "pageAlignment":"near",
+      "fill":{
+        "fillType":"solid",
+        "color":0xFFFFFFFF},
+      "image":null,
+      "imageHorizontalAlignment":"near",
+      "imageVerticalAlignment":"near",
+      "imageRepeat":"auto",
+      "favicon":null,
+      "sketchFactor":"0",
+      "colorStyle":"appliedColor",
+      "fontName":"应用字体",
+      "borderWidth":"0"},
+    "adaptiveStyles":{
+},
+    "interactionMap":{
+},
+    "diagram":{
+      "objects":[{
+          "id":"3078d4672242430db1950c565aaafb67",
+          "label":"",
+          "type":"buttonShape",
+          "styleType":"paragraph",
+          "visible":true,
+          "style":{
+            "fontSize":"20px",
+            "location":{
+              "x":190,
+              "y":270},
+            "size":{
+              "width":450,
+              "height":30}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"3d01260155cf46088d737b5a60f64430",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontSize":"20px",
+                "location":{
+                  "x":190,
+                  "y":270},
+                "size":{
+                  "width":450,
+                  "height":30}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"resources/images/transparent.gif"}}]}},
+  "masters":{
+},
+  "objectPaths":{
+    "3078d4672242430db1950c565aaafb67":{
+      "scriptId":"u0"},
+    "3d01260155cf46088d737b5a60f64430":{
+      "scriptId":"u1"}}});

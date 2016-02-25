@@ -1,0 +1,1 @@
+"%~dp0server\node.exe" "%~dp0server\content-server.js" 8888

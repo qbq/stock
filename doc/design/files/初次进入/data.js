@@ -1,0 +1,227 @@
+﻿$axure.loadCurrentPage({
+  "url":"初次进入.html",
+  "generationDate":new Date(1453341184021.37),
+  "isCanvasEnabled":false,
+  "variables":["OnLoadVariable"],
+  "page":{
+    "packageId":"28038b49b60847bd82c606840cdb6b3f",
+    "type":"Axure:Page",
+    "name":"初次进入",
+    "notes":{
+},
+    "style":{
+      "baseStyle":"627587b6038d43cca051c114ac41ad32",
+      "pageAlignment":"near",
+      "fill":{
+        "fillType":"solid",
+        "color":0xFFFFFFFF},
+      "image":null,
+      "imageHorizontalAlignment":"near",
+      "imageVerticalAlignment":"near",
+      "imageRepeat":"auto",
+      "favicon":null,
+      "sketchFactor":"0",
+      "colorStyle":"appliedColor",
+      "fontName":"应用字体",
+      "borderWidth":"0"},
+    "adaptiveStyles":{
+},
+    "interactionMap":{
+      "onClick":{
+        "description":"OnClick",
+        "cases":[{
+            "description":"用例 1",
+            "isNewIfGroup":false,
+            "actions":[{
+                "action":"linkWindow",
+                "description":"在 当前窗口 打开 链接",
+                "target":{
+                  "targetType":"page",
+                  "includeVariables":true},
+                "linkType":"current"},
+{
+                "action":"linkWindow",
+                "description":"在 当前窗口 打开 学生",
+                "target":{
+                  "targetType":"page",
+                  "url":"学生.html",
+                  "includeVariables":true},
+                "linkType":"current"}]}]}},
+    "diagram":{
+      "objects":[{
+          "id":"cbe5d6ee740a4491bedeb884d18e72ff",
+          "label":"",
+          "type":"buttonShape",
+          "styleType":"buttonShape",
+          "visible":true,
+          "style":{
+            "fontSize":"20px",
+            "location":{
+              "x":220,
+              "y":110},
+            "size":{
+              "width":510,
+              "height":290}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"cb7397cd11f64b439260bdd68f175551",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontSize":"20px",
+                "location":{
+                  "x":220,
+                  "y":110},
+                "size":{
+                  "width":510,
+                  "height":290}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/初次进入/u0.png"}},
+{
+          "id":"0e8eb6c11aef4521984f2b86fbcbf30e",
+          "label":"",
+          "type":"buttonShape",
+          "styleType":"h1",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":303,
+              "y":174},
+            "size":{
+              "width":353,
+              "height":37}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"e70fc024261a46149c9d46d8988821d6",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":303,
+                  "y":174},
+                "size":{
+                  "width":353,
+                  "height":37}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"resources/images/transparent.gif"}},
+{
+          "id":"b556a940b3e649718757e3aa2ea13bdc",
+          "label":"",
+          "type":"button",
+          "styleType":"button",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":390,
+              "y":242},
+            "size":{
+              "width":140,
+              "height":48}},
+          "adaptiveStyles":{
+}},
+{
+          "id":"4b604e687fd646ba83770336d9401880",
+          "label":"",
+          "type":"button",
+          "styleType":"button",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":390,
+              "y":310},
+            "size":{
+              "width":140,
+              "height":48}},
+          "adaptiveStyles":{
+}},
+{
+          "id":"cdc4792d155348feb55997eb366823b1",
+          "label":"教师申请",
+          "type":"imageMapRegion",
+          "styleType":"imageMapRegion",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":390,
+              "y":242},
+            "size":{
+              "width":140,
+              "height":50}},
+          "adaptiveStyles":{
+},
+          "interactionMap":{
+            "onClick":{
+              "description":"OnClick",
+              "cases":[{
+                  "description":"用例 1",
+                  "isNewIfGroup":false,
+                  "actions":[{
+                      "action":"linkWindow",
+                      "description":"在 当前窗口 打开 教师",
+                      "target":{
+                        "targetType":"page",
+                        "url":"教师.html",
+                        "includeVariables":true},
+                      "linkType":"current"}]}]}},
+          "tabbable":true},
+{
+          "id":"d93531839f5a4479a5bb676fc2bfd3ba",
+          "label":"学生申请",
+          "type":"imageMapRegion",
+          "styleType":"imageMapRegion",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":390,
+              "y":310},
+            "size":{
+              "width":140,
+              "height":50}},
+          "adaptiveStyles":{
+},
+          "interactionMap":{
+            "onClick":{
+              "description":"OnClick",
+              "cases":[{
+                  "description":"用例 1",
+                  "isNewIfGroup":false,
+                  "actions":[{
+                      "action":"linkWindow",
+                      "description":"在 当前窗口 打开 学生",
+                      "target":{
+                        "targetType":"page",
+                        "url":"学生.html",
+                        "includeVariables":true},
+                      "linkType":"current"}]}]}},
+          "tabbable":true}]}},
+  "masters":{
+},
+  "objectPaths":{
+    "cbe5d6ee740a4491bedeb884d18e72ff":{
+      "scriptId":"u0"},
+    "cb7397cd11f64b439260bdd68f175551":{
+      "scriptId":"u1"},
+    "0e8eb6c11aef4521984f2b86fbcbf30e":{
+      "scriptId":"u2"},
+    "e70fc024261a46149c9d46d8988821d6":{
+      "scriptId":"u3"},
+    "b556a940b3e649718757e3aa2ea13bdc":{
+      "scriptId":"u4"},
+    "4b604e687fd646ba83770336d9401880":{
+      "scriptId":"u5"},
+    "cdc4792d155348feb55997eb366823b1":{
+      "scriptId":"u6"},
+    "d93531839f5a4479a5bb676fc2bfd3ba":{
+      "scriptId":"u7"}}});
