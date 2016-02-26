@@ -1,0 +1,21 @@
+1. 注册服务 /counter/regist/{gameno}
+2. 资金查询服务 /counter/querycapital/{gameno}
+3. 委托下单服务 /counter/makerorder/{gameno}
+4. 撤单服务 /counter/cancelorder/1000?capitalid=10001&targetno=1000
+D5. 查询持仓服务 /counter/queryhold/{gameno}
+D6. 查询委托服务 /counter/queryorder/{gameno}
+D7. 查询成交服务 /counter/querydeal/{gameno}
+8. 结算服务 /{gameno}/counter/settlement
+9. 交易规则设置 /counter/setrule/{gameno}
+10. 获取交易规则服务 /counter/getrule/{gameno}
+11. 柜台管理服务接口 /countermgr
+
+
+Q:
+1. 没有排名api
+2. 委托和成交没返回账户资金信息，是不显示了还是漏了?
+3. 历史成交和成交记录两个菜单是不是重复了？
+4. 资金明细和我的持仓是不是重复的？
+5. 没有我的自选api?
+
+6. (<5.查询持仓服务>  <"Profit": 15000 //盈亏>)  和 (<3.4.1 我的持仓> 盈亏比率) 对不上

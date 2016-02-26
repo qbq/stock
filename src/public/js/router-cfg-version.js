@@ -3,7 +3,11 @@ define([], function () {
     var routesMap = {
         'stockPriceHS': 'js/stock/StockContainerController.js',
         'tradingBuy': 'js/trading/TradingBuyController.js',
-        'tradingSell': 'js/trading/TradingSellController.js'
+        'tradingSell': 'js/trading/TradingSellController.js',
+        'positions': 'js/position/PositionController.js',
+        'deal/:type': 'js/deal/DealController.js',
+        'order/:type': 'js/order/OrderController.js',
+        'rank': 'js/rank/RankController.js'
         // 'module2(/:name)': 'module2/controller2.js',
         // '*actions': 'defaultAction'
     };

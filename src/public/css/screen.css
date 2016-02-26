@@ -24,7 +24,7 @@ body {
 	background-color: #fff;
 }
 
-#hsPriceContainer {
+#bodyContainer {
 	margin: 0 18px;
 }
 
@@ -42,4 +42,8 @@ body {
 }
 .clear-both {
 	clear: both;
+}
+
+.my-rank {
+	padding-bottom: 8px;
 }

@@ -1,0 +1,40 @@
+<%
+  var orderList = order.RepQueryOrderRsp[0].OrderList;
+%>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><%=title%></h3>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+                <th>委托编号</th>
+                <th>委托时间</th>
+                <th>合约代码</th>
+                <th>合约名称</th>
+                <th>买卖方向</th>
+                <th>委托类型</th>
+                <th>成交量</th>
+                <th>委托价格</th>
+                <th>状态</th>
+            </thead>
+            <tbody>
+              <%_.each(orderList, function(ord){%>
+              <tr>
+                <td><%=ord.OrderNo%></td>
+                <td><%=ord.OrderTime%></td>
+                <td><%=ord.ProductCode%></td>
+                <td><%=ord.ProductName%></td>
+                <td><%=ord.BuyOrSell === 'B' ? '买' : '卖'%></td>
+                <td><%=ord.OrderType%></td>
+                <td><%=ord.OrderAmount%></td>
+                <td><%=ord.OrderPrice%></td>
+                <td><%=ord.Status%></td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>

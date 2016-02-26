@@ -3,7 +3,7 @@
 define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSPriceView'], function(StockContainerTpl, StockCollection, HSPriceView) {
 
 	var stockContainerView = Backbone.View.extend({
-        el: '#hsPriceContainer',
+        el: '#bodyContainer',
         template: _.template(StockContainerTpl),
 
         events: {

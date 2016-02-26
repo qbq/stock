@@ -3,7 +3,7 @@
 define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, Constants) {
 
 	var HSPriceView = Backbone.View.extend({
-        el: '#hsPriceContainer tbody',
+        el: '#bodyContainer tbody',
         template: _.template(StockContainerTpl),
 
         initialize: function (params) {

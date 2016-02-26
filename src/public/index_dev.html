@@ -126,12 +126,66 @@
     </div>
 
 
-    <script src="js/underscore.js"></script>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">我的持仓</h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                    <th>总资产</th>
+                    <th>总市值</th>
+                    <th>资金余额</th>
+                    <th>冻结金额</th>
+                    <th>浮动盈亏</th>
+                    <th>总收益</th>
+                </thead>
+                <tbody>
+                  <td><%=1000000%></td>
+                  <td><%=1000000%></td>
+                  <td><%=0%>%</td>
+                  <td><%=0%></td>
+                  <td><%=0%></td>
+                  <td><%=0%></td>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                    <th>股票名称</th>
+                    <th>股票代码</th>
+                    <th>持股数量</th>
+                    <th>可用数量</th>
+                    <th>冻结数量</th>
+                    <th>成本价格</th>
+                    <th>最新市价</th>
+                    <th>浮动盈亏</th>
+                    <th>盈亏比率(%)</th>
+                </thead>
+                <tbody>
+                  <td><%='大智慧'%></td>
+                  <td><%=601519%></td>
+                  <td><%=5000%></td>
+                  <td><%=5000%></td>
+                  <td><%=0%></td>
+                  <td><%=5.22%></td>
+                  <td><%=15.00%></td>
+                  <td><%=500000%></td>
+                  <td><%=200%>%</td>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/libs/underscore.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
+    <script src="js/libs/jquery-1.12.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/main_dev.js"></script>
 
     <script type="text/template" id="stockTableTemplate">
         <table class="table">
