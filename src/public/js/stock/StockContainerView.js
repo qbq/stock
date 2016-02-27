@@ -11,7 +11,7 @@ define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSP
         },
 
         initialize: function (options) {
-            _.bindAll(this, 'filterStocks');
+            _.bindAll(this, 'filterStocks', 'renderStocks');
         },
 
         render: function () {
@@ -22,18 +22,40 @@ define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSP
 
         filterStocks: function(e) {
             $('.btn-primary.btn-sm.active').removeClass('active');
-            var gql = 'hushenagu';
+            this.gql = 'hushenagu';
             if (e) {
                 var btn = $(e.target);
                 btn.addClass('active');
-                gql = btn.prop('id');
+                this.gql = btn.prop('id');
             } else {
-                this.$el.find('#' + gql).addClass('active');
+                this.$el.find('#' + this.gql).addClass('active');
             }
+
+            if (this.priceView) {
+                this.priceView.remove();
+                this.$('table').append('<tbody/>')
+            }
+            this.renderStocks();
+            this.clearInterval();
+            this.interval = setInterval(this.renderStocks, 5000);
+        },
+
+        renderStocks: function() {
             this.priceView = new HSPriceView({
-                gql: gql,
+                gql: this.gql,
                 collection: new StockCollection()
             }).render();
+        },
+
+        clearInterval: function() {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+        },
+
+        dispose: function() {
+            this.clearInterval();
+            this.remove();
         }
     });
 

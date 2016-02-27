@@ -14,6 +14,9 @@
             bootstrap: 'libs/bootstrap.min',
             underscore: 'libs/underscore',
             backbone: 'libs/backbone',
+            // iobind: 'libs/backbone.iobind.min',
+            // iosync: 'libs/backbone.iosync.min',
+            highstock: 'libs/highstock',
             text: 'libs/text'             //用于requirejs导入html类型的依赖
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
@@ -31,6 +34,15 @@
                 deps: ['jquery'],
                 exports: 'Bootstrap'
             },
+            'highstock': {
+                exports: 'highstock'
+            },
+            /*'iobind': {
+                exports: 'iobind'
+            },
+            'iosync': {
+                exports: 'iosync'
+            },*/
             'router-cfg-version': {
                 deps: ['backbone'],
             },

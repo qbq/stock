@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><span id="#stockName"><%=name%></span> <%=code%></h3>
+    </div>
+    <div class="panel-body">
+        <div id="quoteContainer">
+          <div id="quote">
+          </div>
+        </div>
+        <div class="actions">
+            <div class="col-lg-8">
+                <div class="btn-group" data-toggle="buttons">
+                   <label class="btn btn-primary btn-lg">
+                      <input type="radio" name="buyQtySelector"> 分时
+                   </label>
+                   <label class="btn btn-primary btn-lg">
+                      <input type="radio" name="buyQtySelector"> 日线
+                   </label>
+                   <label class="btn btn-primary btn-lg">
+                      <input type="radio" name="buyQtySelector"> 周线
+                   </label>
+                   <label class="btn btn-primary btn-lg">
+                      <input type="radio" name="buyQtySelector"> 月线
+                   </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="输入股票/基金代码、简称或关键字">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+                    </span>
+                </div>
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div id="chartContainer">
+            <div id="klineChart"></div>
+        </div>
+    </div>
+</div>

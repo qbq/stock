@@ -12,6 +12,7 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.collection.fetch({
                 method: 'GET',
+                header: {credentials: true},
                 data: this.getRequestParam({
                     gql: this.gql
                 })
@@ -30,7 +31,7 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
             param += '&orderby=' + (params['orderby'] || 'ZhangFu');
             param += '&desc=' + (params['desc'] || 'true');
             param += '&start=' + (params['start'] || '0');
-            param += '&count=' + (params['count'] || '10');
+            param += '&count=' + (params['count'] || Constants.PAGE_SIZE);
             param += '&field=' + (params['field'] || Constants.HANGQING_FIELDS);
             param += '&mode=' + (params['mode'] || '2');
             param += '&token=' + (params['token'] || Constants.ACCESS_TOKEN);

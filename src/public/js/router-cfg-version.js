@@ -7,9 +7,11 @@ define([], function () {
         'positions': 'js/position/PositionController.js',
         'deal/:type': 'js/deal/DealController.js',
         'order/:type': 'js/order/OrderController.js',
-        'rank': 'js/rank/RankController.js'
+        'rank': 'js/rank/RankController.js',
+        'focus': 'js/focus/FocusController.js',
+        'kline/:code(/:name)': 'js/kline/KlineContainerController.js',
         // 'module2(/:name)': 'module2/controller2.js',
-        // '*actions': 'defaultAction'
+        '*actions': 'defaultAction'
     };
 
     var Router = Backbone.Router.extend({
@@ -17,8 +19,8 @@ define([], function () {
         routes: routesMap,
 
         defaultAction: function () {
-            // console.log('404');
-            // location.hash = 'module2';
+            // 未定义hash，跳转到首页
+            location.hash = 'stockPriceHS';
         }
 
     });
@@ -30,6 +32,14 @@ define([], function () {
         require([route], function (controller) {
             if(router.currentController && router.currentController !== controller){
                 router.currentController.onRouteChange && router.currentController.onRouteChange();
+            }
+            if (currentView) {
+                if (currentView['dispose']) {
+                   currentView.dispose();
+                } else {
+                    currentView.remove();
+                }
+                $('#navbarContainer').after('<div id="bodyContainer" />');
             }
             router.currentController = controller;
             if (controller) {
