@@ -1,6 +1,6 @@
 'use strict'
 
-define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSPriceView'], function(StockContainerTpl, StockCollection, HSPriceView) {
+define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(StockContainerTpl, HSPriceView) {
 
 	var stockContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -12,6 +12,8 @@ define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSP
 
         initialize: function (options) {
             _.bindAll(this, 'filterStocks', 'renderStocks');
+            this.gql = options.gql || 'hushenagu';
+            this.orderby = options.orderby;
         },
 
         render: function () {
@@ -22,7 +24,6 @@ define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSP
 
         filterStocks: function(e) {
             $('.btn-primary.btn-sm.active').removeClass('active');
-            this.gql = 'hushenagu';
             if (e) {
                 var btn = $(e.target);
                 btn.addClass('active');
@@ -43,7 +44,8 @@ define(['text!stock/StockContainerTpl.html', 'stock/StockCollection', 'stock/HSP
         renderStocks: function() {
             this.priceView = new HSPriceView({
                 gql: this.gql,
-                collection: new StockCollection()
+                orderby: this.orderby,
+                collection: this.collection
             }).render();
         },
 

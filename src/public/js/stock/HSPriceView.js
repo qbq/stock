@@ -8,13 +8,15 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
 
         initialize: function (params) {
             this.gql = params.gql;
+            this.orderby = params.orderby;
             this.collection.bind('sync', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.collection.fetch({
                 method: 'GET',
                 header: {credentials: true},
                 data: this.getRequestParam({
-                    gql: this.gql
+                    gql: this.gql,
+                    orderby: this.orderby
                 })
                 // data: 'gql=block=股票\\\\市场分类\\\\中小企业板&orderby=ZhangFu&desc=true&start=0&count=20&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'
             });

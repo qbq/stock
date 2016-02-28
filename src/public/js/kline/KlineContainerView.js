@@ -3,28 +3,29 @@
 define([
     'text!kline/KlineContainerTpl.html',
     'quote/QuoteView',
-    'quote/QuoteModel'/*,
+    'quote/QuoteModel',
     'chart/KlineChartView',
-    'chart/KlineChartModel'*/
+    'chart/KlineChartModel'
 ], function(
     KlineContainerTpl,
     QuoteView,
-    QuoteModel/*,
+    QuoteModel,
     KlineChartView,
-    KlineChartModel*/) {
+    KlineChartModel) {
 
 	var klineContainerView = Backbone.View.extend({
         el: '#bodyContainer',
         template: _.template(KlineContainerTpl),
 
         events: {
-        	// 'click .btn-primary.btn-sm': 'filterStocks'
+            'click #buyStock': 'buyStock',
+        	'click #sellStock': 'sellStock'
         },
 
         initialize: function (options) {
             this.code = options.code;
             this.name = options.name;
-            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote'/*, 'renderKlineChartView'*/);
+            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView');
         },
 
         render: function () {
@@ -33,21 +34,21 @@ define([
                 "name": this.name
             }));
             this.renderQuoteView();
-            // this.renderKlineChartView();
+            this.renderKlineChartView();
             return this;
         },
 
         renderQuoteView: function(e) {
-            if (this.quoteView) {
-                this.quoteView.remove();
-                this.$('#quoteContainer').append('<div id="quote"/>')
-            }
             this.renderQuote();
             this.clearQuoteInterval();
             this.quoteInterval = setInterval(this.renderQuote, 5000);
         },
 
         renderQuote: function() {
+            if (this.quoteView) {
+                this.quoteView.remove();
+                this.$el.find('#quoteContainer').append('<div id="quote"/>')
+            }
             this.quoteView = new QuoteView({
                 model: new QuoteModel(),
                 code: this.code,
@@ -60,7 +61,7 @@ define([
             if (this.quoteInterval) {
                 clearInterval(this.quoteInterval);
             }
-        },/*
+        },
 
         renderKlineChartView: function(e) {
             this.renderKlineChart();
@@ -69,24 +70,36 @@ define([
         },
 
         renderKlineChart: function() {
+            if (this.klineChartView) {
+                this.klineChartView.dispose();
+            }
+            var klineChartModel = new KlineChartModel({
+                code: this.code,
+            });
             this.klineChartView = new KlineChartView({
-                model: new KlineChartModel({
-                    code: this.code,
-                })
-            }).render();
+                model: klineChartModel
+            });
         },
 
         clearKlineChartInterval: function() {
             if (this.klineChartInterval) {
                 clearInterval(this.klineChartInterval);
             }
-        },*/
+        },
+
+        buyStock: function() {
+            window.location.hash = 'tradingBuy/' + this.code + '/' + this.name;
+        },
+
+        sellStock: function() {
+            window.location.hash = 'tradingSell/' + this.code + '/' + this.name;
+        },
 
         dispose: function() {
             this.clearQuoteInterval();
-            // this.clearKlineChartInterval();
+            this.clearKlineChartInterval();
             this.quoteView.remove();
-            // this.klineChartView.remove();
+            this.klineChartView.remove();
             this.remove();
         }
     });

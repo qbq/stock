@@ -1,8 +1,8 @@
 <%_.each(stocks, function(stock, index){%>
     <tr>
         <td><%=index + 1%></td>
-        <td><a href="#kline/<%=stock.Obj%>"><%=stock.Obj%></a></td>
-        <td><a href="#kline/<%=stock.Obj%>"><%=stock.ZhongWenJianCheng%></a></td>
+        <td><a href="#kline/<%=stock.Obj%>/<%=stock.ZhongWenJianCheng%>"><%=stock.Obj%></a></td>
+        <td><a href="#kline/<%=stock.Obj%>/<%=stock.ZhongWenJianCheng%>"><%=stock.ZhongWenJianCheng%></a></td>
         <td><%=stock.ZuiXinJia%></td>
         <td><%=stock.ZhangDie%></td>
         <td><%=stock.ZhangFu%>%</td>

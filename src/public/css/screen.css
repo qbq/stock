@@ -47,3 +47,7 @@ body {
 .my-rank {
 	padding-bottom: 8px;
 }
+
+#quoteContainer {
+	min-height: 60px;
+}

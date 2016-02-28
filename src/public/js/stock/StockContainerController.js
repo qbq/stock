@@ -1,9 +1,13 @@
 'use strict'
 
-define(['stock/StockContainerView'], function (StockContainerView) {
+define(['stock/StockContainerView', 'stock/StockCollection'], function (StockContainerView, StockCollection) {
 
-    var stockContainerController = function () {
-        var stockContainerView = new StockContainerView();
+    var stockContainerController = function (gql, orderby) {
+        var stockContainerView = new StockContainerView({
+        	collection: new StockCollection(),
+        	orderby: orderby,
+        	gql: gql
+        });
         stockContainerView.render();
         return stockContainerView;
     };
