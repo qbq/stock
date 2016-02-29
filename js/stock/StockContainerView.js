@@ -20,11 +20,11 @@ define([
         initialize: function (options) {
             _.bindAll(this, 'filterStocks', 'renderStocks');
             this.options = options || {};
-            $('#' + this.options.gql).addClass('active');
         },
 
         render: function () {
         	this.$el.html(this.template());
+            $('#' + this.options.gql).addClass('active');
             this.filterStocks();
             return this;
         },
