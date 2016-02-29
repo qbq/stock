@@ -1,6 +1,13 @@
 'use strict'
 
-define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(StockContainerTpl, HSPriceView) {
+define([
+    'text!stock/StockContainerTpl.html',
+    'stock/StockCollection',
+    'price/PriceView'
+], function(
+    StockContainerTpl,
+    StockCollection,
+    PriceView) {
 
 	var stockContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -12,12 +19,12 @@ define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(Stoc
 
         initialize: function (options) {
             _.bindAll(this, 'filterStocks', 'renderStocks');
-            this.gql = options.gql || 'hushenagu';
-            this.orderby = options.orderby;
+            this.options = options || {};
+            $('#' + this.options.gql).addClass('active');
         },
 
         render: function () {
-        	this.$el.html(this.template({}));
+        	this.$el.html(this.template());
             this.filterStocks();
             return this;
         },
@@ -27,14 +34,14 @@ define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(Stoc
             if (e) {
                 var btn = $(e.target);
                 btn.addClass('active');
-                this.gql = btn.prop('id');
+                this.options.gql = btn.prop('id');
             } else {
-                this.$el.find('#' + this.gql).addClass('active');
+                this.$el.find('#' + this.options.gql).addClass('active');
             }
 
             if (this.priceView) {
                 this.priceView.remove();
-                this.$('table').append('<tbody/>')
+                this.$('.panel').append('<div class="table-responsive"/>')
             }
             this.renderStocks();
             this.clearInterval();
@@ -42,11 +49,8 @@ define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(Stoc
         },
 
         renderStocks: function() {
-            this.priceView = new HSPriceView({
-                gql: this.gql,
-                orderby: this.orderby,
-                collection: this.collection
-            }).render();
+            this.options.collection = new StockCollection();
+            this.priceView = new PriceView(this.options).render();
         },
 
         clearInterval: function() {

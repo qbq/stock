@@ -65,8 +65,8 @@ define([
 
         renderKlineChartView: function(e) {
             this.renderKlineChart();
-            this.clearKlineChartInterval();
-            this.klineChartInterval = setInterval(this.renderKlineChart, 5000);
+//            this.clearKlineChartInterval();
+//            this.klineChartInterval = setInterval(this.renderKlineChart, 5000);
         },
 
         renderKlineChart: function() {
@@ -81,11 +81,11 @@ define([
             });
         },
 
-        clearKlineChartInterval: function() {
-            if (this.klineChartInterval) {
-                clearInterval(this.klineChartInterval);
-            }
-        },
+//        clearKlineChartInterval: function() {
+//            if (this.klineChartInterval) {
+//                clearInterval(this.klineChartInterval);
+//            }
+//        },
 
         buyStock: function() {
             window.location.hash = 'tradingBuy/' + this.code + '/' + this.name;
@@ -97,7 +97,7 @@ define([
 
         dispose: function() {
             this.clearQuoteInterval();
-            this.clearKlineChartInterval();
+//            this.clearKlineChartInterval();
             this.quoteView.remove();
             this.klineChartView.remove();
             this.remove();

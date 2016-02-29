@@ -1,14 +1,18 @@
 'use strict'
 
-define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, Constants) {
+define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
 
-	var HSPriceView = Backbone.View.extend({
-        el: '#bodyContainer tbody',
-        template: _.template(StockContainerTpl),
+	var PriceView = Backbone.View.extend({
+        el: '#bodyContainer .table-responsive',
+        template: _.template(PriceTpl),
 
         initialize: function (params) {
-            this.gql = params.gql;
-            this.orderby = params.orderby;
+            this.params = params;
+            this.gql = params.gql || 'hushenagu';
+            this.orderby = (params.orderby || '_').split('_');
+            this.desc = this.orderby[1] === 'asc'; // 如果为指定, desc=true
+            this.orderby = this.orderby[0];
+            this.page = parseInt(params.page, 0) || 1;
             this.collection.bind('sync', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.collection.fetch({
@@ -16,14 +20,23 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
                 header: {credentials: true},
                 data: this.getRequestParam({
                     gql: this.gql,
-                    orderby: this.orderby
+                    orderby: this.orderby,
+                    desc: this.desc,
+                    page: this.page
                 })
                 // data: 'gql=block=股票\\\\市场分类\\\\中小企业板&orderby=ZhangFu&desc=true&start=0&count=20&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'
             });
         },
 
         render: function () {
-        	this.$el.html(this.template({'stocks': this.collection.toJSON()}));
+        	this.$el.html(this.template({
+                'stocks': this.collection.toJSON(),
+                'gql': this.gql,
+                'orderby': this.orderby + (this.desc ? '' : '_asc'),
+                'prepage': this.page - 1,
+                'nextpage': this.page + 1,
+                'lastpage': 10
+            }));
             return this;
         },
 
@@ -32,8 +45,8 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
             param += 'gql=' + (Constants.GQL_LIST[params['gql'] || 'hushenagu']);
             param += '&orderby=' + (params['orderby'] || 'ZhangFu');
             param += '&desc=' + (params['desc'] || 'true');
-            param += '&start=' + (params['start'] || '0');
-            param += '&count=' + (params['count'] || Constants.PAGE_SIZE);
+            param += '&start=' + (((params['page'] - 1) * Constants.PAGE_SIZE + 1) || '0');
+            param += '&count=' + Constants.PAGE_SIZE;
             param += '&field=' + (params['field'] || Constants.HANGQING_FIELDS);
             param += '&mode=' + (params['mode'] || '2');
             param += '&token=' + (params['token'] || Constants.ACCESS_TOKEN);
@@ -41,5 +54,5 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
         }
     });
 
-    return HSPriceView;
+    return PriceView;
 });
