@@ -8,7 +8,9 @@ define(['text!stock/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         initialize: function (params) {
             this.gql = params.gql;
-            this.orderby = params.orderby;
+            this.orderby = (params.orderby || '_').splite('_');
+            this.desc = this.orderby[1] === 'desc';
+            this.orderby = this.orderby[0];
             this.collection.bind('sync', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.collection.fetch({
@@ -16,7 +18,8 @@ define(['text!stock/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 header: {credentials: true},
                 data: this.getRequestParam({
                     gql: this.gql,
-                    orderby: this.orderby
+                    orderby: this.orderby,
+                    desc: this.desc
                 })
                 // data: 'gql=block=股票\\\\市场分类\\\\中小企业板&orderby=ZhangFu&desc=true&start=0&count=20&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'
             });
