@@ -20,7 +20,7 @@ define([], function () {
 
         defaultAction: function () {
             // 未定义hash，跳转到首页
-            location.hash = 'stockPriceHS';
+            location.hash = 'stockPrice';
         }
 
     });
