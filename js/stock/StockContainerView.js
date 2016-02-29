@@ -1,6 +1,6 @@
 'use strict'
 
-define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(StockContainerTpl, HSPriceView) {
+define(['text!stock/StockContainerTpl.html', 'price/PriceView'], function(StockContainerTpl, PriceView) {
 
 	var stockContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -42,7 +42,7 @@ define(['text!stock/StockContainerTpl.html', 'stock/HSPriceView'], function(Stoc
         },
 
         renderStocks: function() {
-            this.priceView = new HSPriceView({
+            this.priceView = new PriceView({
                 gql: this.gql,
                 orderby: this.orderby,
                 collection: this.collection

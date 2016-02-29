@@ -1,10 +1,10 @@
 'use strict'
 
-define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, Constants) {
+define(['text!stock/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
 
-	var HSPriceView = Backbone.View.extend({
+	var PriceView = Backbone.View.extend({
         el: '#bodyContainer tbody',
-        template: _.template(StockContainerTpl),
+        template: _.template(PriceTpl),
 
         initialize: function (params) {
             this.gql = params.gql;
@@ -41,5 +41,5 @@ define(['text!stock/HSPriceTpl.html', 'Constants'], function(StockContainerTpl, 
         }
     });
 
-    return HSPriceView;
+    return PriceView;
 });

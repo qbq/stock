@@ -1,7 +1,7 @@
 define([], function () {
 
     var routesMap = {
-        'stockPriceHS(/:gql/:orderby)': 'js/stock/StockContainerController.js',
+        'stockPriceHS(/:key1/:value1/:key2/:value2/:key3/:value3)': 'js/stock/StockContainerController.js',
         'tradingBuy/:code(/:name)': 'js/trading/TradingBuyController.js',
         'tradingSell/:code(/:name)': 'js/trading/TradingSellController.js',
         'positions': 'js/position/PositionController.js',
