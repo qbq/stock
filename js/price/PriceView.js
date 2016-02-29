@@ -1,6 +1,6 @@
 'use strict'
 
-define(['text!stock/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
+define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
 
 	var PriceView = Backbone.View.extend({
         el: '#bodyContainer tbody',
