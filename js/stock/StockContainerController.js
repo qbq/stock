@@ -7,7 +7,7 @@ define(['stock/StockContainerView', 'stock/StockCollection'], function (StockCon
         params[key1] = value1;
         params[key2] = value2;
         params[key3] = value3;
-        params.collection: new StockCollection();
+        params.collection = new StockCollection();
         var stockContainerView = new StockContainerView(params);
         stockContainerView.render();
         return stockContainerView;
