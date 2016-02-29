@@ -1,0 +1,45 @@
+<%
+  var rankRsp = rank.RepQueryRankRsp[0],
+      rankList = rankRsp.RankList;
+%>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">排行榜</h3>
+    </div>
+    <div class="panel-body">
+        <div class="my-rank">我的排名: <span class="label label-default"><%=rankRsp.MyRank%> </span> </div>
+        <div class="clear-both"></div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+                <th>排名</th>
+                <th>学生姓名</th>
+                <th>学号</th>
+                <th>比赛名称</th>
+                <th>总收益率</th>
+                <th>月收益率</th>
+                <th>周收益率</th>
+                <th>日收益率</th>
+                <th>总资产</th>
+                <th>成交记录</th>
+            </thead>
+            <tbody>
+              <%_.each(rankList, function(ran){%>
+              <tr>
+                <td><%=ran.RankNo%></td>
+                <td><%=ran.StudentName%></td>
+                <td><%=ran.StudentNo%></td>
+                <td><%=ran.CompName%></td>
+                <td><%=ran.TotalProfit%>%</td>
+                <td><%=ran.AvgMonthProfit%>%</td>
+                <td><%=ran.AvgWeekProfit%>%</td>
+                <td><%=ran.AvgDayProfit%>%</td>
+                <td><%=ran.TotalCapital%></td>
+                <td><button type="button" class="btn btn-primary btn-sm ">点击查询</button></td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>

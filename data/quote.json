@@ -1,0 +1,20 @@
+{
+    "Id": 666, 
+    "RepDataQuoteDynaSingle": [
+        {
+            "Obj": "SH600000", 
+            "Data": {
+                "Id": "666666", 
+                "ShiJian": "1234567890", 
+                "ZhongWenJianCheng": "浦发银行", 
+                "ZuiXinJia": 17, 
+                "ZhangDie": 1, 
+                "ZhangFu": -0.1, 
+                "ZuiGaoJia": 18, 
+                "ZuiDiJia": 15, 
+                "HuanShou": 0.05, 
+                "ChengJiaoLiang": 123
+            }
+        }
+    ]
+}
