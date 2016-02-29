@@ -7,6 +7,7 @@ var http = require("http"),
 http.createServer(function(request, response) {
 
   var uri = url.parse(request.url).pathname
+    // , filename = path.join(process.cwd(), "..", "..", "/stock_hp", uri);
     , filename = path.join(process.cwd(), "/public", uri);
   console.log("Request URI: \t" + uri);
 
