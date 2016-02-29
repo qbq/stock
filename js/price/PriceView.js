@@ -8,7 +8,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         initialize: function (params) {
             this.gql = params.gql;
-            this.orderby = (params.orderby || '_').splite('_');
+            this.orderby = (params.orderby || '_').split('_');
             this.desc = this.orderby[1] === 'desc';
             this.orderby = this.orderby[0];
             this.collection.bind('sync', this.render, this);
