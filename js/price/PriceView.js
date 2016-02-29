@@ -33,7 +33,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 'stocks': this.collection.toJSON(),
                 'gql': this.gql,
                 'orderby': this.orderby + (this.desc ? '' : '_asc'),
-                'page': this.page,
+                'prepage': this.page - 1,
                 'nextpage': this.page + 1,
                 'lastpage': 10
             }));
