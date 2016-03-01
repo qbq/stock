@@ -49,5 +49,9 @@ body {
 }
 
 #quoteContainer {
-	min-height: 60px;
+	min-height: 80px;
+}
+
+.quote-price {
+	font-size: 180%
 }
