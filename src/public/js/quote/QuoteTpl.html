@@ -1,16 +1,16 @@
 <%
-  var quo = quote.RepDataQuoteDynaSingle[0].Data;
+  var quo = quote.Data.RepDataQuoteDynaSingle[0].Data;
 %>
 <div class="col-lg-4">
-  <p><%=quo.ZuiXinJia%></p>
-  <p><%=quo.ZhangDie%> <%=quo.ZhangFu%>%</p>
+  <p class="quote-price"><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZuiXinJia%></span></p>
+  <p><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span> <span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span></p>
 </div>
 <div class="col-lg-4">
-  <p>成交量 <%=quo.ChengJiaoLiang%>万</p>
-  <p>换手率 <%=quo.HuanShou%>%</p>
+  <p>成交量 <span class="label label-default"><%=quo.ChengJiaoLiang/10000%>万</span></p>
+  <p>换手率 <span class="label label-default"><%=quo.HuanShou%>%</span></p>
 </div>
 <div class="col-lg-4">
-  <p>最高 <%=quo.ZuiGaoJia%></p>
-  <p>最低 <%=quo.ZuiDiJia%></p>
+  <p>最高 <span class="label label-default"><%=quo.ZuiGaoJia%></span></p>
+  <p>最低 <span class="label label-default"><%=quo.ZuiDiJia%></span></p>
 </div>
 <div class="clear-both"></div>

@@ -7,6 +7,7 @@ define(['text!trading/TradingSellTpl.html'], function(TradingSellTpl) {
         template: _.template(TradingSellTpl),
 
         initialize: function (options) {
+            this.options = options;
         	_.bindAll(this, 'render');
             // this.listenTo( this.model, 'reset add change remove', this.render, this );
             this.model.bind('change', this.render, this);
@@ -14,7 +15,11 @@ define(['text!trading/TradingSellTpl.html'], function(TradingSellTpl) {
         },
 
         render: function () {
-        	this.$el.html(this.template({"trading": this.model.toJSON()}));
+        	this.$el.html(this.template({
+                "trading": this.model.toJSON(),
+                "code": this.options.code,
+                "name": this.options.name
+            }));
             return this;
         }
     });
