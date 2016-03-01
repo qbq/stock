@@ -45,7 +45,7 @@ define([
             }
             this.renderStocks();
             this.clearInterval();
-            this.interval = setInterval(this.renderStocks, 5000);
+            this.interval = setInterval(this.renderStocks, 10000);
         },
 
         renderStocks: function() {
