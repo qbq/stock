@@ -37,7 +37,9 @@ http.createServer(function(request, response) {
         return;
       }
 
-      var headers = {};
+      var headers = {
+        'Access-Control-Allow-Origin': '*'
+      };
       var contentType = contentTypesByExtension[path.extname(filename)];
       if (contentType) headers["Content-Type"] = contentType;
       response.writeHead(200, headers);

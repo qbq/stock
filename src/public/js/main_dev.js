@@ -1,5 +1,41 @@
 $(document).ready(function() {
 
+
+    // testing for ie
+/*    $.ajax('http://v2.yundzh.com/stkdata?gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=1&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1',{
+        methord: 'GET',
+        contentType: 'json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function(data) {
+            console.log(data); 
+        }
+    });*/
+    jQuery.support.cors = true;
+    // $.ajax('https://v2.yundzh.com/stkdata?gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=1&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1', {
+    $.getJSON('https://v2.yundzh.com/stkdata?gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=1&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1', function(data) {
+        // methord: 'GET',
+        // contentType: 'json'
+         console.log('getJSON success'); 
+         console.log(data); 
+    }, function(data) {
+         console.log('getJSON error'); 
+         console.log(data); 
+    }).success(function(data) {
+         console.log('success'); 
+         console.log(data); 
+     }).error(function(data) {
+         console.log('error');
+         console.log(data); 
+    }).done(function(data) {
+         console.log('done'); 
+         console.log(data); 
+    }).complete(function(data) {
+         console.log('complete'); 
+         console.log(data); 
+    });
+
 	// 点击导航连接后关闭导航栏
 	$('.navbar li').on('click', function(e) {
 
@@ -35,7 +71,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-
+/*
 	$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?', function (data) {
 
         // split the data set into ohlc and volume
@@ -121,7 +157,7 @@ $(document).ready(function() {
                 }
             }]
         });
-    });
+    });*/
 });
 
 
