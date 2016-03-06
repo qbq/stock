@@ -56,6 +56,8 @@
 
     //Backbone会把自己加到全局变量中
     require(['bootstrap', 'router-cfg-version', 'app'], function(Bootstrap, Router, App){
+    	jQuery.support.cors = true; // 允许跨域访问
+        
         Backbone.history.start();   //开始监控url变化
 
         var app = new App();
