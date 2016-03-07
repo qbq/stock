@@ -17,7 +17,8 @@
             // iobind: 'libs/backbone.iobind.min',
             // iosync: 'libs/backbone.iosync.min',
             highstock: 'libs/highstock',
-            text: 'libs/text'             //用于requirejs导入html类型的依赖
+            text: 'libs/text',             //用于requirejs导入html类型的依赖
+            xdomainrequest: 'libs/jquery.xdomainrequest.min'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
@@ -27,7 +28,7 @@
                 exports: '$'
             },
             'backbone': {
-                deps: ['underscore', 'jquery'],
+                deps: ['underscore', 'jquery', 'xdomainrequest'],
                 exports: 'Backbone'
             },
             'bootstrap': {
@@ -44,7 +45,7 @@
                 exports: 'iosync'
             },*/
             'router-cfg-version': {
-                deps: ['backbone'],
+                deps: ['backbone']
             },
             'app': {
                 deps: ['backbone']
@@ -56,6 +57,7 @@
 
     //Backbone会把自己加到全局变量中
     require(['bootstrap', 'router-cfg-version', 'app'], function(Bootstrap, Router, App){
+    	
     	jQuery.support.cors = true; // 允许跨域访问
         
         Backbone.history.start();   //开始监控url变化
