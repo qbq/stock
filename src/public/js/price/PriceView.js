@@ -23,14 +23,15 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 // jsonp: 'render',
                 header: {credentials: true},
                 data: this.getRequestParam({
-                    gql: this.gql,
+                    // gql: this.gql,
+                    obj: 'SH600000',
                     orderby: this.orderby,
                     desc: this.desc,
                     page: this.page
                 })
                 // data: 'gql=block=股票\\\\市场分类\\\\中小企业板&orderby=ZhangFu&desc=true&start=0&count=20&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'
             }).error(function(e) {
-                console.log(e);
+                console.log(e.statusText);
             });
         },
 
@@ -48,7 +49,8 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         getRequestParam: function(params) {
             var param = '', params = params || {};
-            param += 'gql=' + (Constants.GQL_LIST[params['gql'] || 'hushenagu']);
+            param += 'gql=' + (encodeURI(Constants.GQL_LIST[params['gql'] || 'hushenagu']));
+            // param += 'obj=' + (params['obj'] || 'SH600000');
             param += '&orderby=' + (params['orderby'] || 'ZhangFu');
             param += '&desc=' + (params['desc'] || 'true');
             param += '&start=' + (((params['page'] - 1) * Constants.PAGE_SIZE + 1) || '0');
