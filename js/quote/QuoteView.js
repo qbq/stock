@@ -12,6 +12,9 @@ define(['text!quote/QuoteTpl.html', 'Constants'], function(QuoteTpl, Constants) 
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.code = params.code;var view = this;
             this.model.fetch({
+                crossDomain: true,
+                dataType: 'json',
+                header: {credentials: true},
                 data: {
                     obj: this.code,
                     field: Constants.QUOTE_FIELDS,

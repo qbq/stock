@@ -17,6 +17,10 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.collection.fetch({
                 method: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                // dataType: 'jsonp',
+                // jsonp: 'render',
                 header: {credentials: true},
                 data: this.getRequestParam({
                     gql: this.gql,
@@ -25,6 +29,8 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                     page: this.page
                 })
                 // data: 'gql=block=股票\\\\市场分类\\\\中小企业板&orderby=ZhangFu&desc=true&start=0&count=20&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'
+            }).error(function(e) {
+                console.log(e);
             });
         },
 

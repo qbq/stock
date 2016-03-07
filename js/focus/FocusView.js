@@ -11,7 +11,11 @@ define(['text!focus/FocusTpl.html', 'Constants'], function(FocusTpl, Constants) 
             this.model.bind('change', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             
-            this.model.fetch();
+            this.model.fetch({
+                crossDomain: true,
+                dataType: 'json',
+                header: {credentials: true},
+            });
         },
 
         render: function () {
