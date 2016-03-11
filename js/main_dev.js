@@ -1,161 +1,203 @@
-$(document).ready(function() {
+'use strict';
 
-	// 点击导航连接后关闭导航栏
-	$('.navbar li').on('click', function(e) {
+(function (window) {
+    //配置baseUrl
+    var baseUrl = document.getElementById('main').getAttribute('data-baseurl');
 
-		var navbarToggle = $('.navbar .navbar-toggle');
-		if (navbarToggle.is(':visible') && $(this).find('li').length === 0) {
-			$('.navbar .navbar-toggle').trigger('click');
-		}
-
-		$('.navbar li.active').removeClass('active');
-		$(this).addClass('active');
-
-		e.preventDefault();
-	});
-
-	$('#stockPriceHS').on('click', function() {
-		$.ajax('data/stocks.json', {
-			dataType: 'json',
-			success: function(data) {
-				var panel = $('.panel');
-				panel.find('.panel-title').html('沪深行情');
-
-				var stockTableTemplate = _.template($('#stockTableTemplate').html());
-
-				var table = $('<table class="table"></table>');
-				table.append('<thead><th>序号</th><th>产品</th><th>价格</th></thead>');
-	            $(data.stocks).each(function(index, stock) {
-	            	table.append('<tr><td>'+ (index + 1) + '</td><td>'+ stock.shortname + '</td><td>'+ stock.lastprice + '</td></tr>')
-	            });
-
-	            panel.append(stockTableTemplate(data));
-
-	            panel.removeClass('hidden');
-			}
-		});
-	});
-
-	$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?', function (data) {
-
-        // split the data set into ohlc and volume
-        var ohlc = [],
-            volume = [],
-            dataLength = data.length,
-            // set the allowed units for data grouping
-            groupingUnits = [[
-                'week',                         // unit name
-                [1]                             // allowed multiples
-            ], [
-                'month',
-                [1, 2, 3, 4, 6]
-            ]],
-
-            i = 0;
-
-        for (i; i < dataLength; i += 1) {
-            ohlc.push([
-                data[i][0], // the date
-                data[i][1], // open
-                data[i][2], // high
-                data[i][3], // low
-                data[i][4] // close
-            ]);
-
-            volume.push([
-                data[i][0], // the date
-                data[i][5] // the volume
-            ]);
+    /*
+     * 文件依赖
+     */
+    var config = {
+        baseUrl: baseUrl,           //依赖相对路径
+        paths: {                    //如果某个前缀的依赖不是按照baseUrl拼接这么简单，就需要在这里指出
+            jquery: 'libs/jquery-1.12.1.min',
+            bootstrap: 'libs/bootstrap.min',
+            underscore: 'libs/underscore',
+            backbone: 'libs/backbone',
+            // iobind: 'libs/backbone.iobind.min',
+            // iosync: 'libs/backbone.iosync.min',
+            highstock: 'libs/highstock',
+            text: 'libs/text',             //用于requirejs导入html类型的依赖
+            xdomainrequest: 'libs/jquery.xdomainrequest.min',
+            Long: 'libs/Long',
+            ByteBuffer: 'libs/ByteBufferAB',
+            protobufjs: 'libs/ProtoBuf-light',
+            connection: 'libs/connection',
+            yfloat: 'libs/yfloat',
+            DataStore: 'libs/datastore',
+            Chart: 'libs/chart',
+            ChartDataProvider: 'libs/ChartDataProvider'
+        },
+        shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
+            'underscore': {
+                exports: '_'
+            },
+            'jquery': {
+                exports: '$'
+            },
+            'backbone': {
+                deps: ['underscore', 'jquery', 'xdomainrequest'],
+                exports: 'Backbone'
+            },
+            'bootstrap': {
+                deps: ['jquery'],
+                exports: 'Bootstrap'
+            },
+            'highstock': {
+                exports: 'highstock'
+            },
+            /*'iobind': {
+                exports: 'iobind'
+            },
+            'iosync': {
+                exports: 'iosync'
+            },
+            'router-cfg-version': {
+                deps: ['backbone']
+            },
+            'app': {
+                deps: ['backbone']
+            },*/
+            'Chart': {
+                deps: ['highstock'],
+                exports: 'Chart'
+            },
+            'ChartDataProvider': {
+                deps: [],
+                exports: 'ChartDataProvider'
+            }
         }
+    };
 
+    require.config(config);
 
-        // create the chart
-        $('#klineChartContainer').highcharts('StockChart', {
+    //Backbone会把自己加到全局变量中
+    require([
+        'bootstrap',
+        'backbone',
+        'DataStore',
+        'Chart',
+        'ChartDataProvider'
+    ], function(Bootstrap, backbone, DataStore, Chart, ChartDataProvider){
+        
+        jQuery.support.cors = true; // 允许跨域访问
+        
+        Backbone.history.start();   //开始监控url变化
 
-            rangeSelector: {
-                selected: 1
-            },
+        
 
-            title: {
-                text: 'AAPL Historical'
-            },
+        $(document).ready(function() {
 
-            yAxis: [{
-                labels: {
-                    align: 'right',
-                    x: -3
-                },
-                title: {
-                    text: 'OHLC'
-                },
-                height: '60%',
-                lineWidth: 2
-            }, {
-                labels: {
-                    align: 'right',
-                    x: -3
-                },
-                title: {
-                    text: 'Volume'
-                },
-                top: '65%',
-                height: '35%',
-                offset: 0,
-                lineWidth: 2
-            }],
+            DataStore.address = 'ws://10.15.144.101:80/ws';
+            DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
 
-            series: [{
-                type: 'candlestick',
-                name: 'AAPL',
-                data: ohlc,
-                dataGrouping: {
-                    units: groupingUnits
+            DataStore.dataType = 'pb';
+            window.DataStore = DataStore;
+
+            var precisionMap = {'FX': 4};
+
+            var DEFAULT_VALUE = '--';
+            var formatNumber = function(data, precision, unit, useDefault) {
+
+                if (data == null) {
+                    data = 0;
                 }
-            }, {
-                type: 'column',
-                name: 'Volume',
-                data: volume,
-                yAxis: 1,
-                dataGrouping: {
-                    units: groupingUnits
+
+                var n = Number(data);
+                if ((n == 0 || isNaN(n)) && useDefault !== false) {
+                    return useDefault || DEFAULT_VALUE;
                 }
-            }]
+
+                unit = unit || '';
+                precision = precision != null ? precision : 2;
+
+
+                if (unit === 'K/M') {
+                    if (n >= 10 * 1000 * 1000) {
+                        unit = 'M';
+                    } else if (n >= 10 * 1000) {
+                        unit = 'K';
+                    } else {
+                        unit = '';
+                    }
+                }
+                switch(unit) {
+                    case '%': n = n * 100; break;
+                    case 'K': n = n / 1000; break;
+                    case 'M': n = n / (1000 * 1000); break;
+                    case 100: n = n / 100; unit = ''; break;
+                }
+                return n.toFixed(precision) + unit;
+            };
+
+            Date.prototype.format = function(format) {
+                var d, k, o;
+                o = {
+                    "M+": this.getMonth() + 1,
+                    "d+": this.getDate(),
+                    "h+": this.getHours(),
+                    "m+": this.getMinutes(),
+                    "s+": this.getSeconds(),
+                    "q+": Math.floor((this.getMonth() + 3) / 3),
+                    "S": this.getMilliseconds()
+                };
+                if (/(y+)/.test(format)) {
+                    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                }
+                for (k in o) {
+                    d = o[k];
+                    if (new RegExp("(" + k + ")").test(format)) {
+                        format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? d : ("00" + d).substr(("" + d).length));
+                    }
+                }
+                return format;
+            };
+
+            var dynaDataStore = new DataStore({
+                serviceUrl: '/stkdata',
+                fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
+            });
+
+            var stkCode = 'SH600000';
+            if (stkCode) {
+                this.precision = precisionMap[stkCode.substr(0, 2)] || 2;
+                dynaDataStore.subscribe({
+                    obj: stkCode
+                }, {}, function(data) {
+                    if (data instanceof Error) {
+                        console.log(data);
+                    } else {
+                        var dynaData = data[stkCode];
+                        if (dynaData) {
+                            this.name = dynaData.ZhongWenJianCheng;
+                            this.baseInfo = {
+                                LastClose: formatNumber(dynaData.ZuoShou, this.precision),
+                                High: formatNumber(dynaData.ZuiGaoJia, this.precision),
+                                Open: formatNumber(dynaData.KaiPanJia, this.precision),
+                                Low: formatNumber(dynaData.ZuiDiJia, this.precision),
+                                New: formatNumber(dynaData.ZuiXinJia, this.precision),
+                                Volume: formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
+                                Amount: formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
+                                Time: dynaData.ShiJian ?
+                                  new Date(Number(dynaData.ShiJian + '000')).format('yyyy-MM-dd hh:mm:ss') :
+                                  DEFAULT_VALUE
+                            };
+                        }
+                    }
+                }.bind(this));
+                this.dataProvider && this.dataProvider.close();
+                this.dataProvider = new ChartDataProvider(stkCode);
+                new Chart($('#chart'), {
+                    dataProvider: this.dataProvider,
+                    dataPrecision: this.precision,
+                    chart: {
+                        width: null,
+                        height: null
+                    }
+                });
+            }
+        
         });
+
     });
-});
-
-
-if (window.WebSocket) {
-	// console.log('Full URL');
-	// websocket = new WebSocket(encodeURI('ws://v2.yundzh.com/stkdata?gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=0&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'));
-	
-	console.log('Token Only');
-	websocket = new WebSocket(encodeURI('ws://v2.yundzh.com/ws?token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1'));
-	
-	// console.log('No Param');
-	// websocket = new WebSocket(encodeURI('ws://v2.yundzh.com/stkdata'));
-
-	// console.log('Root');
-	// websocket = new WebSocket(encodeURI('ws://v2.yundzh.com/'));
-
-	// console.log('Another testing website');
-	// websocket = new WebSocket(encodeURI('ws://echo.websocket.org/'));
-	
-	websocket.onopen = function() {
-		console.log('已连接');
-		websocket.send('/stkdata?qid=1&gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=0&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1&qid=1');
-	};
-	websocket.onerror = function() {
-		//连接失败
-		console.log('连接发生错误');
-	};
-	websocket.onclose = function() {
-		//连接断开
-		console.log('&nbsp;&nbsp;(已经断开连接)');
-	};
-	//消息接收
-	websocket.onmessage = function(message) {
-		console.log(message);
-	}
-}
-
+})(window);

@@ -2,8 +2,8 @@ define([], function () {
 
     var routesMap = {
         'stockPrice(/:key1/:value1)(/:key2/:value2)(/:key3/:value3)': 'js/stock/StockContainerController.js',
-        'tradingBuy/:code(/:name)': 'js/trading/TradingBuyController.js',
-        'tradingSell/:code(/:name)': 'js/trading/TradingSellController.js',
+        'tradingBuy(/:code/:name)': 'js/trading/TradingBuyController.js',
+        'tradingSell(/:code/:name)': 'js/trading/TradingSellController.js',
         'positions': 'js/position/PositionController.js',
         'deal/:type': 'js/deal/DealController.js',
         'order/:type': 'js/order/OrderController.js',

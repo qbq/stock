@@ -42,7 +42,7 @@
             </thead>
             <tbody>
               <%_.each(holdList, function(pos){%>
-              <tr>
+              <tr data-hash="/tradingSell/<%=pos.ProductCode%>/<%=pos.ProductName%>">
                 <td><%=pos.ProductName%></td>
                 <td><%=pos.ProductCode%></td>
                 <td><%=pos.PosAmount%></td>

@@ -3,14 +3,19 @@
 define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
 
 	var PriceView = Backbone.View.extend({
+        events: {
+            'click tr': 'showKline'
+        },
+
         el: '#bodyContainer .table-responsive',
         template: _.template(PriceTpl),
 
         initialize: function (params) {
+            _.bindAll(this, 'showKline');
             this.params = params;
-            this.gql = params.gql || 'hushenagu';
+            this.gql = params.gql || 'quanbuagu';
             this.orderby = (params.orderby || '_').split('_');
-            this.desc = this.orderby[1] === 'asc'; // 如果为指定, desc=true
+            this.desc = !this.orderby[1] || this.orderby[1] === 'desc'; // 如果为指定, desc=true
             this.orderby = this.orderby[0];
             this.page = parseInt(params.page, 0) || 1;
             this.collection.bind('sync', this.render, this);
@@ -23,8 +28,8 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 // jsonp: 'render',
                 header: {credentials: true},
                 data: this.getRequestParam({
-                    // gql: this.gql,
-                    obj: 'SH600000',
+                    gql: this.gql,
+                    // obj: 'SH600000',
                     orderby: this.orderby,
                     desc: this.desc,
                     page: this.page
@@ -39,7 +44,8 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         	this.$el.html(this.template({
                 'stocks': this.collection.toJSON(),
                 'gql': this.gql,
-                'orderby': this.orderby + (this.desc ? '' : '_asc'),
+                'orderby': this.orderby,
+                'desc': this.desc,
                 'prepage': this.page - 1,
                 'nextpage': this.page + 1,
                 'lastpage': 10
@@ -49,16 +55,21 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         getRequestParam: function(params) {
             var param = '', params = params || {};
-            param += 'gql=' + (encodeURI(Constants.GQL_LIST[params['gql'] || 'hushenagu']));
+            param += 'gql=' + (encodeURI(Constants.GQL_LIST[params['gql'] || 'quanbuagu']));
             // param += 'obj=' + (params['obj'] || 'SH600000');
             param += '&orderby=' + (params['orderby'] || 'ZhangFu');
-            param += '&desc=' + (params['desc'] || 'true');
+            param += '&desc=' + (params['desc']);
             param += '&start=' + (((params['page'] - 1) * Constants.PAGE_SIZE + 1) || '0');
             param += '&count=' + Constants.PAGE_SIZE;
             param += '&field=' + (params['field'] || Constants.HANGQING_FIELDS);
             param += '&mode=' + (params['mode'] || '2');
             param += '&token=' + (params['token'] || Constants.ACCESS_TOKEN);
             return param;
+        },
+
+        showKline: function(e) {
+            console.log($(e.target).parent('tr').data().hash);
+            location.hash = $(e.target).parent('tr').data().hash;
         }
     });
 

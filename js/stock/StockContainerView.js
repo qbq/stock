@@ -36,7 +36,7 @@ define([
                 btn.addClass('active');
                 this.options.gql = btn.prop('id');
             } else {
-                this.$el.find('#' + this.options.gql).addClass('active');
+                this.$el.find('#' + (this.options.gql || 'quanbuagu')).addClass('active');
             }
 
             if (this.priceView) {

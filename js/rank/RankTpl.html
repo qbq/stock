@@ -4,11 +4,11 @@
 %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">排行榜</h3>
+        <h3 class="panel-title col-lg-10 col-sm-9 col-xs-8">排行榜</h3>
+        <div class="my-rank col-lg-2 col-sm-3 col-xs-4">我的排名: <span class="label label-default"><%=rankRsp.MyRank%> </span> </div>
+        <div class="clear-both"></div>
     </div>
     <div class="panel-body">
-        <div class="my-rank">我的排名: <span class="label label-default"><%=rankRsp.MyRank%> </span> </div>
-        <div class="clear-both"></div>
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>

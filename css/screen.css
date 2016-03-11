@@ -55,3 +55,7 @@ body {
 .quote-price {
 	font-size: 180%
 }
+
+.vertical-empty-spliter {
+	margin-top: 8px;
+}

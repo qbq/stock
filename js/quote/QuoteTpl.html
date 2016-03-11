@@ -1,15 +1,15 @@
 <%
   var quo = quote.Data.RepDataQuoteDynaSingle[0].Data;
 %>
-<div class="col-lg-4">
+<div class="col-lg-4 col-sm-4 col-xs-4">
   <p class="quote-price"><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZuiXinJia%></span></p>
   <p><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span> <span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span></p>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-4 col-sm-4 col-xs-4">
   <p>成交量 <span class="label label-default"><%=quo.ChengJiaoLiang/10000%>万</span></p>
   <p>换手率 <span class="label label-default"><%=quo.HuanShou%>%</span></p>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-4 col-sm-4 col-xs-4">
   <p>最高 <span class="label label-default"><%=quo.ZuiGaoJia%></span></p>
   <p>最低 <span class="label label-default"><%=quo.ZuiDiJia%></span></p>
 </div>
