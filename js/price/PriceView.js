@@ -7,7 +7,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             'click tr': 'showKline'
         },
 
-        el: '#bodyContainer .table-responsive',
+        el: '#bodyContainer .price-table-container',
         template: _.template(PriceTpl),
 
         initialize: function (params) {
@@ -68,7 +68,6 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         },
 
         showKline: function(e) {
-            console.log($(e.target).parent('tr').data().hash);
             location.hash = $(e.target).parent('tr').data().hash;
         }
     });

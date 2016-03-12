@@ -14,6 +14,9 @@ define([], function() {
             'changyeban': 'block=股票\\\\市场分类\\\\创业板',
             'wodezixuan': 'block=股票\\\\市场分类\\\\我的自选'
     	},
-        PAGE_SIZE: 10
+        PAGE_SIZE: 10,
+
+        SEARCH_COUNT: 10,
+
     };
 });

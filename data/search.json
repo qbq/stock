@@ -1,0 +1,29 @@
+{
+  "Counter": 6,
+  "Data": {
+    "Id": 666,
+    "RepDataJianPanBaoShuChu": [{
+      "GuanJianZi": "d",                                
+      "JieGuo": [{
+        "LeiXing": 0,
+        "ShuJu": [{
+          "DaiMa": "SH600000",
+          "ShuXing": "上证A股"
+        }]
+      }, {
+        "LeiXing": 1,
+        "ShuJu": [{
+          "DaiMa": "UPDOWN_R",
+          "MingCheng": "  阴阳相关"
+        }]
+      }, {
+        "LeiXing": 2,
+        "ShuJu": [{
+          "DaiMa": "1319",
+          "MingCheng": "体感3D",
+          "KuoZhan": "SZ002410\nSH600363\nSZ000050\nSZ000973"
+        }]
+      }]
+    }]
+  }
+}

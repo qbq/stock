@@ -1,0 +1,18 @@
+<table class="table table-striped table-hover table-responsive search-result-table">
+	<%_.each(search.Data.RepDataJianPanBaoShuChu, function(data, index) {%>
+		<%_.each(data.JieGuo, function(JieGuo, JieGuo_index) {%>
+			<%_.each(JieGuo.ShuJu, function(ShuJu, ShuJu_index) {
+				var result = ShuJu['ShuXing'] || ShuJu['MingCheng'] || '&nbsp';
+			%>
+				<tr data-hash="/kline/<%=ShuJu.DaiMa%>/<%=result%>">
+					<td>
+						<%=ShuJu.DaiMa%>
+					</td>
+					<td>
+						<%=result%>
+					</td>
+				</tr>
+			<%})%>
+		<%})%>
+	<%})%>
+</table>

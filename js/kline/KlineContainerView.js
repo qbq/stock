@@ -5,13 +5,17 @@ define([
     'quote/QuoteView',
     'quote/QuoteModel',
     'chart/KlineChartView',
-    'chart/KlineChartModel'
+    'chart/KlineChartModel',
+    'search/SearchView',
+    'search/SearchModel'
 ], function(
     KlineContainerTpl,
     QuoteView,
     QuoteModel,
     KlineChartView,
-    KlineChartModel) {
+    KlineChartModel,
+    SearchView,
+    SearchModel) {
 
 	var klineContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -19,13 +23,17 @@ define([
 
         events: {
             'click #buyStock': 'buyStock',
-        	'click #sellStock': 'sellStock'
+        	'click #sellStock': 'sellStock',
+            'keyup .search-box': 'showSearchResult',
+            'focus .search-box': 'emptyInput',
+            'blur .search-box': 'hideSearchResult',
+            'click .search-button': 'showSearchResult'
         },
 
         initialize: function (options) {
             this.code = options.code;
             this.name = options.name;
-            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView');
+            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView', 'showSearchResult', 'hideSearchResult', 'emptyInput');
         },
 
         render: function () {
@@ -33,6 +41,7 @@ define([
                 "code": this.code,
                 "name": this.name
             }));
+            this.$('.search-box').focus();
             this.renderQuoteView();
             this.renderKlineChartView();
             return this;
@@ -101,6 +110,56 @@ define([
             this.quoteView.remove();
             this.klineChartView.remove();
             this.remove();
+        },
+
+        showSearchResult: function(e) {
+
+            // 键盘上下选择
+            if (event.which === 38) {
+                if (this.searchResultView) {
+                    this.searchResultView.selectResult(-1);
+                }
+            } else if (event.which === 40) {
+                if (this.searchResultView) {
+                    this.searchResultView.selectResult(1);
+                }
+            } else if (event.which === 13) {
+                if (this.searchResultView) {
+                    this.searchResultView.redirectToKline();
+                }
+            } else {
+
+                var input = this.$('.search-box').val(),
+                    container = this.$('.search-result-container'),
+                    el = this.$('#search-result-wrapper');
+
+                if (!input) {
+                    container.addClass('hidden');
+                    return;
+                }
+
+                if (this.searchResultView) {
+                    this.searchResultView.remove();
+                    el = $('<div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>');
+                    container.append(el);
+                }
+                container.removeClass('hidden').show();
+                this.searchResultView = new SearchView({
+                    el: el,
+                    containerView: this,
+                    model: new SearchModel({
+                        input: input
+                    }),
+                });
+            }
+        },
+
+        hideSearchResult: function() {
+            this.$('.search-result-container').fadeOut(500);//.addClass('hidden');
+        },
+
+        emptyInput: function() {
+            this.$('.search-box').val('');
         }
     });
 

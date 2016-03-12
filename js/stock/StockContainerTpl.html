@@ -12,15 +12,18 @@
             <button type="button" class="btn btn-primary btn-sm "id="wodezixuan">我的自选</button>
         </div>
         <div class="vertical-empty-spliter visible-xs-block"></div>
-        <div class="col-lg-4 col-sm-4 pull-right">
+        <div class="col-lg-4 col-sm-4 pull-right search-group">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="输入股票/基金代码、简称或关键字">
+                <input type="text" class="form-control search-box" placeholder="输入股票/基金代码、简称或关键字">
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+                <button class="btn btn-default search-button" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
                 </span>
+            </div>
+            <div class="search-result-container hidden">
+                <div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>
             </div>
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive price-table-container">
     </div>
 </div>

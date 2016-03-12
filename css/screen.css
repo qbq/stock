@@ -59,3 +59,20 @@ body {
 .vertical-empty-spliter {
 	margin-top: 8px;
 }
+
+.search-group {
+	position: relative;
+}
+
+.search-result-container {
+	position: absolute;
+	z-index: 99999;
+	background-color: white;
+	width: 100%;
+	border: 1px dotted;
+	border-top: none;
+}
+
+.search-result-container table tr.selected-search-result {
+	background-color: #7C7ED0;
+}
