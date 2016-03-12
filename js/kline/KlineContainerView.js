@@ -7,7 +7,9 @@ define([
     'chart/KlineChartView',
     'chart/KlineChartModel',
     'search/SearchView',
-    'search/SearchModel'
+    'search/SearchModel',
+    'tradeinfo/TradeInfoView',
+    'tradeinfo/TradeInfoModel'
 ], function(
     KlineContainerTpl,
     QuoteView,
@@ -15,7 +17,9 @@ define([
     KlineChartView,
     KlineChartModel,
     SearchView,
-    SearchModel) {
+    SearchModel,
+    TradeInfoView,
+    TradeInfoModel) {
 
 	var klineContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -33,7 +37,7 @@ define([
         initialize: function (options) {
             this.code = options.code;
             this.name = options.name;
-            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView', 'showSearchResult', 'hideSearchResult', 'emptyInput');
+            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
         },
 
         render: function () {
@@ -44,6 +48,7 @@ define([
             this.$('.search-box').focus();
             this.renderQuoteView();
             this.renderKlineChartView();
+            this.renderTradeInfoView();
             return this;
         },
 
@@ -160,6 +165,18 @@ define([
 
         emptyInput: function() {
             this.$('.search-box').val('');
+        },
+
+        renderTradeInfoView: function() {
+            if (this.tradeInfoView) {
+                this.tradeInfoView.dispose();
+            }
+            var tradeInfoModel = new TradeInfoModel({
+                obj: this.code,
+            });
+            this.tradeInfoView = new TradeInfoView({
+                model: tradeInfoModel
+            });
         }
     });
 

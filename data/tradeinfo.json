@@ -1,0 +1,36 @@
+{
+  "Counter": 1,
+  "Data": {
+    "Id": 666,
+    "RepDataStkData": [{
+        "obj": "SH600000",
+        "ZhongWenJianCheng": "浦发银行",
+        "ZuiXinJia": 81.14,
+        "ZuoShou": 81.8,
+        "ZhangTing": 89.98,
+        "DieTing": 73.62,
+        "WeiTuoMaiRuJia1": 81.14,
+        "WeiTuoMaiRuJia2": 81.13,
+        "WeiTuoMaiRuJia3": 81.12,
+        "WeiTuoMaiRuJia4": 81.1,
+        "WeiTuoMaiRuJia5": 81,
+        "WeiTuoMaiRuLiang1": 1300,
+        "WeiTuoMaiRuLiang2": 100,
+        "WeiTuoMaiRuLiang3": 1000,
+        "WeiTuoMaiRuLiang4": 600,
+        "WeiTuoMaiRuLiang5": 34800,
+        "WeiTuoMaiChuJia1": 81.2,
+        "WeiTuoMaiChuJia2": 81.29,
+        "WeiTuoMaiChuJia3": 81.3,
+        "WeiTuoMaiChuJia4": 81.48,
+        "WeiTuoMaiChuJia5": 81.49,
+        "WeiTuoMaiChuLiang1": 500,
+        "WeiTuoMaiChuLiang2": 800,
+        "WeiTuoMaiChuLiang3": 600,
+        "WeiTuoMaiChuLiang4": 500,
+        "WeiTuoMaiChuLiang5": 100
+      }
+
+    ]
+  }
+}

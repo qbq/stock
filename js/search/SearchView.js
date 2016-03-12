@@ -7,7 +7,7 @@ define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constant
             'click tr': 'showKline'
         },
 
-        el: '#bodyContainer',
+        el: '#search-result-wrapper',
         template: _.template(SearchTpl),
 
         initialize: function (params) {
