@@ -88,9 +88,10 @@ define([
                 this.klineChartView.dispose();
             }
             var klineChartModel = new KlineChartModel({
-                code: this.code,
+                code: this.code
             });
             this.klineChartView = new KlineChartView({
+                code: this.code,
                 model: klineChartModel
             });
         },

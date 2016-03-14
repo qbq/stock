@@ -16,7 +16,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             this.gql = params.gql || 'quanbuagu';
             this.orderby = (params.orderby || '_').split('_');
             this.desc = !this.orderby[1] || this.orderby[1] === 'desc'; // 如果为指定, desc=true
-            this.orderby = this.orderby[0];
+            this.orderby = this.orderby[0] || 'ZhangFu';
             this.page = parseInt(params.page, 0) || 1;
             this.collection.bind('sync', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
@@ -57,7 +57,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             var param = '', params = params || {};
             param += 'gql=' + (encodeURI(Constants.GQL_LIST[params['gql'] || 'quanbuagu']));
             // param += 'obj=' + (params['obj'] || 'SH600000');
-            param += '&orderby=' + (params['orderby'] || 'ZhangFu');
+            param += '&orderby=' + (params['orderby']);
             param += '&desc=' + (params['desc']);
             param += '&start=' + (((params['page'] - 1) * Constants.PAGE_SIZE + 1) || '0');
             param += '&count=' + Constants.PAGE_SIZE;

@@ -3,29 +3,115 @@
 define([
     'text!chart/KlineChartTpl.html',
     'Constants', 
-    'highstock'
+    'highstock',
+    'DataStore',
+    'Chart',
+    'ChartDataProvider'
 ], function(
     KlineChartTpl,
     Constants,
-    highstock) {
+    highstock,
+    DataStore,
+    Chart,
+    ChartDataProvider) {
+
+    DataStore.address = 'ws://v2.yundzh.com/ws';
+    // DataStore.address = 'ws://10.15.144.101:80/ws';
+    DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
+
+    DataStore.dataType = 'pb';
+    window.DataStore = DataStore;
+
+    var precisionMap = {'FX': 4};
+
+    var DEFAULT_VALUE = '--';
+    var formatNumber = function(data, precision, unit, useDefault) {
+
+        if (data == null) {
+            data = 0;
+        }
+
+        var n = Number(data);
+        if ((n == 0 || isNaN(n)) && useDefault !== false) {
+            return useDefault || DEFAULT_VALUE;
+        }
+
+        unit = unit || '';
+        precision = precision != null ? precision : 2;
+
+
+        if (unit === 'K/M') {
+            if (n >= 10 * 1000 * 1000) {
+                unit = 'M';
+            } else if (n >= 10 * 1000) {
+                unit = 'K';
+            } else {
+                unit = '';
+            }
+        }
+        switch(unit) {
+            case '%': n = n * 100; break;
+            case 'K': n = n / 1000; break;
+            case 'M': n = n / (1000 * 1000); break;
+            case 100: n = n / 100; unit = ''; break;
+        }
+        return n.toFixed(precision) + unit;
+    };
+
+    Date.prototype.format = function(format) {
+        var d, k, o;
+        o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(format)) {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (k in o) {
+            d = o[k];
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? d : ("00" + d).substr(("" + d).length));
+            }
+        }
+        return format;
+    };
+
+    var dynaDataStore = new DataStore({
+        serviceUrl: '/stkdata',
+        fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
+    });
 
 	var KlineChartView = Backbone.View.extend({
-        el: '#chartContainer',
+        el: '#chart',
         template: _.template(KlineChartTpl),
 
         initialize: function (params) {
-            _.bindAll(this, 'render', 'renderChart', 'refreshChart');
+            this.stkCode = params.code;
+            _.bindAll(this, 'render', 'renderChart'/*, 'refreshChart'*/);
             this.model.bind('sync', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
-            this.model.fetch({
-                data: {
-                    obj: this.code
-                }
-            });
+            // this.model.fetch({
+            //     data: {
+            //         obj: this.code
+            //     }
+            // });
+            if (this.stkCode) {
+                this.precision = precisionMap[this.stkCode.substr(0, 2)] || 2;
+                dynaDataStore.subscribe({
+                    obj: this.stkCode
+                }, {}, this.render);
+            } else {
+                this.$el.html('无效代码');
+            }
         },
 
-        render: function () {
-            var chartData = this.model.get('data');
+        render: function (data) {
+            // var chartData = this.model.get('data');
         	this.$el.html(this.template());
             /*if (this.chart) {
                 this.refreshChart(chartData);
@@ -36,11 +122,22 @@ define([
                 this.chart.destroy();
                 this.$el.find('#klineChartContainer').highcharts().destroy();
             }
-            this.renderChart(chartData);
+            // this.renderChart(chartData);
+            this.dataProvider && this.dataProvider.close();
+            this.dataProvider = new ChartDataProvider(this.stkCode);
+            new Chart(this.$el, {
+                dataProvider: this.dataProvider,
+                dataPrecision: this.precision,
+                chart: {
+                    width: null,
+                    height: null
+                }
+            });
+            this.renderChart(data);
             return this;
         },
 
-        processSeriesData: function(data) {
+        /*processSeriesData: function(data) {
             // split the data set into ohlc and volume
             var ohlc = [],
                 volume = [],
@@ -147,6 +244,28 @@ define([
 
         dispose: function() {
             this.chart
+        }*/
+        renderChart: function(data) {
+            if (data instanceof Error) {
+                console.log(data);
+            } else {
+                var dynaData = data[this.stkCode];
+                if (dynaData) {
+                    this.name = dynaData.ZhongWenJianCheng;
+                    this.baseInfo = {
+                        LastClose: formatNumber(dynaData.ZuoShou, this.precision),
+                        High: formatNumber(dynaData.ZuiGaoJia, this.precision),
+                        Open: formatNumber(dynaData.KaiPanJia, this.precision),
+                        Low: formatNumber(dynaData.ZuiDiJia, this.precision),
+                        New: formatNumber(dynaData.ZuiXinJia, this.precision),
+                        Volume: formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
+                        Amount: formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
+                        Time: dynaData.ShiJian ?
+                          new Date(Number(dynaData.ShiJian + '000')).format('yyyy-MM-dd hh:mm:ss') :
+                          DEFAULT_VALUE
+                    };
+                }
+            }
         }
     });
 

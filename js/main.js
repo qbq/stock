@@ -18,7 +18,15 @@
             // iosync: 'libs/backbone.iosync.min',
             highstock: 'libs/highstock',
             text: 'libs/text',             //用于requirejs导入html类型的依赖
-            xdomainrequest: 'libs/jquery.xdomainrequest.min'
+            xdomainrequest: 'libs/jquery.xdomainrequest.min',
+            Long: 'libs/Long',
+            ByteBuffer: 'libs/ByteBufferAB',
+            protobufjs: 'libs/ProtoBuf-light',
+            connection: 'libs/connection',
+            yfloat: 'libs/yfloat',
+            DataStore: 'libs/datastore',
+            Chart: 'libs/chart',
+            ChartDataProvider: 'libs/ChartDataProvider'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
@@ -49,6 +57,14 @@
             },
             'app': {
                 deps: ['backbone']
+            },
+            'Chart': {
+                deps: ['highstock'],
+                exports: 'Chart'
+            },
+            'ChartDataProvider': {
+                deps: [],
+                exports: 'ChartDataProvider'
             }
         }
     };
