@@ -3,53 +3,29 @@
       <h3 class="panel-title"><span id="#stockName"><%=name%></span> <%=code%></h3>
     </div>
     <div class="panel-body">
-        <div id="quoteContainer">
-          <div id="quote">
+        <div class="col-lg-4 col-sm-3 col-xs-6">
+          <div class="input-group">
+              <input type="text" class="form-control search-box" placeholder="输入股票/基金代码、简称或关键字">
+              <span class="input-group-btn">
+              <button class="btn btn-default search-button" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+              </span>
+          </div>
+          <div class="search-result-container hidden">
+              <div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>
           </div>
         </div>
-        <div class="vertical-empty-spliter visible-xs-block"></div>
-        <div class="actions">
-            <div class="col-lg-4 col-sm-3">
-              <button class="btn btn-primary btn-lg" id="buyStock">买入</button>
-              <button class="btn btn-default btn-lg" id="sellStock">卖出</button>
-            </div>
-            <div class="vertical-empty-spliter visible-xs-block"></div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="btn-group" data-toggle="buttons">
-                   <label class="btn btn-primary btn-lg">
-                      <input type="radio" name="buyQtySelector"> 分时
-                   </label>
-                   <label class="btn btn-primary btn-lg">
-                      <input type="radio" name="buyQtySelector"> 日线
-                   </label>
-                   <label class="btn btn-primary btn-lg">
-                      <input type="radio" name="buyQtySelector"> 周线
-                   </label>
-                   <label class="btn btn-primary btn-lg">
-                      <input type="radio" name="buyQtySelector"> 月线
-                   </label>
-                </div>
-            </div>
-            <div class="vertical-empty-spliter visible-xs-block"></div>
-            <div class="col-lg-4 col-sm-3 col-xs-6">
-              <div class="input-group">
-                  <input type="text" class="form-control search-box" placeholder="输入股票/基金代码、简称或关键字">
-                  <span class="input-group-btn">
-                  <button class="btn btn-default search-button" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
-                  </span>
-              </div>
-              <div class="search-result-container hidden">
-                  <div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>
-              </div>
-            </div>
-            <div class="clear-both"></div>
-        </div>
+        <div class="pull-right">更新时间 <span id="lastUpdateTime"></span></div>
+        <div class="clear-both"></div>
         <div class="vertical-empty-spliter"></div>
         <div>
           <div class="col-lg-8 col-sm-8" id="chartContainer">
               <div id="chart">加载中...</div>
           </div>
           <div class="col-lg-4 col-sm-4" id="tradeInfoContainer">
+              <div id="quoteContainer">
+                <div id="quote">
+                </div>
+              </div>
               <div id="tradeInfo">加载中...</div>
           </div>
         </div>

@@ -1,16 +1,76 @@
 <%
   var quo = quote.Data.RepDataQuoteDynaSingle[0].Data;
 %>
-<div class="col-lg-4 col-sm-4 col-xs-4">
-  <p class="quote-price"><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZuiXinJia%></span></p>
-  <p><span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span> <span class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span></p>
+<div class="visible-xs vertical-empty-spliter"></div>
+<div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		最新价
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span id="ZuiXinJia" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZuiXinJia%></span>
+	</div>
+	<div class="visible-sm clear-both"></div>
+	<div class="visible-sm vertical-empty-spliter"></div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		涨跌
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  <span id="ZhangDie" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span> <span id="ZhangFu" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span>
+	</div>
+	<div class="clear-both"></div>
 </div>
-<div class="col-lg-4 col-sm-4 col-xs-4">
-  <p>成交量 <span class="label label-default"><%=quo.ChengJiaoLiang/10000%>万</span></p>
-  <p>换手率 <span class="label label-default"><%=quo.HuanShou%>%</span></p>
+<div class="vertical-empty-spliter"></div>
+<div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  成交量
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="ChengJiaoLiang"><%=quo.ChengJiaoLiang/1000%>K</span>
+	</div>
+	<div class="visible-sm clear-both"></div>
+	<div class="visible-sm vertical-empty-spliter"></div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  换手率
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="HuanShou"><%=quo.HuanShou%>%</span>
+	</div>
+	<div class="clear-both"></div>
 </div>
-<div class="col-lg-4 col-sm-4 col-xs-4">
-  <p>最高 <span class="label label-default"><%=quo.ZuiGaoJia%></span></p>
-  <p>最低 <span class="label label-default"><%=quo.ZuiDiJia%></span></p>
+<div class="vertical-empty-spliter"></div>
+<div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  最高
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="ZuiGaoJia"><%=quo.ZuiGaoJia%></span>
+	</div>
+	<div class="visible-sm clear-both"></div>
+	<div class="visible-sm vertical-empty-spliter"></div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  最低
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="ZuiDiJia"><%=quo.ZuiDiJia%></span>
+	</div>
+	<div class="clear-both"></div>
 </div>
-<div class="clear-both"></div>
+<div class="vertical-empty-spliter"></div>
+<div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  昨收
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="ZuoShou"><%=quo.ZuoShou%></span>
+	</div>
+	<div class="visible-sm clear-both"></div>
+	<div class="visible-sm vertical-empty-spliter"></div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+	  开盘价
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		<span class="label label-default" id="KaiPanJia"><%=quo.KaiPanJia%></span>
+	</div>
+	<div class="clear-both"></div>
+</div>
+<div class="vertical-empty-spliter"></div>

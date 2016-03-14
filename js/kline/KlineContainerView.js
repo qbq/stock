@@ -2,24 +2,30 @@
 
 define([
     'text!kline/KlineContainerTpl.html',
+    'Constants',
+    'util/Util',
     'quote/QuoteView',
     'quote/QuoteModel',
-    'chart/KlineChartView',
-    'chart/KlineChartModel',
     'search/SearchView',
     'search/SearchModel',
     'tradeinfo/TradeInfoView',
-    'tradeinfo/TradeInfoModel'
+    'tradeinfo/TradeInfoModel',
+    'DataStore',
+    'Chart',
+    'ChartDataProvider'
 ], function(
     KlineContainerTpl,
+    Constants,
+    Util,
     QuoteView,
     QuoteModel,
-    KlineChartView,
-    KlineChartModel,
     SearchView,
     SearchModel,
     TradeInfoView,
-    TradeInfoModel) {
+    TradeInfoModel,
+    DataStore,
+    Chart,
+    ChartDataProvider) {
 
 	var klineContainerView = Backbone.View.extend({
         el: '#bodyContainer',
@@ -35,9 +41,27 @@ define([
         },
 
         initialize: function (options) {
+            // hash参数
             this.code = options.code;
             this.name = options.name;
-            _.bindAll(this, 'render', 'renderQuoteView', 'renderQuote', 'renderKlineChartView', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
+
+            if (!this.code) {
+                this.$el.html('无效代码');
+                return this;
+            }
+
+            // 默认属性
+            this.precisionMap = {'FX': 4};
+            this.precision = this.precisionMap[this.code.substr(0, 2)] || 2;
+
+            // 初始化DataStore
+            this.dynaDataStore = new DataStore({
+                serviceUrl: '/stkdata',
+                fields: Constants.DYNA_DATASTORE_FIELDS
+            });
+
+            // 绑定方法
+            _.bindAll(this, 'render', 'renderQuoteView', 'refreshQuote', 'renderKlineChart', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
         },
 
         render: function () {
@@ -47,60 +71,60 @@ define([
             }));
             this.$('.search-box').focus();
             this.renderQuoteView();
-            this.renderKlineChartView();
+            this.renderKlineChart();
             this.renderTradeInfoView();
             return this;
         },
 
-        renderQuoteView: function(e) {
-            this.renderQuote();
-            this.clearQuoteInterval();
-            this.quoteInterval = setInterval(this.renderQuote, 5000);
-        },
-
-        renderQuote: function() {
-            if (this.quoteView) {
-                this.quoteView.remove();
-                this.$el.find('#quoteContainer').append('<div id="quote"/>')
-            }
+        renderQuoteView: function() {
             this.quoteView = new QuoteView({
-                model: new QuoteModel(),
                 code: this.code,
-                name: this.name,
-                parentView: this
+                model: new QuoteModel()
             });
         },
 
-        clearQuoteInterval: function() {
-            if (this.quoteInterval) {
-                clearInterval(this.quoteInterval);
+        renderKlineChart: function(data) {
+            this.dynaDataStore.subscribe({
+                obj: this.code
+            }, {}, this.refreshQuote);
+            this.dataProvider = new ChartDataProvider(this.code);
+            this.chart = new Chart(this.$('#chart'), {
+                dataProvider: this.dataProvider,
+                dataPrecision: this.precision,
+                chart: {
+                    width: null,
+                    height: null
+                }
+            });
+        },
+
+        refreshQuote: function(data) {
+            if (data instanceof Error) {
+                console.log(data);
+            } else {
+                var dynaData = data[this.code];
+                if (dynaData) {
+                    this.name = dynaData.ZhongWenJianCheng;
+                    this.quoteInfo = {
+                        ZuiXinJia: Util.formatNumber(dynaData.ZuiXinJia, this.precision),
+                        ZhangDie: Util.formatNumber(dynaData.ZhangDie, this.precision),
+                        ZhangFu: Util.formatNumber(dynaData.ZhangFu, this.precision),
+                        ChengJiaoLiang: Util.formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
+                        ChengJiaoE: Util.formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
+                        HuanShou: Util.formatNumber(dynaData.HuanShou, this.precision),
+                        ZuoShou: Util.formatNumber(dynaData.ZuoShou, this.precision),
+                        ZuiGaoJia: Util.formatNumber(dynaData.ZuiGaoJia, this.precision),
+                        ZuiDiJia: Util.formatNumber(dynaData.ZuiDiJia, this.precision),
+                        KaiPanJia: Util.formatNumber(dynaData.KaiPanJia, this.precision)
+                    };
+                    this.quoteView && this.quoteView.refreshQuote(this.quoteInfo);
+                    var lastUpdateTime = dynaData.ShiJian ?
+                          new Date(Number(dynaData.ShiJian + '000')).format('yyyy-MM-dd hh:mm:ss') :
+                          Constants.DEFAULT_VALUE
+                    this.$('#lastUpdateTime').html(lastUpdateTime);
+                }
             }
         },
-
-        renderKlineChartView: function(e) {
-            this.renderKlineChart();
-//            this.clearKlineChartInterval();
-//            this.klineChartInterval = setInterval(this.renderKlineChart, 5000);
-        },
-
-        renderKlineChart: function() {
-            if (this.klineChartView) {
-                this.klineChartView.dispose();
-            }
-            var klineChartModel = new KlineChartModel({
-                code: this.code
-            });
-            this.klineChartView = new KlineChartView({
-                code: this.code,
-                model: klineChartModel
-            });
-        },
-
-//        clearKlineChartInterval: function() {
-//            if (this.klineChartInterval) {
-//                clearInterval(this.klineChartInterval);
-//            }
-//        },
 
         buyStock: function() {
             window.location.hash = 'tradingBuy/' + this.code + '/' + this.name;
@@ -111,10 +135,11 @@ define([
         },
 
         dispose: function() {
-            this.clearQuoteInterval();
-//            this.clearKlineChartInterval();
-            this.quoteView.remove();
-            this.klineChartView.remove();
+            this.quoteView && this.quoteView.remove();
+            this.dataProvider && this.dataProvider.close();
+            // TODO 未提供destroy方法， 多次切换有内存泄露
+            // this.chart && this.chart.destroy();
+            this.tradeInfoView && this.tradeInfoView.remove();
             this.remove();
         },
 

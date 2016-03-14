@@ -56,7 +56,7 @@
                 deps: ['backbone']
             },
             'app': {
-                deps: ['backbone']
+                deps: ['backbone', 'extend/DateExtend']
             },
             'Chart': {
                 deps: ['highstock'],
@@ -72,11 +72,29 @@
     require.config(config);
 
     //Backbone会把自己加到全局变量中
-    require(['bootstrap', 'router-cfg-version', 'app'], function(Bootstrap, Router, App){
+    require([
+        'bootstrap',
+        'router-cfg-version',
+        'Constants',
+        'DataStore',
+        'app'
+    ], function(
+        Bootstrap,
+        Router,
+        Constants,
+        DataStore,
+        App){
     	
     	jQuery.support.cors = true; // 允许跨域访问
         
         Backbone.history.start();   //开始监控url变化
+
+        // 设置全局DataStore
+        DataStore.address = Constants.WEBSOCKET_ADDRESS;
+        DataStore.token = Constants.ACCESS_TOKEN;
+
+        DataStore.dataType = 'pb';
+        window.DataStore = DataStore;
 
         var app = new App();
     });
