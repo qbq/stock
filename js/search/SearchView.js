@@ -40,9 +40,9 @@ define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constant
         selectResult: function(step) {
             this.selectedResultIndex = this.selectedResultIndex + step;
             if (this.selectedResultIndex < 0) {
-                this.selectedResultIndex = 0;
+                this.selectedResultIndex = Constants.SEARCH_COUNT - 1;
             } else if (this.selectedResultIndex > Constants.SEARCH_COUNT - 1) {
-                this.selectedResultIndex = Constants.SEARCH_COUNT - 1
+                this.selectedResultIndex = 0
             }
             this.highlightSelectedResult(this.selectedResultIndex);
         },
@@ -60,6 +60,14 @@ define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constant
                 hash = this.resultRows.eq(this.selectedResultIndex).data().hash;
             }
             location.hash = hash;
+        },
+
+        getSelectedResult: function() {
+            var selectedCells = this.resultRows.eq(this.selectedResultIndex).find('td');
+            return {
+                obj: $.trim(selectedCells.eq(0).html()),
+                name: $.trim(selectedCells.eq(1).html())
+            };
         }
     });
 

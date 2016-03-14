@@ -1,14 +1,28 @@
 'use strict'
 
-define(['text!trading/TradingSellTpl.html'], function(TradingSellTpl) {
+define([
+    'text!trading/TradingSellTpl.html',
+    'search/SearchView',
+    'search/SearchModel'
+], function(
+    TradingSellTpl,
+    SearchView,
+    SearchModel
+) {
 
 	var TradingSellView = Backbone.View.extend({
+
+        events: {
+            'keyup .search-box': 'showSearchResult',
+            'blur .search-box': 'hideSearchResult'
+        },
+
         el: '#bodyContainer',
         template: _.template(TradingSellTpl),
 
         initialize: function (options) {
             this.options = options;
-        	_.bindAll(this, 'render');
+        	_.bindAll(this, 'render', 'showSearchResult', 'hideSearchResult');
             // this.listenTo( this.model, 'reset add change remove', this.render, this );
             this.model.bind('change', this.render, this);
         	this.model.fetch();
@@ -21,6 +35,57 @@ define(['text!trading/TradingSellTpl.html'], function(TradingSellTpl) {
                 "name": this.options.name
             }));
             return this;
+        },
+
+        showSearchResult: function(e) {
+
+            // 键盘上下选择
+            if (event.which === 38) {
+                if (this.searchResultView) {
+                    this.searchResultView.selectResult(-1);
+                }
+            } else if (event.which === 40) {
+                if (this.searchResultView) {
+                    this.searchResultView.selectResult(1);
+                }
+            } else if (event.which === 13) {
+                if (this.searchResultView) {
+                    var selectedResult = this.searchResultView.getSelectedResult();
+                    this.redirectToSell(selectedResult);
+                }
+            } else {
+
+                var input = this.$('.search-box').val(),
+                    container = this.$('.search-result-container'),
+                    el = this.$('#search-result-wrapper');
+
+                if (!input) {
+                    container.addClass('hidden');
+                    return;
+                }
+
+                if (this.searchResultView) {
+                    this.searchResultView.remove();
+                    el = $('<div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>');
+                    container.append(el);
+                }
+                container.removeClass('hidden').show();
+                this.searchResultView = new SearchView({
+                    el: el,
+                    containerView: this,
+                    model: new SearchModel({
+                        input: input
+                    }),
+                });
+            }
+        },
+
+        hideSearchResult: function() {
+            this.$('.search-result-container').fadeOut(1000);//.addClass('hidden');
+        },
+
+        redirectToSell: function(result) {
+            location.hash = '/tradingSell/' + result.obj + '/' + result.name;
         }
     });
 

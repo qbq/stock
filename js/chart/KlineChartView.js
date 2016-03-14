@@ -1,6 +1,13 @@
 'use strict'
 
-define(['text!chart/KlineChartTpl.html', 'Constants', 'highstock'], function(KlineChartTpl, Constants, highstock) {
+define([
+    'text!chart/KlineChartTpl.html',
+    'Constants', 
+    'highstock'
+], function(
+    KlineChartTpl,
+    Constants,
+    highstock) {
 
 	var KlineChartView = Backbone.View.extend({
         el: '#chartContainer',

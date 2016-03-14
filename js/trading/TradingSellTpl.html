@@ -19,8 +19,11 @@
                 <label for="quote" class="col-sm-2 control-label">股票代码</label>
                 <div class="col-sm-8">
                     <div class="input-group">
-                       <input type="text" class="form-control" value="<%=code%>" id="quote">
+                       <input type="text" class="form-control search-box" value="<%=code%>" id="quote">
                        <span class="input-group-addon"><%=name%></span>
+                    </div>
+                    <div class="search-result-container hidden">
+                        <div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>
                     </div>
                 </div>
              </div>

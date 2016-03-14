@@ -2,7 +2,7 @@
 	<%_.each(search.Data.RepDataJianPanBaoShuChu, function(data, index) {%>
 		<%_.each(data.JieGuo, function(JieGuo, JieGuo_index) {%>
 			<%_.each(JieGuo.ShuJu, function(ShuJu, ShuJu_index) {
-				var result = ShuJu['ShuXing'] || ShuJu['MingCheng'] || '&nbsp';
+				var result = ShuJu['MingCheng'] || ShuJu['ShuXing'] || '&nbsp';
 			%>
 				<tr data-hash="/kline/<%=ShuJu.DaiMa%>/<%=result%>">
 					<td>
