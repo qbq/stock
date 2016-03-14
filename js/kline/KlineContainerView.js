@@ -3,7 +3,7 @@
 define([
     'text!kline/KlineContainerTpl.html',
     'Constants',
-    'util/Util',
+    'util/util',
     'quote/QuoteView',
     'quote/QuoteModel',
     'search/SearchView',
