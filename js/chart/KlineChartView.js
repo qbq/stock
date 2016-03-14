@@ -101,6 +101,13 @@ define([
             //     }
             // });
             if (this.stkCode) {
+                
+                this.$el.html(this.template());
+                if (this.chart) {
+                    this.chart.destroy();
+                    this.$el.find('#klineChartContainer').highcharts().destroy();
+                }
+
                 this.precision = precisionMap[this.stkCode.substr(0, 2)] || 2;
                 dynaDataStore.subscribe({
                     obj: this.stkCode
@@ -112,20 +119,15 @@ define([
 
         render: function (data) {
             // var chartData = this.model.get('data');
-        	this.$el.html(this.template());
             /*if (this.chart) {
                 this.refreshChart(chartData);
             } else {
                 this.renderChart(chartData);
             }*/
-            if (this.chart) {
-                this.chart.destroy();
-                this.$el.find('#klineChartContainer').highcharts().destroy();
-            }
             // this.renderChart(chartData);
             this.dataProvider && this.dataProvider.close();
             this.dataProvider = new ChartDataProvider(this.stkCode);
-            new Chart(this.$el, {
+            this.chart = new Chart(this.$el, {
                 dataProvider: this.dataProvider,
                 dataPrecision: this.precision,
                 chart: {
