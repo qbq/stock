@@ -26,7 +26,7 @@
             yfloat: 'libs/yfloat',
             DataStore: 'libs/datastore',
             Chart: 'libs/chart',
-            ChartDataProvider: 'libs/ChartDataProvider'
+            ChartDataProvider: 'libs/chartDataProvider'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
