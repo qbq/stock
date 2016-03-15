@@ -4,22 +4,26 @@ define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constant
 
 	var SearchView = Backbone.View.extend({
         events: {
-            'click tr': 'showKline'
+            'click tr': 'showRouteTarget'
         },
 
         el: '#search-result-wrapper',
         template: _.template(SearchTpl),
 
         initialize: function (params) {
+            this.routeTarget = params.routeTarget || 'kline';
             this.containerView = params.containerView;
-            _.bindAll(this, 'render', 'showKline', 'selectResult', 'highlightSelectedResult', 'redirectToKline');
+            _.bindAll(this, 'render', 'showRouteTarget', 'selectResult', 'highlightSelectedResult', 'redirectToKline');
             this.model.bind('change', this.render, this);
             // this.listenTo( this.collection, 'reset add change remove', this.render, this );
             this.model.fetch();
         },
 
         render: function () {
-        	this.$el.html(this.template({'search': this.model.toJSON()}));
+        	this.$el.html(this.template({
+                'search': this.model.toJSON(),
+                'routeTarget': this.routeTarget
+            }));
             this.resultRows = this.$('tr');
             if (this.resultRows.length === 0) {
                 if (this.containerView) {
@@ -32,7 +36,7 @@ define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constant
             return this;
         },
 
-        showKline: function(e) {
+        showRouteTarget: function(e) {
             var hash = $(e.target).parent('tr').data().hash;
             this.redirectToKline(hash);
         },

@@ -4,7 +4,7 @@
 			<%_.each(JieGuo.ShuJu, function(ShuJu, ShuJu_index) {
 				var result = ShuJu['MingCheng'] || ShuJu['ShuXing'] || '&nbsp';
 			%>
-				<tr data-hash="/kline/<%=ShuJu.DaiMa%>/<%=result%>">
+				<tr data-hash="/<%=routeTarget%>/<%=ShuJu.DaiMa%>/<%=result%>">
 					<td>
 						<%=ShuJu.DaiMa%>
 					</td>

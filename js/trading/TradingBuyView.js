@@ -31,8 +31,8 @@ define([
         render: function () {
         	this.$el.html(this.template({
                 "trading": this.model.toJSON(),
-                "code": this.options.code,
-                "name": this.options.name
+                "code": this.options.code || 'SH601519',
+                "name": this.options.name || '大智慧'
             }));
             return this;
         },
@@ -73,6 +73,7 @@ define([
                 this.searchResultView = new SearchView({
                     el: el,
                     containerView: this,
+                    routeTarget: 'tradingBuy',
                     model: new SearchModel({
                         input: input
                     }),
