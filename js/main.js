@@ -24,9 +24,9 @@
             protobufjs: 'libs/ProtoBuf-light',
             connection: 'libs/connection',
             yfloat: 'libs/yfloat',
-            DataStore: 'libs/datastore',
+            DataStore: 'libs/datastore.all.min',
             Chart: 'libs/chart',
-            ChartDataProvider: 'libs/chartDataProvider'
+            ChartDataProvider: 'libs/chartDataProvider_b'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {

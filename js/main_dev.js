@@ -24,9 +24,9 @@
             protobufjs: 'libs/ProtoBuf-light',
             connection: 'libs/connection',
             yfloat: 'libs/yfloat',
-            DataStore: 'libs/datastore',
+            DataStore: 'libs/datastore.all.min',
             Chart: 'libs/chart',
-            ChartDataProvider: 'libs/ChartDataProvider'
+            ChartDataProvider: 'libs/chartDataProvider_b'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
@@ -84,84 +84,33 @@
         
         Backbone.history.start();   //开始监控url变化
 
-        
+        // DataStore.address = 'ws://10.15.144.101:80/ws';
+
+        // 外网环境
+        DataStore.address = 'ws://v2.yundzh.com/ws';
+        DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
+
+        DataStore.dataType = 'pb';
+        window.DataStore = DataStore;
+
+        var precisionMap = {'FX': 4};
+
+        var dynaDataStore = new DataStore({
+            serviceUrl: '/stkdata',
+            fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
+        });
+
+        var stkCode = 'SH601519';
+
+        var dynaDataStore = new DataStore({
+            serviceUrl: '/stkdata',
+            fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
+        });
+        var DEFAULT_VALUE = '--';
 
         $(document).ready(function() {
-
-            DataStore.address = 'ws://v2.yundzh.com/ws';
-            // DataStore.address = 'ws://10.15.144.101:80/ws';
-            DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
-
-            DataStore.dataType = 'pb';
-            window.DataStore = DataStore;
-
-            var precisionMap = {'FX': 4};
-
-            var DEFAULT_VALUE = '--';
-            var formatNumber = function(data, precision, unit, useDefault) {
-
-                if (data == null) {
-                    data = 0;
-                }
-
-                var n = Number(data);
-                if ((n == 0 || isNaN(n)) && useDefault !== false) {
-                    return useDefault || DEFAULT_VALUE;
-                }
-
-                unit = unit || '';
-                precision = precision != null ? precision : 2;
-
-
-                if (unit === 'K/M') {
-                    if (n >= 10 * 1000 * 1000) {
-                        unit = 'M';
-                    } else if (n >= 10 * 1000) {
-                        unit = 'K';
-                    } else {
-                        unit = '';
-                    }
-                }
-                switch(unit) {
-                    case '%': n = n * 100; break;
-                    case 'K': n = n / 1000; break;
-                    case 'M': n = n / (1000 * 1000); break;
-                    case 100: n = n / 100; unit = ''; break;
-                }
-                return n.toFixed(precision) + unit;
-            };
-
-            Date.prototype.format = function(format) {
-                var d, k, o;
-                o = {
-                    "M+": this.getMonth() + 1,
-                    "d+": this.getDate(),
-                    "h+": this.getHours(),
-                    "m+": this.getMinutes(),
-                    "s+": this.getSeconds(),
-                    "q+": Math.floor((this.getMonth() + 3) / 3),
-                    "S": this.getMilliseconds()
-                };
-                if (/(y+)/.test(format)) {
-                    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-                }
-                for (k in o) {
-                    d = o[k];
-                    if (new RegExp("(" + k + ")").test(format)) {
-                        format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? d : ("00" + d).substr(("" + d).length));
-                    }
-                }
-                return format;
-            };
-
-            var dynaDataStore = new DataStore({
-                serviceUrl: '/stkdata',
-                fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
-            });
-
-            var stkCode = 'SH600000';
             if (stkCode) {
-                this.precision = precisionMap[stkCode.substr(0, 2)] || 2;
+                var precision = precisionMap[stkCode.substr(0, 2)] || 2;
                 dynaDataStore.subscribe({
                     obj: stkCode
                 }, {}, function(data) {
@@ -172,11 +121,11 @@
                         if (dynaData) {
                             this.name = dynaData.ZhongWenJianCheng;
                             this.baseInfo = {
-                                LastClose: formatNumber(dynaData.ZuoShou, this.precision),
-                                High: formatNumber(dynaData.ZuiGaoJia, this.precision),
-                                Open: formatNumber(dynaData.KaiPanJia, this.precision),
-                                Low: formatNumber(dynaData.ZuiDiJia, this.precision),
-                                New: formatNumber(dynaData.ZuiXinJia, this.precision),
+                                LastClose: formatNumber(dynaData.ZuoShou, precision),
+                                High: formatNumber(dynaData.ZuiGaoJia, precision),
+                                Open: formatNumber(dynaData.KaiPanJia, precision),
+                                Low: formatNumber(dynaData.ZuiDiJia, precision),
+                                New: formatNumber(dynaData.ZuiXinJia, precision),
                                 Volume: formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
                                 Amount: formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
                                 Time: dynaData.ShiJian ?
@@ -199,6 +148,60 @@
             }
         
         });
+        function formatNumber(data, precision, unit, useDefault) {
 
+            if (data == null) {
+                data = 0;
+            }
+
+            var n = Number(data);
+            if ((n == 0 || isNaN(n)) && useDefault !== false) {
+                return useDefault || Constants.DEFAULT_VALUE;
+            }
+
+            unit = unit || '';
+            precision = precision != null ? precision : 2;
+
+
+            if (unit === 'K/M') {
+                if (n >= 10 * 1000 * 1000) {
+                    unit = 'M';
+                } else if (n >= 10 * 1000) {
+                    unit = 'K';
+                } else {
+                    unit = '';
+                }
+            }
+            switch(unit) {
+                case '%': n = n * 100; break;
+                case 'K': n = n / 1000; break;
+                case 'M': n = n / (1000 * 1000); break;
+                case 100: n = n / 100; unit = ''; break;
+            }
+            return n.toFixed(precision) + unit;
+        }
+
+        Date.prototype.format = function(format) {
+            var d, k, o;
+            o = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S": this.getMilliseconds()
+            };
+            if (/(y+)/.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (k in o) {
+                d = o[k];
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? d : ("00" + d).substr(("" + d).length));
+                }
+            }
+            return format;
+        };
     });
 })(window);
