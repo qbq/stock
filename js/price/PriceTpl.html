@@ -6,7 +6,12 @@
 <table class="table table-striped table-hover price-table">
     <thead>
         <th>序号</th>
-        <th>股票代码</th>
+        <th>
+            <a href="#stockPrice/gql/<%=gql%>/orderby/obj<%=(orderby === 'obj' ? orderType : '')%>">
+                股票代码
+                <%=(orderby === 'obj' ? orderIconTag : '')%>
+            </a>
+        </th>
         <th>股票简称</th>
         <th>
             <a href="#stockPrice/gql/<%=gql%>/orderby/ZuiXinJia<%=(orderby === 'ZuiXinJia' ? orderType : '')%>">
@@ -71,9 +76,12 @@
         <th>加自选</th>
     </thead>
     <tbody>
-        <%_.each(stocks, function(stock, index){%>
+        <%  var index = 0;
+            _.each(stocks, function(stock){
+                index++;
+        %>
             <tr data-hash="kline/<%=stock.Obj%>/<%=stock.ZhongWenJianCheng%>">
-                <td><%=index + 1%></td>
+                <td><%=index%></td>
                 <td><a href="#kline/<%=stock.Obj%>/<%=stock.ZhongWenJianCheng%>"><%=stock.Obj%></a></td>
                 <td><a href="#kline/<%=stock.Obj%>/<%=stock.ZhongWenJianCheng%>"><%=stock.ZhongWenJianCheng%></a></td>
                 <td><%=stock.ZuiXinJia%></td>

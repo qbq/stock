@@ -43,6 +43,7 @@ define(['text!quote/QuoteTpl.html', 'Constants'], function(QuoteTpl, Constants) 
             this.els.$HuanShou.html(quoteInfo.HuanShou);
             this.els.$ZuiGaoJia.html(quoteInfo.ZuiGaoJia);
             this.els.$ZuiDiJia.html(quoteInfo.ZuiDiJia);
+            this.els.$KaiPanJia.html(quoteInfo.KaiPanJia);
         },
 
         initElements: function() {
@@ -54,6 +55,7 @@ define(['text!quote/QuoteTpl.html', 'Constants'], function(QuoteTpl, Constants) 
                 $HuanShou: this.$('#HuanShou'),
                 $ZuiGaoJia: this.$('#ZuiGaoJia'),
                 $ZuiDiJia: this.$('#ZuiDiJia'),
+                $KaiPanJia: this.$('#KaiPanJia')
             };
         }
     });

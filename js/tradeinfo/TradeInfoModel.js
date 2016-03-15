@@ -11,7 +11,7 @@ define(['Constants'], function(Constants) {
           return 'http://v2.yundzh.com/stkdata?obj='
                   + this.obj
                   + '&filed='
-                  + Constants.TRADE_INFO_FIELDS
+                  + Constants.TRADE_INFO_FIELDS.join(',')
                   + '&token='
                   + Constants.ACCESS_TOKEN;
       },*/

@@ -3,10 +3,7 @@
 %>
 <div class="visible-xs vertical-empty-spliter"></div>
 <div>
-	<div class="col-lg-3 col-sm-6 col-xs-3">
-		最新价
-	</div>
-	<div class="col-lg-3 col-sm-6 col-xs-3">
+	<div class="col-lg-6 col-sm-6 col-xs-3 quote-price">
 		<span id="ZuiXinJia" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZuiXinJia%></span>
 	</div>
 	<div class="visible-sm clear-both"></div>
@@ -15,7 +12,12 @@
 		涨跌
 	</div>
 	<div class="col-lg-3 col-sm-6 col-xs-3">
-	  <span id="ZhangDie" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span> <span id="ZhangFu" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span>
+	  <span id="ZhangDie" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangDie%></span>
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3">
+		涨幅
+	</div>
+	<div class="col-lg-3 col-sm-6 col-xs-3"><span id="ZhangFu" class="label <%=quo.ZhangDie < 0 ? 'label-success' : 'label-danger' %>"><%=quo.ZhangFu%>%</span>
 	</div>
 	<div class="clear-both"></div>
 </div>

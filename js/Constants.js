@@ -22,7 +22,7 @@ define([], function() {
             'ChengJiaoLiang',
             'ChengJiaoE',
             'HuanShou'
-        ].join(','),
+        ],
 
         TRADE_INFO_FIELDS: [
             'ZhongWenJianCheng',
@@ -50,9 +50,9 @@ define([], function() {
             'WeiTuoMaiChuLiang3',
             'WeiTuoMaiChuLiang4',
             'WeiTuoMaiChuLiang5',
-        ].join(','),
+        ],
 
-        DYNA_DATASTORE_FIELDS: [
+        KLINE_DATASTORE_FIELDS: [
             'ZhongWenJianCheng',
             'ZuoShou',
             'ZuiGaoJia',
@@ -61,7 +61,10 @@ define([], function() {
             'ZuiXinJia',
             'ChengJiaoLiang',
             'ChengJiaoE',
-            'ShiJian'
+            'ShiJian',
+            'ZhangDie',
+            'ZhangFu',
+            'HuanShou'
         ],
 
         GQL_LIST: {

@@ -57,7 +57,7 @@ define([
             // 初始化DataStore
             this.dynaDataStore = new DataStore({
                 serviceUrl: '/stkdata',
-                fields: Constants.DYNA_DATASTORE_FIELDS
+                fields: Constants.KLINE_DATASTORE_FIELDS
             });
 
             // 绑定方法
@@ -108,10 +108,10 @@ define([
                     this.quoteInfo = {
                         ZuiXinJia: Util.formatNumber(dynaData.ZuiXinJia, this.precision),
                         ZhangDie: Util.formatNumber(dynaData.ZhangDie, this.precision),
-                        ZhangFu: Util.formatNumber(dynaData.ZhangFu, this.precision),
+                        ZhangFu: Util.formatNumber(dynaData.ZhangFu, this.precision) + '%',
                         ChengJiaoLiang: Util.formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
                         ChengJiaoE: Util.formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
-                        HuanShou: Util.formatNumber(dynaData.HuanShou, this.precision),
+                        HuanShou: Util.formatNumber(dynaData.HuanShou, this.precision) + '%',
                         ZuoShou: Util.formatNumber(dynaData.ZuoShou, this.precision),
                         ZuiGaoJia: Util.formatNumber(dynaData.ZuiGaoJia, this.precision),
                         ZuiDiJia: Util.formatNumber(dynaData.ZuiDiJia, this.precision),

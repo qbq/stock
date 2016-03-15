@@ -52,8 +52,8 @@ define([
                 this.$('.panel').append('<div class="table-responsive price-table-container"/>')
             }
             this.renderStocks();
-            this.clearInterval();
-            this.interval = setInterval(this.renderStocks, 10000);
+            // this.clearInterval();
+            // this.interval = setInterval(this.renderStocks, 10000);
         },
 
         renderStocks: function() {
