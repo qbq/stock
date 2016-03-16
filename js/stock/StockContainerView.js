@@ -25,7 +25,7 @@ define([
         },
 
         initialize: function (options) {
-            _.bindAll(this, 'filterStocks', 'renderStocks', 'showSearchResult', 'hideSearchResult', 'emptyInput');
+            _.bindAll(this, 'render', 'dispose', 'filterStocks', 'renderStocks', 'showSearchResult', 'hideSearchResult', 'emptyInput');
             this.options = options || {};
         },
 
@@ -61,14 +61,15 @@ define([
             this.priceView = new PriceView(this.options).render();
         },
 
-        clearInterval: function() {
+/*        clearInterval: function() {
             if (this.interval) {
                 clearInterval(this.interval);
             }
-        },
+        },*/
 
         dispose: function() {
-            this.clearInterval();
+            // this.clearInterval();
+            this.priceView.dispose();
             this.remove();
         },
 

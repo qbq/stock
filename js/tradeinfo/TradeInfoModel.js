@@ -6,15 +6,15 @@ define(['Constants'], function(Constants) {
       initialize: function(params) {
           this.obj = params.obj;
       },
-      url: 'data/tradeinfo.json',
-      /*url: function() {
+      // url: 'data/tradeinfo.json',
+      url: function() {
           return 'http://v2.yundzh.com/stkdata?obj='
                   + this.obj
-                  + '&filed='
+                  + '&field='
                   + Constants.TRADE_INFO_FIELDS.join(',')
                   + '&token='
                   + Constants.ACCESS_TOKEN;
-      },*/
+      },
       defaults: {
         "Counter": 1,
         "Data": {

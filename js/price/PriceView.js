@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) {
 
@@ -11,7 +11,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         template: _.template(PriceTpl),
 
         initialize: function (params) {
-            _.bindAll(this, 'render', 'refresh', 'refreshRow', 'showKline');
+            _.bindAll(this, 'render', 'refresh', 'refreshRow', 'showKline', 'dispose');
             this.params = params;
             this.gql = params.gql || 'quanbuagu';
             this.orderby = (params.orderby || '_').split('_');
@@ -68,22 +68,55 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             }
         },
 
-        refreshRow: function(rowData) {
+        refreshRow: function(obj, rowData) {
             var updatingRow = this.rows.eq(this.updatingRowIndex),
-                updatingCells = updatingRow.find('td');
+                updatingCells = updatingRow.find('td'),
+                objLink = updatingCells.eq(1).find('a'),
+                nameLink = updatingCells.eq(2).find('a'),
+                oldObj = objLink.html();
+
             this.updatingRowIndex++;
-            updatingRow.data('hash', '/kline/' + rowData.Obj + '/' + rowData.ZhongWenJianCheng);
-            updatingCells.eq(1).html(rowData.Obj);
-            updatingCells.eq(2).html(rowData.ZuiXinJia);
-            updatingCells.eq(3).html(rowData.ZhangDie);
-            updatingCells.eq(4).html(rowData.ZhangFu);
-            updatingCells.eq(5).html(rowData.ZuoShou);
-            updatingCells.eq(6).html(rowData.KaiPanJia);
-            updatingCells.eq(7).html(rowData.ZuiGaoJia);
-            updatingCells.eq(8).html(rowData.ZuiDiJia);
-            updatingCells.eq(9).html(rowData.ChengJiaoLiang);
-            updatingCells.eq(10).html(rowData.ChengJiaoE);
-            updatingCells.eq(11).html(rowData.HuanShou);
+
+            if ($.trim(oldObj) !== obj) {
+                var hash = '/kline/' + obj + '/' + rowData.ZhongWenJianCheng;
+
+                updatingRow.data('hash', hash);
+                this._highlight(updatingRow);
+
+                objLink.data('hash', hash);
+                objLink.html(obj);
+
+                nameLink.data('hash', hash);
+                nameLink.html(rowData.ZhongWenJianCheng);
+            }         
+            this._updateCell(updatingCells.eq(3), rowData.ZuiXinJia);
+            this._updateCell(updatingCells.eq(4), rowData.ZhangDie);
+            this._updateCell(updatingCells.eq(5), rowData.ZhangFu);
+            this._updateCell(updatingCells.eq(6), rowData.ZuoShou);
+            this._updateCell(updatingCells.eq(7), rowData.KaiPanJia);
+            this._updateCell(updatingCells.eq(8), rowData.ZuiGaoJia);
+            this._updateCell(updatingCells.eq(9), rowData.ZuiDiJia);
+            this._updateCell(updatingCells.eq(10), rowData.ChengJiaoLiang/100);
+            this._updateCell(updatingCells.eq(11), rowData.ChengJiaoE/10000);
+            this._updateCell(updatingCells.eq(12), rowData.HuanShou + '%');
+        },
+
+        _updateCell: function(cell, newVal) {
+            var oldVal = cell.html();
+            newVal += '';
+            if($.trim(oldVal) !== newVal) {
+                cell.html(newVal);
+                this._highlight(cell);
+                return true;
+            }
+        },
+
+        _highlight: function(el) {
+            var originColor = el.css('background-color');
+            el.css('background-color', 'yellow');
+            setTimeout(function() {
+                el.css('background-color', originColor);
+            }, 1000);
         },
 
         showKline: function(e) {

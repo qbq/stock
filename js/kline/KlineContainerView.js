@@ -57,11 +57,11 @@ define([
             // 初始化DataStore
             this.dynaDataStore = new DataStore({
                 serviceUrl: '/stkdata',
-                fields: Constants.KLINE_DATASTORE_FIELDS
+                fields: Constants.KLINE_DATASTORE_FIELDS.concat(Constants.TRADE_INFO_FIELDS)
             });
 
             // 绑定方法
-            _.bindAll(this, 'render', 'renderQuoteView', 'refreshQuote', 'renderKlineChart', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
+            _.bindAll(this, 'render', 'dispose', 'renderQuoteView', 'refreshQuote', 'renderKlineChart', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
         },
 
         render: function () {
@@ -84,11 +84,14 @@ define([
         },
 
         renderKlineChart: function(data) {
+            // 订阅行情
             this.dynaDataStore.subscribe({
                 obj: this.code
             }, {}, this.refreshQuote);
+
+            // 初始化图表
             this.dataProvider = new ChartDataProvider(this.code);
-            this.chart = new Chart(this.$('#chart'), {
+            new Chart(this.$('#chart'), {
                 dataProvider: this.dataProvider,
                 dataPrecision: this.precision,
                 chart: {
@@ -99,6 +102,7 @@ define([
         },
 
         refreshQuote: function(data) {
+            console.log(data);
             if (data instanceof Error) {
                 console.log(data);
             } else {
