@@ -15,13 +15,6 @@ define([
     Chart,
     ChartDataProvider) {
 
-    DataStore.address = 'ws://v2.yundzh.com/ws';
-    // DataStore.address = 'ws://10.15.144.101:80/ws';
-    DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
-
-    DataStore.dataType = 'pb';
-    window.DataStore = DataStore;
-
     var precisionMap = {'FX': 4};
 
     var DEFAULT_VALUE = '--';

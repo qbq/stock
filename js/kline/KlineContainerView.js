@@ -122,6 +122,32 @@ define([
                         KaiPanJia: Util.formatNumber(dynaData.KaiPanJia, this.precision)
                     };
                     this.quoteView && this.quoteView.refreshQuote(this.quoteInfo);
+
+                    this.tradeInfo = {
+						WeiTuoMaiChuJia5 : dynaData.WeiTuoMaiChuJia5 ,
+					    WeiTuoMaiChuJia4 : dynaData.WeiTuoMaiChuJia4 ,
+					    WeiTuoMaiChuJia3 : dynaData.WeiTuoMaiChuJia3 ,
+					    WeiTuoMaiChuJia2 : dynaData.WeiTuoMaiChuJia2 ,
+					    WeiTuoMaiChuJia1 : dynaData.WeiTuoMaiChuJia1 ,
+					    WeiTuoMaiChuLiang5: dynaData.WeiTuoMaiChuLiang5,
+					    WeiTuoMaiChuLiang4: dynaData.WeiTuoMaiChuLiang4,
+					    WeiTuoMaiChuLiang3: dynaData.WeiTuoMaiChuLiang3,
+					    WeiTuoMaiChuLiang2: dynaData.WeiTuoMaiChuLiang2,
+					    WeiTuoMaiChuLiang1: dynaData.WeiTuoMaiChuLiang1,
+					    ZuiXinJia        : dynaData.ZuiXinJia        ,
+					    WeiTuoMaiRuJia1  : dynaData.WeiTuoMaiRuJia1  ,
+					    WeiTuoMaiRuJia2  : dynaData.WeiTuoMaiRuJia2  ,
+					    WeiTuoMaiRuJia3  : dynaData.WeiTuoMaiRuJia3  ,
+					    WeiTuoMaiRuJia4  : dynaData.WeiTuoMaiRuJia4  ,
+					    WeiTuoMaiRuJia5  : dynaData.WeiTuoMaiRuJia5  ,
+					    WeiTuoMaiRuLiang1: dynaData.WeiTuoMaiRuLiang1,
+					    WeiTuoMaiRuLiang2: dynaData.WeiTuoMaiRuLiang2,
+					    WeiTuoMaiRuLiang3: dynaData.WeiTuoMaiRuLiang3,
+					    WeiTuoMaiRuLiang4: dynaData.WeiTuoMaiRuLiang4,
+					    WeiTuoMaiRuLiang5: dynaData.WeiTuoMaiRuLiang5
+                    };
+                    this.tradeInfoView && this.tradeInfoView.refreshTradeInfo(this.tradeInfo);
+
                     var lastUpdateTime = dynaData.ShiJian ?
                           new Date(Number(dynaData.ShiJian + '000')).format('yyyy-MM-dd hh:mm:ss') :
                           Constants.DEFAULT_VALUE

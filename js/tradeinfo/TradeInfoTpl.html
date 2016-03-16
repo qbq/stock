@@ -2,21 +2,6 @@
   var stockData = tradeinfo.Data.RepDataStkData[0];
 %>
 <div class="panel panel-default buy-sell-panel">
-  <div class="panel-heading">
-    <div class=" col-sm-3">
-      最新: <span class="label label-default"><%=stockData.ZuiXinJia%></span> 
-    </div>
-    <div class=" col-sm-3">
-      昨收: <span class="label label-default"><%=stockData.ZuoShou%></span> 
-    </div>
-    <div class=" col-sm-3">
-      涨停: <span class="label label-danger"><%=stockData.ZhangTing%></span> 
-    </div>
-    <div class=" col-sm-3">
-      跌停: <span class="label label-success"><%=stockData.DieTing%></span> 
-    </div>
-    <div class="clear-both"></div>
-  </div>
   <div class="panel-body">
     <div class="">
       <div class="col-lg-4 col-sm-6 col-xs-4">
@@ -24,21 +9,21 @@
         <p>卖四(元/手)</p>
         <p>卖三(元/手)</p>
         <p>卖二(元/手)</p>
-        <p><a href="#tradingSell/<%=stockData.obj%>/<%=stockData.ZhongWenJianCheng%>">卖一(元/手)</a></p>
+        <p><a href="#tradingSell/<%=stockData.Obj%>/<%=stockData.ZhongWenJianCheng%>">卖一(元/手)</a></p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
-        <p><%=stockData.WeiTuoMaiChuJia5 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuJia4 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuJia3 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuJia2 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuJia1 || 0%></p>
+        <p id="WeiTuoMaiChuJia5"><%=stockData.WeiTuoMaiChuJia5 || 0%></p>
+        <p id="WeiTuoMaiChuJia4"><%=stockData.WeiTuoMaiChuJia4 || 0%></p>
+        <p id="WeiTuoMaiChuJia3"><%=stockData.WeiTuoMaiChuJia3 || 0%></p>
+        <p id="WeiTuoMaiChuJia2"><%=stockData.WeiTuoMaiChuJia2 || 0%></p>
+        <p id="WeiTuoMaiChuJia1"><%=stockData.WeiTuoMaiChuJia1 || 0%></p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
-        <p><%=stockData.WeiTuoMaiChuLiang5 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuLiang4 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuLiang3 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuLiang2 || 0%></p>
-        <p><%=stockData.WeiTuoMaiChuLiang1 || 0%></p>
+        <p id="WeiTuoMaiChuLiang5"><%=stockData.WeiTuoMaiChuLiang5 || 0%></p>
+        <p id="WeiTuoMaiChuLiang4"><%=stockData.WeiTuoMaiChuLiang4 || 0%></p>
+        <p id="WeiTuoMaiChuLiang3"><%=stockData.WeiTuoMaiChuLiang3 || 0%></p>
+        <p id="WeiTuoMaiChuLiang2"><%=stockData.WeiTuoMaiChuLiang2 || 0%></p>
+        <p id="WeiTuoMaiChuLiang1"><%=stockData.WeiTuoMaiChuLiang1 || 0%></p>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -47,7 +32,7 @@
         <p>当前价(元)</p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
-        <p><%=stockData.ZuiXinJia%></p>
+        <p id="ZuiXinJia"><%=stockData.ZuiXinJia%></p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
         <p>&nbsp;</p>
@@ -56,25 +41,25 @@
     </div>
     <div class="">
       <div class="col-lg-4 col-sm-6 col-xs-4">
-        <p><a href="#tradingBuy/<%=stockData.obj%>/<%=stockData.ZhongWenJianCheng%>">买一(元/手)</a></p>
+        <p><a href="#tradingBuy/<%=stockData.Obj%>/<%=stockData.ZhongWenJianCheng%>">买一(元/手)</a></p>
         <p>买二(元/手)</p>
         <p>买三(元/手)</p>
         <p>买四(元/手)</p>
         <p>买五(元/手)</p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
-        <p><%=stockData.WeiTuoMaiRuJia1 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuJia2 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuJia3 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuJia4 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuJia5 || 0%></p>
+        <p id="WeiTuoMaiRuJia1"><%=stockData.WeiTuoMaiRuJia1 || 0%></p>
+        <p id="WeiTuoMaiRuJia2"><%=stockData.WeiTuoMaiRuJia2 || 0%></p>
+        <p id="WeiTuoMaiRuJia3"><%=stockData.WeiTuoMaiRuJia3 || 0%></p>
+        <p id="WeiTuoMaiRuJia4"><%=stockData.WeiTuoMaiRuJia4 || 0%></p>
+        <p id="WeiTuoMaiRuJia5"><%=stockData.WeiTuoMaiRuJia5 || 0%></p>
       </div>
       <div class="col-lg-4 col-sm-3 col-xs-4">
-        <p><%=stockData.WeiTuoMaiRuLiang1 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuLiang2 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuLiang3 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuLiang4 || 0%></p>
-        <p><%=stockData.WeiTuoMaiRuLiang5 || 0%></p>
+        <p id="WeiTuoMaiRuLiang1"><%=stockData.WeiTuoMaiRuLiang1 || 0%></p>
+        <p id="WeiTuoMaiRuLiang2"><%=stockData.WeiTuoMaiRuLiang2 || 0%></p>
+        <p id="WeiTuoMaiRuLiang3"><%=stockData.WeiTuoMaiRuLiang3 || 0%></p>
+        <p id="WeiTuoMaiRuLiang4"><%=stockData.WeiTuoMaiRuLiang4 || 0%></p>
+        <p id="WeiTuoMaiRuLiang5"><%=stockData.WeiTuoMaiRuLiang5 || 0%></p>
       </div>
       <div class="clearfix"></div>
     </div>

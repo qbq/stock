@@ -1,10 +1,9 @@
 'use strict'
 
-define([], function() {
+define(['Constants'], function(Constants) {
 
     var QuoteModel = Backbone.Model.extend({
-        // url: 'data/quote.json',
-        url: 'http://v2.yundzh.com/quote/dyna',
+        url: Constants.QUOTE_URL,
         defaults: {
             "Counter": 1,
             "Data": {

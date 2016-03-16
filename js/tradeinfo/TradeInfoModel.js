@@ -6,9 +6,9 @@ define(['Constants'], function(Constants) {
       initialize: function(params) {
           this.obj = params.obj;
       },
-      // url: 'data/tradeinfo.json',
       url: function() {
-          return 'http://v2.yundzh.com/stkdata?obj='
+          return Constants.TRADE_INFO_URL
+                  + '?obj='
                   + this.obj
                   + '&field='
                   + Constants.TRADE_INFO_FIELDS.join(',')

@@ -1,12 +1,42 @@
 'use strict'
 
-define([], function() {
+define(['env'], function(env) {
+
+    var WEBSOCKET_ADDRESSES = {
+        'dev': 'ws://10.15.144.101:80/ws', // 内网
+        'prod': 'ws://v2.yundzh.com/ws' // 外网
+    },
+    WEBSOCKET_ADDRESS = WEBSOCKET_ADDRESSES[env],
+    HTTP_ADDRESSES = {
+        'dev': 'http://localhost:8888/', // 内网
+        'prod': 'http://v2.yundzh.com/' // 外网
+    },
+    HTTP_ADDRESS = HTTP_ADDRESSES[env],
+    QUOTE_URIS = {
+        'dev': 'data/quote.json', // 内网
+        'prod': 'quote/dyna' // 外网
+    },
+    SEARCH_URIS = {
+        'dev': 'data/search.json',
+        'prod': 'kbspirit'
+    },
+    STOCK_URIS = {
+        'dev': 'data/stocks.json',
+        'prod': 'stkdata',
+    },
+    TRADE_INFO_URIS = {
+        'dev': 'data/tradeinfo.json',
+        'prod': 'stkdata'
+    }
 
     return {
-        // 外网
-        WEBSOCKET_ADDRESS: 'ws://v2.yundzh.com/ws',
-        // 内网
-        // WEBSOCKET_ADDRESS: 'ws://10.15.144.101:80/ws';
+        WEBSOCKET_ADDRESS: WEBSOCKET_ADDRESS,
+        HTTP_ADDRESS: HTTP_ADDRESS,
+
+        QUOTE_URL: HTTP_ADDRESS + QUOTE_URIS[env],
+        SEARCH_URL: HTTP_ADDRESS + SEARCH_URIS[env],
+        STOCK_URL: HTTP_ADDRESS + STOCK_URIS[env],
+        TRADE_INFO_URL: HTTP_ADDRESS + TRADE_INFO_URIS[env],
 
     	ACCESS_TOKEN: '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9',
 
@@ -76,7 +106,7 @@ define([], function() {
             'wodezixuan': 'block=股票\\\\市场分类\\\\我的自选'
     	},
 
-        PAGE_SIZE: 10,
+        PAGE_SIZE: 50,
 
         SEARCH_COUNT: 10,
 

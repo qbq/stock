@@ -25,7 +25,7 @@
             connection: 'libs/connection',
             yfloat: 'libs/yfloat',
             DataStore: 'libs/datastore.all.min',
-            Chart: 'libs/chart',
+            Chart: 'libs/chart_b',
             ChartDataProvider: 'libs/chartDataProvider_b'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
@@ -55,8 +55,11 @@
             'router-cfg-version': {
                 deps: ['backbone']
             },
+            'Constants': {
+                deps: ['env']
+            },
             'app': {
-                deps: ['backbone', 'extend/DateExtend']
+                deps: ['backbone', 'Constants', 'extend/DateExtend']
             },
             'Chart': {
                 deps: ['highstock'],

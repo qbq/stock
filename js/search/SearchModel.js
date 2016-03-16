@@ -6,9 +6,9 @@ define(['Constants'], function(Constants) {
         initialize: function(params) {
             this.input = params.input;
         },
-        // url: 'data/search.json',
         url: function() {
-            return 'http://v2.yundzh.com/kbspirit?input='
+            return  Constants.SEARCH_URL
+                    + '?input='
                     + this.input
                     + '&count='
                     + Constants.SEARCH_COUNT

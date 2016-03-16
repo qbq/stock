@@ -3,8 +3,7 @@
 define([], function() {
 
 	var FocusModel = Backbone.Model.extend({
-        // url: 'data/queryfocus.json',
-        url: 'http://v2.yundzh.com/stkdata?gql=block=股票\\\\市场分类\\\\全部A股&orderby=ZhangFu&desc=true&start=0&count=10&field=ZhongWenJianCheng,ZuiXinJia,ZhangDie,ZhangFu,ZuoShou,KaiPanJia,ZuiGaoJia,ZuiDiJia,ChengJiaoLiang,ChengJiaoE,HuanShou&mode=2&token=00000011:1470039600:2db14efc6f396fa002f2d26a41306810fb34c5c1',
+        url: 'data/queryfocus.json',
         defaults: {
             "Qid": "888",
             "Err": 0,
