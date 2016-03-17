@@ -6,12 +6,13 @@ define(['env'], function(env) {
         'dev': 'ws://10.15.144.101:80/ws', // 内网
         'prod': 'ws://v2.yundzh.com/ws' // 外网
     },
-    WEBSOCKET_ADDRESS = WEBSOCKET_ADDRESSES[env],
+    WEBSOCKET_ADDRESS = WEBSOCKET_ADDRESSES[env.stock],
     HTTP_ADDRESSES = {
         'dev': 'http://localhost:8888/', // 内网
         'prod': 'http://v2.yundzh.com/' // 外网
     },
-    HTTP_ADDRESS = HTTP_ADDRESSES[env],
+    STOCK_HTTP_ADDRESS = HTTP_ADDRESSES[env.stock],
+    TRADE_HTTP_ADDRESS = HTTP_ADDRESSES[env.trade],
     QUOTE_URIS = {
         'dev': 'data/quote.json', // 内网
         'prod': 'quote/dyna' // 外网
@@ -27,16 +28,47 @@ define(['env'], function(env) {
     TRADE_INFO_URIS = {
         'dev': 'data/tradeinfo.json',
         'prod': 'stkdata'
-    }
+    },
+    QUERY_CAPITAL_URIS = {
+        'dev': 'data/querycapital.json',
+        'prod': 'counter/querycapital/'
+    },
+    TRADE_INIT_URIS = {
+        'dev': 'data/trading.json',
+        'prod': 'counter/tradeinit/' // TODO missing now
+    },
+    MAKE_ORDER_URIS = {
+        'dev': 'data/trading.json',
+        'prod': 'counter/makeorder/'
+    },
+    QUERY_HOLD_URIS = {
+        'dev': 'data/queryhold.json',
+        'prod': 'counter/queryhold/'
+    },
+    QUERY_ORDER_URIS = {
+        'dev': 'data/queryorder.json',
+        'prod': 'counter/queryorder/'
+    },
+    QUERY_DEAL_URIS = {
+        'dev': 'data/querydeal.json',
+        'prod': 'counter/querydeal/'
+    };
 
     return {
         WEBSOCKET_ADDRESS: WEBSOCKET_ADDRESS,
-        HTTP_ADDRESS: HTTP_ADDRESS,
+        HTTP_ADDRESS: STOCK_HTTP_ADDRESS,
 
-        QUOTE_URL: HTTP_ADDRESS + QUOTE_URIS[env],
-        SEARCH_URL: HTTP_ADDRESS + SEARCH_URIS[env],
-        STOCK_URL: HTTP_ADDRESS + STOCK_URIS[env],
-        TRADE_INFO_URL: HTTP_ADDRESS + TRADE_INFO_URIS[env],
+        QUOTE_URL: STOCK_HTTP_ADDRESS + QUOTE_URIS[env.stock],
+        SEARCH_URL: STOCK_HTTP_ADDRESS + SEARCH_URIS[env.stock],
+        STOCK_URL: STOCK_HTTP_ADDRESS + STOCK_URIS[env.stock],
+        TRADE_INFO_URL: STOCK_HTTP_ADDRESS + TRADE_INFO_URIS[env.stock],
+
+        QUERY_CAPITAL_URL: TRADE_HTTP_ADDRESS + QUERY_CAPITAL_URIS[env.trade],
+        TRADE_INIT_URL: TRADE_HTTP_ADDRESS + TRADE_INIT_URIS[env.trade],
+        MAKE_ORDER_URL: TRADE_HTTP_ADDRESS + MAKE_ORDER_URIS[env.trade],
+        QUERY_HOLD_URL: TRADE_HTTP_ADDRESS + QUERY_HOLD_URIS[env.trade],
+        QUERY_ORDER_URL: TRADE_HTTP_ADDRESS + QUERY_ORDER_URIS[env.trade],
+        QUERY_DEAL_URL: TRADE_HTTP_ADDRESS + QUERY_DEAL_URIS[env.trade],
 
     	ACCESS_TOKEN: '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9',
 
@@ -110,6 +142,16 @@ define(['env'], function(env) {
 
         SEARCH_COUNT: 10,
 
-        DEFAULT_VALUE: '--'
+        DEFAULT_VALUE: '--',
+
+        DEAL_TYPES: {
+            'today': 0,
+            'history': 1
+        },
+
+        ORDER_TYPES: {
+            'today': 0,
+            'history': 1
+        }
     };
 });

@@ -1,3 +1,6 @@
 define([], function() {
-	return 'prod';
+	return {
+		stock: 'prod',
+		trade: 'dev'
+	};
 })

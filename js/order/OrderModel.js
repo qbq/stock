@@ -1,10 +1,24 @@
 'use strict'
 
-define([], function() {
+define(['Constants'], function(Constants) {
 
 	var OrderModel = Backbone.Model.extend({
-        url: 'data/queryorder.json',
-        // url: '/counter/queryorder/1000?capitalid=10001&type=1',
+        initialize: function(params) {
+            params = params || {};
+            this.gameno = params.gameno || '';
+            this.capitalid = params.capitalid || '';
+            this.type = params.type || 0;
+        },
+        url: function() {
+            return Constants.QUERY_ORDER_URL
+                    + this.gameno
+                    + '?capitalid='
+                    + this.capitalid
+                    + '&type='
+                    + Constants.ORDER_TYPES[this.type]
+                    + '&token='
+                    + Constants.ACCESS_TOKEN;
+        },
         defaults: {
             "Id": 888,
             "RepQueryOrderRsp": [{

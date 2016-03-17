@@ -1,0 +1,13 @@
+{
+	"Id": 102,
+	"RepQueryCapitalRsp": [
+		{
+			"RspNo": 0,
+			"RspDesc": "OK",
+			"AvailCapital": 200000,
+			"FreezeCapital": 500000,
+			"TotalValue": 7000000,
+			"TotalCapital": 1300000
+		}
+	]
+}

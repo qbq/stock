@@ -7,7 +7,7 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover">
             <thead>
                 <th>委托编号</th>
                 <th>委托时间</th>
@@ -23,11 +23,11 @@
               <%_.each(orderList, function(ord){%>
               <tr>
                 <td><%=ord.OrderNo%></td>
-                <td><%=ord.OrderTime%></td>
+                <td><%=ord.OrderTime.substr(0, 4)%>/<%=ord.OrderTime.substr(4, 2)%>/<%=ord.OrderTime.substr(6, 2)%> <%=ord.OrderTime.substr(8, 2)%>:<%=ord.OrderTime.substr(10, 2)%></td>
                 <td><%=ord.ProductCode%></td>
                 <td><%=ord.ProductName%></td>
-                <td><%=ord.BuyOrSell === 'B' ? '买' : '卖'%></td>
-                <td><%=ord.OrderType%></td>
+                <td><%=ord.BuyOrSell === 'S' ? '卖' : '买'%></td>
+                <td><%=ord.OrderType === 'M' ? '市价单' : '指价单'%></td>
                 <td><%=ord.OrderAmount%></td>
                 <td><%=ord.OrderPrice%></td>
                 <td><%=ord.Status%></td>

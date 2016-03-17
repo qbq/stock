@@ -19,8 +19,8 @@
                     "DealNo": "500002", 
                     "DealTime": "201602221043", 
                     "ProductCode": "SZ002415", 
-                    "ProductName": "海康威视", 
-                    "BuyOrSell": "B", 
+                    "ProductName": "海康威视B", 
+                    "BuyOrSell": "S", 
                     "DealAmount": 2000, 
                     "DealPrice": 23.05, 
                     "Fee": 13.83

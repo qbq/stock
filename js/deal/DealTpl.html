@@ -7,7 +7,7 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover">
             <thead>
                 <th>成交编号</th>
                 <th>成交时间</th>
@@ -22,7 +22,7 @@
               <%_.each(dealList, function(de){%>
               <tr>
                 <td><%=de.DealNo%></td>
-                <td><%=de.DealTime%></td>
+                <td><%=de.DealTime.substr(0, 4)%>/<%=de.DealTime.substr(4, 2)%>/<%=de.DealTime.substr(6, 2)%> <%=de.DealTime.substr(8, 2)%>:<%=de.DealTime.substr(10, 2)%></td>
                 <td><%=de.ProductCode%></td>
                 <td><%=de.ProductName%></td>
                 <td><%=de.BuyOrSell === 'B' ? '买' : '卖'%></td>
