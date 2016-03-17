@@ -102,7 +102,6 @@ define([
         },
 
         refreshQuote: function(data) {
-            console.log(data);
             if (data instanceof Error) {
                 console.log(data);
             } else {

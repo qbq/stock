@@ -823,7 +823,7 @@
         });
 
         chart.series[1].setData(data[1]);
-        chart.yAxis[1].update();
+        chart.yAxis[1].update(false, true);
 
         if (mini !== true) {
 

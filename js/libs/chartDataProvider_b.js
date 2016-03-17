@@ -220,7 +220,7 @@
             }
           }
         }
-
+         
         if (data.length > 0) {
           $.each(data, function (i, eachData) {
             var time = eachData.ShiJian * 1000,
