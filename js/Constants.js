@@ -8,7 +8,8 @@ define(['env'], function(env) {
     },
     WEBSOCKET_ADDRESS = WEBSOCKET_ADDRESSES[env.stock],
     HTTP_ADDRESSES = {
-        'dev': 'http://localhost:8888/', // 内网
+        //'dev': 'http://localhost:8888/', // 内网
+        'dev': '',
         'prod': 'http://v2.yundzh.com/' // 外网
     },
     STOCK_HTTP_ADDRESS = HTTP_ADDRESSES[env.stock],
