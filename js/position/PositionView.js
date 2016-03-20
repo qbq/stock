@@ -17,7 +17,12 @@ define(['text!position/PositionTpl.html', 'Constants'], function(PositionTpl, Co
         },
 
         render: function () {
-        	this.$el.html(this.template({'position': this.model.toJSON()}));
+            var resp = this.model.get('RepQueryHoldRsp')[0];
+            if (resp.RspNo === 0) {
+                this.$el.html(this.template({'position': this.model.toJSON()}));
+            } else {
+                alert('查询持仓失败: ' + resp.RspDesc);
+            }
             return this;
         },
 
