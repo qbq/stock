@@ -14,11 +14,7 @@ define(['Constants'], function(Constants) {
                 }, {
                     "ZhangHuMing": "A股教学赛2",
                     "ZhangHuHao": "JXA000002"
-                }],
-            "Obj": "SH601519",
-            "MingZi": "大智慧",
-            "WeiTuoJia": 14.54,
-            "KeMaiShu": 0
+                }]
         }
     });
 

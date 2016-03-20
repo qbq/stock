@@ -9,18 +9,12 @@ define(['text!order/OrderTpl.html', 'Constants'], function(OrderTpl, Constants) 
         initialize: function (params) {
             _.bindAll(this, 'render');
             this.model.bind('change', this.render, this);
-            // this.listenTo( this.collection, 'reset add change remove', this.render, this );
-            this.type = this.model.get('type') === 'today' ? 1 : 0;
-            this.model.fetch({
-                data: {
-                    type: this.type
-                }
-            });
+            this.model.fetch();
         },
 
         render: function () {
             var tlpData = {'order': this.model.toJSON()};
-            if (this.type) {
+            if (this.model.type === 'today') {
                 tlpData.title = '今日委托';
             } else {
                 tlpData.title = '历史委托';

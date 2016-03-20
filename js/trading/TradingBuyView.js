@@ -19,9 +19,16 @@ define([
         events: {
             'keyup .search-box': 'showSearchResult',
             'blur .search-box': 'fetchStockInfo',
-            'click #resetAll': 'resetAll',
-            // 'change #price': ''
-            // TODO 2 increase buttons, 2 decrease buttons, 4 split buttons, buy button, change price, validate qty while changing
+            'change #price': 'recaculateStockInfo',
+            'change #buyQty': 'validateStockInfo',
+            'click #decreasePrice': 'decreasePrice',
+            'click #increasePrice': 'increasePrice',
+            'click #decreaseQty': 'decreaseQty',
+            'click #increaseQty': 'increaseQty',
+            'click .buy-qty-selector': 'changeQty',
+            'click #buy': 'buy',
+            'click #resetAll': 'resetAll'
+            // 4 split buttons, buy button
         },
 
         el: '#bodyContainer',
@@ -30,7 +37,20 @@ define([
         initialize: function (options) {
             this.code = options.code || 'SH601519';
             this.name = options.name || '大智慧';
-        	_.bindAll(this, 'render', 'fetchStockInfo', 'parseStockAndCapitalData', 'refreshStockInfo', 'resetAll');
+        	_.bindAll(this,
+                'render',
+                'fetchStockInfo',
+                'parseStockAndCapitalData',
+                'refreshStockInfo',
+                'resetAll',
+                'recaculateStockInfo',
+                'validateStockInfo',
+                'decreasePrice',
+                'increasePrice',
+                'decreaseQty',
+                'increaseQty',
+                'changeQty',
+                'buy');
             this.model.bind('change', this.render, this);
         	this.model.fetch();
         },
@@ -54,9 +74,44 @@ define([
                 $buyQty: this.$('#buyQty'),
                 $confirmQty: this.$('#confirmQty'),
                 $searchBox: this.$('.search-box'),
+                $quoteName: this.$('#quoteName'),
                 $buyButton: this.$('#buy'),
                 $resetAllButton: this.$('#resetAll')
             };
+        },
+
+        buy: function() {
+            var capitalid  = this.els.$tradingAccount.val(),
+                productcode = this.els.$searchBox.val(),
+                ordertype = 'R',
+                buysell = 'B',
+                orderprice = this.els.$price.val(),
+                orderamount = this.els.$buyQty.val();
+            $.getJSON({
+                url: Constants.MAKE_ORDER_URL,
+                data: {
+                    capitalid: capitalid,
+                    productcode: productcode,
+                    ordertype: ordertype,
+                    buysell: buysell,
+                    orderprice: orderprice,
+                    orderamount: orderamount * 100
+                }
+            }).success(this.buyResult)
+            .error(this.buyError);
+        },
+
+        buyResult: function(data) {
+            if (data && data.RepCounterRsp[0].RspNo === 0) {
+                alert('交易成功');
+                location.hash = 'order/today';
+            } else {
+                alert('交易失败: ' + data.RepCounterRsp[0].RspDesc);
+            }
+        },
+
+        buyError: function(err) {
+            alert('交易失败: ' + err.responseText || '服务器异常.');
         },
 
         showSearchResult: function(e) {
@@ -73,7 +128,13 @@ define([
             } else if (event.which === 13) {
                 if (this.searchResultView) {
                     var selectedResult = this.searchResultView.getSelectedResult();
-                    this.redirectToBuy(selectedResult);
+                    // this.redirectToBuy(selectedResult);
+                    this.code = selectedResult.obj;
+                    this.name = selectedResult.name;
+                    this.els.$searchBox.val(this.code);
+                    this.els.$quoteName.html(this.name);
+                    location.hash.replace('/tradingSell/' + this.code + '/' + this.name);
+                    this.fetchStockInfo();
                 }
             } else {
 
@@ -112,9 +173,8 @@ define([
         },
 
         resetAll: function() {
-            this.els.$price.val(0);
-            this.els.$buyQty.val(0);
-            this.els.$confirmQty.html(0);
+            this.els.$price.val(this.ZuiXinJia);
+            this.refreshStockInfo(this.ZuiXinJia, this.availCapital);
         },
 
         fetchStockInfo: function() {
@@ -148,29 +208,93 @@ define([
                 && capitalData[0].RepQueryCapitalRsp
                 && capitalData[0].RepQueryCapitalRsp[0]
                 && capitalData[0].RepQueryCapitalRsp[0].AvailCapital) {
-                this.AvailCapital = capitalData[0].RepQueryCapitalRsp[0].AvailCapital;
-                this.avaliableQty = Math.floor(this.AvailCapital / this.ZuiXinJia / 100);
-                this.els.$buyButton.prop('disabled', false);
+                this.availCapital = capitalData[0].RepQueryCapitalRsp[0].AvailCapital;
             } else {
                 this.els.$buyButton.prop('disabled', true);
                 this.avaliableQty = 0;
                 alert('无可用资金');
             }
 
-            this.refreshStockInfo(this.ZuiXinJia, this.avaliableQty);
+            this.refreshStockInfo(this.ZuiXinJia, this.availCapital);
         },
 
-        refreshStockInfo: function(price, avaliableQty) {
+        refreshStockInfo: function(price, availCapital) {
             this.els.$price.val(price);
-            var info = avaliableQty + ' 手 (' + avaliableQty * 100 + '股)';
+            this.avaliableQty = Math.floor(availCapital / price / 100);
+            if (this.avaliableQty > 0) {
+                this.els.$buyButton.prop('disabled', false);
+            } else {
+                alert('资金不足');
+            }
+            var info = this.avaliableQty + '手 (' + this.avaliableQty * 100 + '股)';
             this.els.$avaliableQty.html(info);
-            this.els.$buyQty.val(avaliableQty);
+            this.els.$buyQty.val(this.avaliableQty);
             this.refreshConfirmQty(info);
         },
 
         refreshConfirmQty: function(confirmQty) {
             this.els.$confirmQty.html(confirmQty);
+        },
+
+        recaculateStockInfo: function() {
+            var buyPrice = this.els.$price.val();
+            this.refreshStockInfo(buyPrice, this.availCapital);
+        },
+
+        validateStockInfo: function() {
+            var qty = this.els.$buyQty.val();
+            if (qty > this.avaliableQty) {
+                alert('最多可买' + this.avaliableQty + '手(' + (this.avaliableQty * 100) + '股)');
+                this.els.$buyQty.val(this.avaliableQty);
+                this.refreshConfirmQty(this.avaliableQty + '手 (' + (this.avaliableQty * 100) + '股)');
+            }
+        },
+
+        decreasePrice: function() {
+            var buyPrice = this.els.$price.val();
+            var newPrice = parseFloat(buyPrice, 2) * 10000000 - 10000000;
+            newPrice = newPrice <= 0 ? 10000000 : newPrice;
+            newPrice = newPrice / 10000000;
+            newPrice = Math.round(newPrice*100, 2)/100;
+            this.els.$price.val(newPrice);
+            this.recaculateStockInfo();
+        },
+
+        increasePrice: function() {
+            var buyPrice = this.els.$price.val();
+            var newPrice = parseFloat(buyPrice, 2) * 10000000 + 10000000;
+            newPrice = newPrice / 10000000;
+            newPrice = Math.round(newPrice*100, 2)/100;
+            this.els.$price.val(newPrice);
+            this.recaculateStockInfo();
+        },
+
+        decreaseQty: function() {
+            var qty = this.els.$buyQty.val();
+            var newQty = parseInt(qty, 0) * 10000000 - 10000000;
+            newQty = newQty < 10000000 ? 10000000 : newQty;
+            newQty = newQty / 10000000;
+            this.els.$buyQty.val(newQty);
+            this.validateStockInfo();
+            this.refreshConfirmQty(newQty + '手 (' + (newQty * 100) + '股)');
+        },
+        
+        increaseQty: function() {
+            var qty = this.els.$buyQty.val();
+            var newQty = parseInt(qty, 0) * 10000000 + 10000000;
+            newQty = newQty / 10000000;
+            this.els.$buyQty.val(newQty);
+            this.refreshConfirmQty(newQty + '手 (' + (newQty * 100) + '股)');
+            this.validateStockInfo();
+        },
+
+        changeQty: function(e) {
+            var option = $(e.target).find('input').val();
+            var newQty = Math.floor(this.avaliableQty / option);
+            this.els.$buyQty.val(newQty);
+            this.refreshConfirmQty(newQty + '手 (' + (newQty * 100) + '股)');
         }
+        
     });
 
     return TradingBuyView;

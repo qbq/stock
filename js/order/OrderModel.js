@@ -7,7 +7,7 @@ define(['Constants'], function(Constants) {
             params = params || {};
             this.gameno = params.gameno || '';
             this.capitalid = params.capitalid || '';
-            this.type = params.type || 0;
+            this.type = params.type || 'today';
         },
         url: function() {
             return Constants.QUERY_ORDER_URL

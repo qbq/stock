@@ -34,11 +34,12 @@ define(['env'], function(env) {
         'prod': 'counter/querycapital/'
     },
     TRADE_INIT_URIS = {
-        'dev': 'data/trading.json',
+        'dev': 'data/tradeinit.json',
         'prod': 'counter/tradeinit/' // TODO missing now
     },
     MAKE_ORDER_URIS = {
-        'dev': 'data/trading.json',
+        'dev': 'data/makeorder_s.json',
+        // 'dev': 'data/makeorder_f.json', // 测试用，交易失败
         'prod': 'counter/makeorder/'
     },
     QUERY_HOLD_URIS = {

@@ -1,0 +1,9 @@
+{
+    "Id": 102,
+    "RepCounterRsp": [
+        {
+            "RspNo": 1,
+            "RspDesc": "This is an error for testing."
+        }
+    ]
+}
