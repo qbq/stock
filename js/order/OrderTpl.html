@@ -30,7 +30,13 @@
                 <td><%=ord.OrderType === 'M' ? '市价单' : '指价单'%></td>
                 <td><%=ord.OrderAmount%></td>
                 <td><%=ord.OrderPrice%></td>
-                <td><%=ord.Status%></td>
+                <td>
+                    <%if (ord.Status === '已成交') {%>
+                    <%=ord.Status%>
+                    <%} else {%>
+                    <button type="button" class="btn btn-primary btn-sm ">取消</button>
+                    <%}%>
+                </td>
               </tr>
               <%})%>
             </tbody>

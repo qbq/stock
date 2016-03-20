@@ -23,7 +23,7 @@
             "OrderType": "R",
             "OrderAmount": 2000,
             "OrderPrice": 23.05,
-            "Status": "已成交"
+            "Status": "未成交"
         }]
     }]
 }
