@@ -55,22 +55,22 @@ define(['text!tradeinfo/TradeInfoTpl.html', 'Constants'], function(TradeInfoTpl,
 			this.els.$WeiTuoMaiChuJia3.html(data.WeiTuoMaiChuJia3);
 			this.els.$WeiTuoMaiChuJia2.html(data.WeiTuoMaiChuJia2);
 			this.els.$WeiTuoMaiChuJia1.html(data.WeiTuoMaiChuJia1);
-			this.els.$WeiTuoMaiChuLiang5.html(data.WeiTuoMaiChuLiang5);
-			this.els.$WeiTuoMaiChuLiang4.html(data.WeiTuoMaiChuLiang4);
-			this.els.$WeiTuoMaiChuLiang3.html(data.WeiTuoMaiChuLiang3);
-			this.els.$WeiTuoMaiChuLiang2.html(data.WeiTuoMaiChuLiang2);
-			this.els.$WeiTuoMaiChuLiang1.html(data.WeiTuoMaiChuLiang1);
+			this.els.$WeiTuoMaiChuLiang5.html(data.WeiTuoMaiChuLiang5 / 100);
+			this.els.$WeiTuoMaiChuLiang4.html(data.WeiTuoMaiChuLiang4 / 100);
+			this.els.$WeiTuoMaiChuLiang3.html(data.WeiTuoMaiChuLiang3 / 100);
+			this.els.$WeiTuoMaiChuLiang2.html(data.WeiTuoMaiChuLiang2 / 100);
+			this.els.$WeiTuoMaiChuLiang1.html(data.WeiTuoMaiChuLiang1 / 100);
 			this.els.$ZuiXinJia.html(data.ZuiXinJia);
 			this.els.$WeiTuoMaiRuJia1.html(data.WeiTuoMaiRuJia1);
 			this.els.$WeiTuoMaiRuJia2.html(data.WeiTuoMaiRuJia2);
 			this.els.$WeiTuoMaiRuJia3.html(data.WeiTuoMaiRuJia3);
 			this.els.$WeiTuoMaiRuJia4.html(data.WeiTuoMaiRuJia4);
 			this.els.$WeiTuoMaiRuJia5.html(data.WeiTuoMaiRuJia5);
-			this.els.$WeiTuoMaiRuLiang1.html(data.WeiTuoMaiRuLiang1);
-			this.els.$WeiTuoMaiRuLiang2.html(data.WeiTuoMaiRuLiang2);
-			this.els.$WeiTuoMaiRuLiang3.html(data.WeiTuoMaiRuLiang3);
-			this.els.$WeiTuoMaiRuLiang4.html(data.WeiTuoMaiRuLiang4);
-			this.els.$WeiTuoMaiRuLiang5.html(data.WeiTuoMaiRuLiang5);
+			this.els.$WeiTuoMaiRuLiang1.html(data.WeiTuoMaiRuLiang1 / 100);
+			this.els.$WeiTuoMaiRuLiang2.html(data.WeiTuoMaiRuLiang2 / 100);
+			this.els.$WeiTuoMaiRuLiang3.html(data.WeiTuoMaiRuLiang3 / 100);
+			this.els.$WeiTuoMaiRuLiang4.html(data.WeiTuoMaiRuLiang4 / 100);
+			this.els.$WeiTuoMaiRuLiang5.html(data.WeiTuoMaiRuLiang5 / 100);
         }
     });
 

@@ -58,7 +58,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         },
 
         refresh: function(data) {
-            console.log(data);
+            // console.log(data);
             if(this.rows && this.rows.length > 0) {
                 this.updatingRowIndex = 0;
                 $.each(data, this.refreshRow);

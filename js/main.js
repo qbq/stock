@@ -16,7 +16,7 @@
             backbone: 'libs/backbone',
             // iobind: 'libs/backbone.iobind.min',
             // iosync: 'libs/backbone.iosync.min',
-            highstock: 'libs/highstock',
+            highstock: 'libs/highstock_b',
             text: 'libs/text',             //用于requirejs导入html类型的依赖
             xdomainrequest: 'libs/jquery.xdomainrequest.min',
             Long: 'libs/Long',

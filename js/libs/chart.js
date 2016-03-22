@@ -812,18 +812,37 @@
       chart.showLoading();
 
       self._options.dataProvider.subscribeData(type, function(data, closePrice) {
+
+        var minPrice = data[0],
+            minAverage = data[1],
+            minVolume = data[2];
+
+        /*$.each(minPrice, function(index, price) {
+          if (price[1] || minVolume[index][1] || minAverage[index][1]) {
+            console.log('time=' 
+                        + new Date(price[0])
+                        + '|price='
+                        + price[1]
+                        + '|volume='
+                        + minVolume[index][1]
+                        + '|average='
+                        + minAverage[index][1]);
+          }
+        });*/
+
         var series = chart.series[0];
         chart.closePrice = closePrice;
 
         chart.positions = null;
         series.setData(data[0]);
+        // chart.series[0].update({}, false);
 
         chart.yAxis[0].plotLinesAndBands[0].update({
           value: closePrice
         });
 
         chart.series[1].setData(data[1]);
-        chart.yAxis[1].update();
+        // chart.series[1].update({}, false);
 
         if (mini !== true) {
 
