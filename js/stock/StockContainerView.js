@@ -18,7 +18,7 @@ define([
         template: _.template(StockContainerTpl),
 
         events: {
-        	'click .btn-primary.btn-sm': 'filterStocks',
+        	'click .btn-primary.btn-sm.filter': 'filterStocks',
             'keyup .search-box': 'showSearchResult',
             'blur .search-box': 'hideSearchResult',
             'click .search-button': 'showSearchResult'
@@ -48,7 +48,7 @@ define([
             }
 
             if (this.priceView) {
-                this.priceView.remove();
+                this.priceView.dispose();
                 this.$('.panel').append('<div class="table-responsive price-table-container"/>')
             }
             this.renderStocks();

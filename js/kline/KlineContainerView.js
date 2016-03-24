@@ -165,7 +165,7 @@ define([
 
         dispose: function() {
             this.quoteView && this.quoteView.remove();
-            this.dynaDataStore && this.dynaDataStore.cancel();
+            this.dynaDataStore && this.dynaDataStore._close();
             this.dataProvider && this.dataProvider.close();
             // TODO 未提供destroy方法， 多次切换有内存泄露
             // this.chart && this.chart.destroy();

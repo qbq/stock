@@ -124,7 +124,9 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         },
 
         dispose: function() {
-            this.dynaDataStore && this.dynaDataStore.cancel();
+            this.remove();
+            this.dynaDataStore && this.dynaDataStore._close();
+            this.dynaDataStore = null;
         }
     });
 
