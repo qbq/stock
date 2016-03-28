@@ -10,6 +10,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/screen.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
@@ -22,227 +23,17 @@
   </head>
 
   <body>
-    <div class="page-body">
-        <img src="image/banner.png" width="100%">
-        <!-- <h1>在线型金融模拟交易系统</h1> -->
-        <nav class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-              <span class="sr-only">切换导航</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <!-- <a class="navbar-brand" href="#">我的比赛</a> -->
-          </div>
-          <div class="collapse navbar-collapse" id="example-navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">班级教学赛_沪深 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a id="stockPriceHS" href="#">行情</a></li>
-                  <li><a href="#">沪深K线</a></li>
-                  <li><a href="#">我的交易</a></li>
-                  <li><a href="#">我的交易_卖出</a></li>
-                  <li><a href="#">我的持仓</a></li>
-                  <li><a href="#">今日成交</a></li>
-                  <li><a href="#">今日委托</a></li>
-                  <li><a href="#">历史成交</a></li>
-                  <li><a href="#">历史委托</a></li>
-                  <li><a href="#">比赛排名</a></li>
-                  <li><a href="#">成交记录</a></li>
-                  <li><a href="#">资金明细</a></li>
-                  <li><a href="#">我的自选</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">班级教学赛_港股 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">行情</a></li>
-                  <li><a href="#">港股K线</a></li>
-                  <li><a href="#">我的交易</a></li>
-                  <li><a href="#">我的交易_卖出</a></li>
-                  <li><a href="#">我的持仓</a></li>
-                  <li><a href="#">今日成交</a></li>
-                  <li><a href="#">今日委托</a></li>
-                  <li><a href="#">历史成交</a></li>
-                  <li><a href="#">历史委托</a></li>
-                  <li><a href="#">比赛排名</a></li>
-                  <li><a href="#">成交记录</a></li>
-                  <li><a href="#">资金明细</a></li>
-                  <li><a href="#">我的自选</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">班级教学赛_股指期货 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">行情</a></li>
-                  <li><a href="#">股指期货K线</a></li>
-                  <li><a href="#">我的交易</a></li>
-                  <li><a href="#">我的交易_卖出</a></li>
-                  <li><a href="#">我的持仓</a></li>
-                  <li><a href="#">今日成交</a></li>
-                  <li><a href="#">今日委托</a></li>
-                  <li><a href="#">历史成交</a></li>
-                  <li><a href="#">历史委托</a></li>
-                  <li><a href="#">比赛排名</a></li>
-                  <li><a href="#">成交记录</a></li>
-                  <li><a href="#">资金明细</a></li>
-                  <li><a href="#">我的自选</a></li>
-                </ul>
-              </li>
-              <li><a href="#">我的班级</a></li>
-              <li><a href="#">我的点评</a></li>
-              <li><a href="#">我的学堂</a></li>
-              <li><a href="#">我的社区</a></li>
-              <li><a href="#">我的点评</a></li>
-              <li><a href="#">帮助中心</a></li>
-              <li><a href="#">登录与注册</a></li>
-            </ul>
-          </div>
-        </nav>
 
-
-        <div id="chart"></div>
-
-        <div class="panel panel-default hidden">
-            <div class="panel-heading">
-                <h3 class="panel-title">大智慧 601519</h3>
-            </div>
-            <div class="panel-body">
-                <div id="quoteContainer">
-                  <div class="quote">
-                    <div class="col-lg-4">
-                      <p>100</p>
-                      <p>10 10%</p>
-                    </div>
-                    <div class="col-lg-4">
-                      <p>成交量 100万</p>
-                      <p>换手率 10%</p>
-                    </div>
-                    <div class="col-lg-4">
-                      <p>最高 100</p>
-                      <p>最低 100</p>
-                    </div>
-                    <div class="clear-both"></div>
-                  </div>
-                </div>
-                <div class="actions">
-                    <div class="col-lg-8">
-                        <div class="btn-group" data-toggle="buttons">
-                           <label class="btn btn-primary btn-lg">
-                              <input type="radio" name="buyQtySelector"> 分时
-                           </label>
-                           <label class="btn btn-primary btn-lg">
-                              <input type="radio" name="buyQtySelector"> 日线
-                           </label>
-                           <label class="btn btn-primary btn-lg">
-                              <input type="radio" name="buyQtySelector"> 周线
-                           </label>
-                           <label class="btn btn-primary btn-lg">
-                              <input type="radio" name="buyQtySelector"> 月线
-                           </label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="输入股票/基金代码、简称或关键字">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="clear-both"></div>
-                </div>
-                <div id="chartContainer">
-                  <div id="klineChartContainer">
-
-                  </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="panel panel-default hidden">
-            <div class="panel-heading">
-                <h3 class="panel-title"></h3>
-            </div>
-            <div class="panel-body">
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-primary btn-sm ">沪深A股</button>
-                    <button type="button" class="btn btn-primary btn-sm ">中小企业版</button>
-                    <button type="button" class="btn btn-primary btn-sm ">创业板</button>
-                    <button type="button" class="btn btn-primary btn-sm ">沪深B股</button>
-                    <button type="button" class="btn btn-primary btn-sm ">我的自选</button>
-                </div>
-                <div class="col-lg-4 pull-right">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="输入股票/基金代码、简称或关键字">
-                        <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="panel panel-default hidden">
-            <div class="panel-heading">
-                <h3 class="panel-title">我的持仓</h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                        <th>总资产</th>
-                        <th>总市值</th>
-                        <th>资金余额</th>
-                        <th>冻结金额</th>
-                        <th>浮动盈亏</th>
-                        <th>总收益</th>
-                    </thead>
-                    <tbody>
-                      <td><%=1000000%></td>
-                      <td><%=1000000%></td>
-                      <td><%=0%>%</td>
-                      <td><%=0%></td>
-                      <td><%=0%></td>
-                      <td><%=0%></td>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
-                    <thead>
-                        <th>股票名称</th>
-                        <th>股票代码</th>
-                        <th>持股数量</th>
-                        <th>可用数量</th>
-                        <th>冻结数量</th>
-                        <th>成本价格</th>
-                        <th>最新市价</th>
-                        <th>浮动盈亏</th>
-                        <th>盈亏比率(%)</th>
-                    </thead>
-                    <tbody>
-                      <td><%='大智慧'%></td>
-                      <td><%=601519%></td>
-                      <td><%=5000%></td>
-                      <td><%=5000%></td>
-                      <td><%=0%></td>
-                      <td><%=5.22%></td>
-                      <td><%=15.00%></td>
-                      <td><%=500000%></td>
-                      <td><%=200%>%</td>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="ws"></div>
+    <div class="input-group">
+        <input type="text" class="form-control search-box" name="input" placeholder="输入股票/基金代码、简称或关键字">
+        <span class="input-group-btn">
+        <button class="btn btn-default search-button" type="button"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+        </span>
     </div>
+    <div class="search-result-container hidden">
+        <div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>
+    </div>
+
     <script data-baseurl="./js/" data-main="js/main_dev.js" src="js/libs/require.js" id="main"></script>
   </body>
 

@@ -65,15 +65,12 @@ body {
 	position: relative;
 }
 
-.search-result-container {
-	position: absolute;
-	z-index: 99999;
+.ui-autocomplete {
 	background-color: white;
-	width: 100%;
 	border: 1px dotted;
 	border-top: none;
 }
 
-.search-result-container table tr.selected-search-result {
+.ui-autocomplete .ui-menu-item.ui-state-focus {
 	background-color: #7C7ED0;
 }

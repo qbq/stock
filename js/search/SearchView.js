@@ -3,75 +3,54 @@
 define(['text!search/SearchTpl.html', 'Constants'], function(SearchTpl, Constants) {
 
 	var SearchView = Backbone.View.extend({
-        events: {
-            'click tr': 'showRouteTarget'
-        },
 
-        el: '#search-result-wrapper',
         template: _.template(SearchTpl),
 
         initialize: function (params) {
-            this.routeTarget = params.routeTarget || 'kline';
-            this.containerView = params.containerView;
-            _.bindAll(this, 'render', 'showRouteTarget', 'selectResult', 'highlightSelectedResult', 'redirectToKline');
-            this.model.bind('change', this.render, this);
-            // this.listenTo( this.collection, 'reset add change remove', this.render, this );
-            this.model.fetch();
+            this.selectFn = params.selectFn;
+            this.code = params.code || '';
+            this.name = params.name || '';
         },
 
         render: function () {
         	this.$el.html(this.template({
-                'search': this.model.toJSON(),
-                'routeTarget': this.routeTarget
+                code: this.code,
+                name: this.name
             }));
-            this.resultRows = this.$('tr');
-            if (this.resultRows.length === 0) {
-                if (this.containerView) {
-                    this.containerView.hideSearchResult();
-                }
-            } else {
-                this.selectedResultIndex = 0;
-                this.highlightSelectedResult(this.selectedResultIndex);
-            }
+            this.$('.search-box').autocomplete({
+              minLength: 1,
+              source: function(request, response) {
+                $.getJSON( Constants.SEARCH_URL, {
+                    input: request.term,
+                    count: Constants.SEARCH_COUNT,
+                    type: 0,
+                    token: Constants.ACCESS_TOKEN
+                  }, function(data){
+                    response( data.Data.RepDataJianPanBaoShuChu[0].JieGuo[0].ShuJu );
+                  } );
+              },
+              focus: function( event, ui ) {
+                $( ".search-box" ).val( ui.item.DaiMa );
+                return false;
+              },
+              select: this.selectFn || function( event, ui ) {
+                $( ".search-button" ).html( ui.item.MingCheng || ui.item.ShuXing || '' );
+                $( ".search-box" ).val( ui.item.DaiMa );
+         
+                return false;
+              }
+            })
+            .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+              return $( "<li>" )
+                .append( '<span class="col-lg-6">' + item.DaiMa + '</span><span class="col-lg-6">' + (item.MingCheng || item.ShuXing || '') + "<span>" )
+                .appendTo( ul );
+            };
             return this;
         },
 
-        showRouteTarget: function(e) {
-            var hash = $(e.target).parent('tr').data().hash;
-            this.redirectToKline(hash);
-        },
-
-        selectResult: function(step) {
-            this.selectedResultIndex = this.selectedResultIndex + step;
-            if (this.selectedResultIndex < 0) {
-                this.selectedResultIndex = Constants.SEARCH_COUNT - 1;
-            } else if (this.selectedResultIndex > Constants.SEARCH_COUNT - 1) {
-                this.selectedResultIndex = 0
-            }
-            this.highlightSelectedResult(this.selectedResultIndex);
-        },
-
-        highlightSelectedResult: function(index) {
-            this.resultRows.filter('.selected-search-result').removeClass('selected-search-result');
-            this.resultRows.eq(index).addClass('selected-search-result');
-        },
-
-        redirectToKline: function(hash) {
-            if (this.resultRows.length === 0) {
-                return;
-            }
-            if (!hash) {
-                hash = this.resultRows.eq(this.selectedResultIndex).data().hash;
-            }
-            location.hash = hash;
-        },
-
-        getSelectedResult: function() {
-            var selectedCells = this.resultRows.eq(this.selectedResultIndex).find('td');
-            return {
-                obj: $.trim(selectedCells.eq(0).html()),
-                name: $.trim(selectedCells.eq(1).html())
-            };
+        dispose: function() {
+            this.$('.search-box').autocomplete( "destroy" );
+            this.remove();
         }
     });
 

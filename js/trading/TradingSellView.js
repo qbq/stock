@@ -15,8 +15,7 @@ define([
 	var TradingSellView = Backbone.View.extend({
 
         events: {
-            'keyup .search-box': 'showSearchResult',
-            'blur .search-box': 'hideSearchResult',
+            'blur .search-box': 'fetchStockInfo',
             'change #sellQty': 'validateStockInfo',
             'click #decreasePrice': 'decreasePrice',
             'click #increasePrice': 'increasePrice',
@@ -36,8 +35,6 @@ define([
             this.gameno = options.gameno;
         	_.bindAll(this,
                 'render',
-                'showSearchResult',
-                'hideSearchResult',
                 'fetchStockInfo',
                 'parseStockAndPositionData',
                 'refreshQty',
@@ -57,6 +54,7 @@ define([
                 "code": this.code,
                 "name": this.name
             }));
+            this.renderSearch();
             this.initializeEls();
             this.fetchStockInfo();
             return this;
@@ -110,66 +108,20 @@ define([
             alert('交易失败: ' + err.responseText || '服务器异常.');
         },
 
-        showSearchResult: function(e) {
-
-            // 键盘上下选择
-            if (event.which === 38) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(-1);
-                }
-            } else if (event.which === 40) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(1);
-                }
-            } else if (event.which === 13) {
-                if (this.searchResultView) {
-                    var selectedResult = this.searchResultView.getSelectedResult();
-                    // this.redirectToSell(selectedResult);
-                    this.code = selectedResult.obj;
-                    this.name = selectedResult.name;
-                    this.els.$searchBox.val(this.code);
-                    this.els.$quoteName.html(this.name);
-                    location.hash.replace('/tradingSell/' + this.code + '/' + this.name);
-                    this.fetchStockInfo();
-                }
-            } else {
-
-                var input = this.$('.search-box').val(),
-                    container = this.$('.search-result-container'),
-                    el = this.$('#search-result-wrapper');
-
-                if (!input) {
-                    container.addClass('hidden');
-                    return;
-                }
-
-                if (this.searchResultView) {
-                    this.searchResultView.remove();
-                    el = $('<div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>');
-                    container.append(el);
-                }
-                container.removeClass('hidden').show();
-                this.searchResultView = new SearchView({
-                    el: el,
-                    containerView: this,
-                    routeTarget: 'tradingSell',
-                    model: new SearchModel({
-                        input: input
-                    }),
-                });
-            }
+        renderSearch: function() {
+            this.searchView = new SearchView({
+                el: $('.search-group'),
+                code: this.code,
+                name: this.name,
+                selectFn: this.selectFn
+            }).render();
         },
 
-        hideSearchResult: function() {
-            this.$('.search-result-container').fadeOut(1000);//.addClass('hidden');
-        },
-
-        redirectToSell: function(result) {
-            location.hash = '/tradingSell/' + result.obj + '/' + result.name;
+        selectFn: function( event, ui ) {
+            location.hash = '/tradingSell/' + ui.item.DaiMa + '/' + ( ui.item.MingCheng || ui.item.ShuXing || '' );
         },
 
         fetchStockInfo: function() {
-            this.hideSearchResult();
             var stockInfoDefer = $.getJSON(Constants.TRADE_INFO_URL, {
                     obj: this.els.$searchBox.val(),
                     field: 'ZuiXinJia',

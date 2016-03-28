@@ -33,11 +33,7 @@ define([
 
         events: {
             'click #buyStock': 'buyStock',
-        	'click #sellStock': 'sellStock',
-            'keyup .search-box': 'showSearchResult',
-            'focus .search-box': 'emptyInput',
-            'blur .search-box': 'hideSearchResult',
-            'click .search-button': 'showSearchResult'
+        	'click #sellStock': 'sellStock'
         },
 
         initialize: function (options) {
@@ -61,7 +57,7 @@ define([
             });
 
             // 绑定方法
-            _.bindAll(this, 'render', 'dispose', 'renderQuoteView', 'refreshQuote', 'renderKlineChart', 'showSearchResult', 'hideSearchResult', 'emptyInput', 'renderTradeInfoView');
+            _.bindAll(this, 'render', 'dispose', 'renderQuoteView', 'refreshQuote', 'renderKlineChart', 'renderSearch', 'renderTradeInfoView');
         },
 
         render: function () {
@@ -69,7 +65,7 @@ define([
                 "code": this.code,
                 "name": this.name
             }));
-            this.$('.search-box').focus();
+            this.renderSearch();
             this.renderQuoteView();
             this.renderKlineChart();
             this.renderTradeInfoView();
@@ -170,57 +166,19 @@ define([
             // TODO 未提供destroy方法， 多次切换有内存泄露
             // this.chart && this.chart.destroy();
             this.tradeInfoView && this.tradeInfoView.remove();
+            this.searchView.dispose();
             this.remove();
         },
 
-        showSearchResult: function(e) {
-
-            // 键盘上下选择
-            if (event.which === 38) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(-1);
-                }
-            } else if (event.which === 40) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(1);
-                }
-            } else if (event.which === 13) {
-                if (this.searchResultView) {
-                    this.searchResultView.redirectToKline();
-                }
-            } else {
-
-                var input = this.$('.search-box').val(),
-                    container = this.$('.search-result-container'),
-                    el = this.$('#search-result-wrapper');
-
-                if (!input) {
-                    container.addClass('hidden');
-                    return;
-                }
-
-                if (this.searchResultView) {
-                    this.searchResultView.remove();
-                    el = $('<div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>');
-                    container.append(el);
-                }
-                container.removeClass('hidden').show();
-                this.searchResultView = new SearchView({
-                    el: el,
-                    containerView: this,
-                    model: new SearchModel({
-                        input: input
-                    }),
-                });
-            }
+        renderSearch: function() {
+            this.searchView = new SearchView({
+                el: $('.search-group'),
+                selectFn: this.selectFn
+            }).render();
         },
 
-        hideSearchResult: function() {
-            this.$('.search-result-container').fadeOut(500);//.addClass('hidden');
-        },
-
-        emptyInput: function() {
-            this.$('.search-box').val('');
+        selectFn: function( event, ui ) {
+            location.hash = '/kline/' + ui.item.DaiMa + '/' + ( ui.item.MingCheng || ui.item.ShuXing || '' );
         },
 
         renderTradeInfoView: function() {

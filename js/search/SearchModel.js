@@ -12,7 +12,7 @@ define(['Constants'], function(Constants) {
                     + this.input
                     + '&count='
                     + Constants.SEARCH_COUNT
-                    + '&typ=1'
+                    + '&type=1'
                     + '&token='
                     + Constants.ACCESS_TOKEN;
         },

@@ -26,7 +26,8 @@
             yfloat: 'libs/yfloat',
             DataStore: 'libs/datastore.all.min',
             Chart: 'libs/chart',
-            ChartDataProvider: 'libs/chartDataProvider_b'
+            ChartDataProvider: 'libs/chartDataProvider_b',
+            jqueryui: 'libs/jquery-ui.min'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
@@ -34,6 +35,10 @@
             },
             'jquery': {
                 exports: '$'
+            },
+            'jqueryui': {
+                exports: 'jqueryui',
+                deps: ['jquery']
             },
             'backbone': {
                 deps: ['underscore', 'jquery', 'xdomainrequest'],
@@ -77,131 +82,42 @@
         'backbone',
         'DataStore',
         'Chart',
-        'ChartDataProvider'
-    ], function(Bootstrap, backbone, DataStore, Chart, ChartDataProvider){
+        'ChartDataProvider',
+        'jqueryui',
+        'Constants'
+    ], function(Bootstrap, backbone, DataStore, Chart, ChartDataProvider, jqueryui, Constants){
         
         jQuery.support.cors = true; // 允许跨域访问
         
         Backbone.history.start();   //开始监控url变化
 
-        // DataStore.address = 'ws://10.15.144.101:80/ws';
-
-        // 外网环境
-        DataStore.address = 'ws://v2.yundzh.com/ws';
-        DataStore.token = '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9';
-
-        DataStore.dataType = 'pb';
-        window.DataStore = DataStore;
-
-        var precisionMap = {'FX': 4};
-
-        var dynaDataStore = new DataStore({
-            serviceUrl: '/stkdata',
-            fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
-        });
-
-        var stkCode = 'SH601519';
-
-        var dynaDataStore = new DataStore({
-            serviceUrl: '/stkdata',
-            fields: ['ZhongWenJianCheng', 'ZuoShou', 'ZuiGaoJia', 'KaiPanJia', 'ZuiDiJia', 'ZuiXinJia', 'ChengJiaoLiang', 'ChengJiaoE', 'ShiJian']
-        });
-        var DEFAULT_VALUE = '--';
-
-        $(document).ready(function() {
-            if (stkCode) {
-                var precision = precisionMap[stkCode.substr(0, 2)] || 2;
-                dynaDataStore.subscribe({
-                    obj: stkCode
-                }, {}, function(data) {
-                    if (data instanceof Error) {
-                        console.log(data);
-                    } else {
-                        var dynaData = data[stkCode];
-                        if (dynaData) {
-                            this.name = dynaData.ZhongWenJianCheng;
-                            this.baseInfo = {
-                                LastClose: formatNumber(dynaData.ZuoShou, precision),
-                                High: formatNumber(dynaData.ZuiGaoJia, precision),
-                                Open: formatNumber(dynaData.KaiPanJia, precision),
-                                Low: formatNumber(dynaData.ZuiDiJia, precision),
-                                New: formatNumber(dynaData.ZuiXinJia, precision),
-                                Volume: formatNumber(dynaData.ChengJiaoLiang, 1, 'K/M'),
-                                Amount: formatNumber(dynaData.ChengJiaoE, 1, 'K/M'),
-                                Time: dynaData.ShiJian ?
-                                  new Date(Number(dynaData.ShiJian + '000')).format('yyyy-MM-dd hh:mm:ss') :
-                                  DEFAULT_VALUE
-                            };
-                        }
-                    }
-                }.bind(this));
-                this.dataProvider && this.dataProvider.close();
-                this.dataProvider = new ChartDataProvider(stkCode);
-                new Chart($('#chart'), {
-                    dataProvider: this.dataProvider,
-                    dataPrecision: this.precision,
-                    chart: {
-                        width: null,
-                        height: null
-                    }
-                });
-            }
-        
-        });
-        function formatNumber(data, precision, unit, useDefault) {
-
-            if (data == null) {
-                data = 0;
-            }
-
-            var n = Number(data);
-            if ((n == 0 || isNaN(n)) && useDefault !== false) {
-                return useDefault || Constants.DEFAULT_VALUE;
-            }
-
-            unit = unit || '';
-            precision = precision != null ? precision : 2;
-
-
-            if (unit === 'K/M') {
-                if (n >= 10 * 1000 * 1000) {
-                    unit = 'M';
-                } else if (n >= 10 * 1000) {
-                    unit = 'K';
-                } else {
-                    unit = '';
-                }
-            }
-            switch(unit) {
-                case '%': n = n * 100; break;
-                case 'K': n = n / 1000; break;
-                case 'M': n = n / (1000 * 1000); break;
-                case 100: n = n / 100; unit = ''; break;
-            }
-            return n.toFixed(precision) + unit;
-        }
-
-        Date.prototype.format = function(format) {
-            var d, k, o;
-            o = {
-                "M+": this.getMonth() + 1,
-                "d+": this.getDate(),
-                "h+": this.getHours(),
-                "m+": this.getMinutes(),
-                "s+": this.getSeconds(),
-                "q+": Math.floor((this.getMonth() + 3) / 3),
-                "S": this.getMilliseconds()
-            };
-            if (/(y+)/.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            }
-            for (k in o) {
-                d = o[k];
-                if (new RegExp("(" + k + ")").test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? d : ("00" + d).substr(("" + d).length));
-                }
-            }
-            return format;
+        $('.search-box').autocomplete({
+          minLength: 1,
+          source: function(request, response) {
+            $.getJSON( Constants.SEARCH_URL, {
+                input: request.term,
+                count: Constants.SEARCH_COUNT,
+                type: 0,
+                token: Constants.ACCESS_TOKEN
+              }, function(data){
+                response( data.Data.RepDataJianPanBaoShuChu[0].JieGuo[0].ShuJu );
+              } );
+          },
+          focus: function( event, ui ) {
+            $( ".search-box" ).val( ui.item.DaiMa );
+            return false;
+          },
+          select: function( event, ui ) {
+            $( ".search-button" ).html( ui.item.MingCheng || ui.item.ShuXing || '' );
+            $( ".search-box" ).val( ui.item.DaiMa );
+     
+            return false;
+          }
+        })
+        .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( '<span class="col-lg-6">' + item.DaiMa + '</span><span class="col-lg-6">' + (item.MingCheng || item.ShuXing || '') + "<span>" )
+            .appendTo( ul );
         };
     });
 })(window);

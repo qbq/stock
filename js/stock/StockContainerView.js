@@ -18,20 +18,17 @@ define([
         template: _.template(StockContainerTpl),
 
         events: {
-        	'click .btn-primary.btn-sm.filter': 'filterStocks',
-            'keyup .search-box': 'showSearchResult',
-            'blur .search-box': 'hideSearchResult',
-            'click .search-button': 'showSearchResult'
+        	'click .btn-primary.btn-sm.filter': 'filterStocks'
         },
 
         initialize: function (options) {
-            _.bindAll(this, 'render', 'dispose', 'filterStocks', 'renderStocks', 'showSearchResult', 'hideSearchResult', 'emptyInput');
+            _.bindAll(this, 'render', 'dispose', 'filterStocks', 'renderSearch', 'renderStocks');
             this.options = options || {};
         },
 
         render: function () {
         	this.$el.html(this.template());
-            this.$('.search-box').focus();
+            this.renderSearch();
             $('#' + this.options.gql).addClass('active');
             this.filterStocks();
             return this;
@@ -52,8 +49,6 @@ define([
                 this.$('.panel').append('<div class="table-responsive price-table-container"/>')
             }
             this.renderStocks();
-            // this.clearInterval();
-            // this.interval = setInterval(this.renderStocks, 10000);
         },
 
         renderStocks: function() {
@@ -61,66 +56,21 @@ define([
             this.priceView = new PriceView(this.options).render();
         },
 
-/*        clearInterval: function() {
-            if (this.interval) {
-                clearInterval(this.interval);
-            }
-        },*/
-
         dispose: function() {
-            // this.clearInterval();
+            this.searchView.dispose();
             this.priceView.dispose();
             this.remove();
         },
 
-        showSearchResult: function(e) {
-
-            // 键盘上下选择
-            if (event.which === 38) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(-1);
-                }
-            } else if (event.which === 40) {
-                if (this.searchResultView) {
-                    this.searchResultView.selectResult(1);
-                }
-            } else if (event.which === 13) {
-                if (this.searchResultView) {
-                    this.searchResultView.redirectToKline();
-                }
-            } else {
-
-                var input = this.$('.search-box').val(),
-                    container = this.$('.search-result-container'),
-                    el = this.$('#search-result-wrapper');
-
-                if (!input) {
-                    container.addClass('hidden');
-                    return;
-                }
-
-                if (this.searchResultView) {
-                    this.searchResultView.remove();
-                    el = $('<div id="search-result-wrapper"><div class="search-loading">加载中...</div></div>');
-                    container.append(el);
-                }
-                container.removeClass('hidden').show();
-                this.searchResultView = new SearchView({
-                    el: el,
-                    containerView: this,
-                    model: new SearchModel({
-                        input: input
-                    }),
-                });
-            }
+        renderSearch: function() {
+            this.searchView = new SearchView({
+                el: $('.search-group'),
+                selectFn: this.selectFn
+            }).render();
         },
 
-        hideSearchResult: function() {
-            this.$('.search-result-container').fadeOut(1000);//.addClass('hidden');
-        },
-
-        emptyInput: function() {
-            this.$('.search-box').val('');
+        selectFn: function( event, ui ) {
+            location.hash = '/kline/' + ui.item.DaiMa + '/' + ( ui.item.MingCheng || ui.item.ShuXing || '' );
         }
     });
 

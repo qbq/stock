@@ -1,18 +1,12 @@
-<table class="table table-striped table-hover table-responsive search-result-table">
-	<%_.each(search.Data.RepDataJianPanBaoShuChu, function(data, index) {%>
-		<%_.each(data.JieGuo, function(JieGuo, JieGuo_index) {%>
-			<%_.each(JieGuo.ShuJu, function(ShuJu, ShuJu_index) {
-				var result = ShuJu['MingCheng'] || ShuJu['ShuXing'] || '&nbsp';
-			%>
-				<tr data-hash="/<%=routeTarget%>/<%=ShuJu.DaiMa%>/<%=result%>">
-					<td>
-						<%=ShuJu.DaiMa%>
-					</td>
-					<td>
-						<%=result%>
-					</td>
-				</tr>
-			<%})%>
-		<%})%>
-	<%})%>
-</table>
+<div class="input-group">
+    <input type="text" class="form-control search-box" name="input" placeholder="输入股票/基金代码、简称或关键字" value="<%=code%>">
+	<% if (name) {%>
+	<span class="input-group-addon" id="quoteName"><%=name%></span>
+	<%} else {%>
+    <span class="input-group-btn">
+    	<button class="btn btn-default search-button" type="button">
+    		<span class="glyphicon glyphicon-search"></span> 搜索
+		</button>
+    </span>
+	<%}%>
+</div>

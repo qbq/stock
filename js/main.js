@@ -26,7 +26,8 @@
             yfloat: 'libs/yfloat',
             DataStore: 'libs/datastore.all.min',
             Chart: 'libs/chart',
-            ChartDataProvider: 'libs/chartDataProvider_b'
+            ChartDataProvider: 'libs/chartDataProvider_b',
+            jqueryui: 'libs/jquery-ui.min'
         },
         shim: {                     //引入没有使用requirejs模块写法的类库。backbone依赖underscore
             'underscore': {
@@ -34,6 +35,10 @@
             },
             'jquery': {
                 exports: '$'
+            },
+            'jqueryui': {
+                exports: 'jqueryui',
+                deps: ['jquery']
             },
             'backbone': {
                 deps: ['underscore', 'jquery', 'xdomainrequest'],
@@ -59,7 +64,7 @@
                 deps: ['env']
             },
             'app': {
-                deps: ['backbone', 'Constants', 'extend/DateExtend']
+                deps: ['backbone', 'Constants', 'extend/DateExtend', 'jqueryui']
             },
             'Chart': {
                 deps: ['highstock'],
