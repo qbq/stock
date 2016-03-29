@@ -14,12 +14,7 @@ define([], function () {
 
     var Router = Backbone.Router.extend({
 
-        routes: routesMap,
-
-        DefaultAction: function () {
-            // 未定义hash，跳转到首页
-            location.hash = 'stockPrice';
-        }
+        routes: routesMap
 
     });
 
@@ -27,6 +22,11 @@ define([], function () {
     var currentView = null;
     //彻底用on route接管路由的逻辑，这里route是路由对应的value
     router.on('route', function (route, params) {
+        if (route === 'DefaultAction') {
+            // 未定义hash，跳转到首页
+            location.hash = 'stockPrice';
+            return;
+        }
         require([route], function (controller) {
             if(router.currentController && router.currentController !== controller){
                 router.currentController.onRouteChange && router.currentController.onRouteChange();
@@ -37,6 +37,7 @@ define([], function () {
                 } else {
                     currentView.remove();
                 }
+                currentView = null;
                 $('#navbarContainer').after('<div id="bodyContainer" />');
             }
             router.currentController = controller;
