@@ -93,7 +93,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             }         
             this._updateCell(updatingCells.eq(3), rowData.ZuiXinJia);
             this._updateCell(updatingCells.eq(4), rowData.ZhangDie);
-            this._updateCell(updatingCells.eq(5), rowData.ZhangFu);
+            this._updateCell(updatingCells.eq(5), rowData.ZhangFu + '%');
             this._updateCell(updatingCells.eq(6), rowData.ZuoShou);
             this._updateCell(updatingCells.eq(7), rowData.KaiPanJia);
             this._updateCell(updatingCells.eq(8), rowData.ZuiGaoJia);
