@@ -13,32 +13,29 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
         initialize: function (params) {
             _.bindAll(this, 'render', 'refresh', 'refreshRow', 'showKline', 'dispose');
             this.params = params;
+            this.obj = params.obj || '';
             this.gql = params.gql || 'quanbuagu';
             this.orderby = (params.orderby || '_').split('_');
             this.desc = !this.orderby[1] || this.orderby[1] === 'desc'; // 如果为指定, desc=true
             this.orderby = this.orderby[0] || 'ZhangFu';
             this.page = parseInt(params.page, 0) || 1;
 
-            // 默认属性
-            // this.precisionMap = {'FX': 4};
-            // this.precision = this.precisionMap[this.gql.substr(0, 2)] || 2;
-
-            // 初始化DataStore
-            // this.dynaDataStore = new DataStore({
-            //     serviceUrl: '/stkdata',
-            //     fields: Constants.HANGQING_FIELDS
-            // });
             window.dynaDataStore.reset({
                 serviceUrl: '/stkdata',
                 fields: Constants.HANGQING_FIELDS
-            })
+            });
+
             var wsParams = {
-                gql: Constants.GQL_LIST[this.gql],
                 desc: this.desc,
                 start: (((this.page - 1) * Constants.PAGE_SIZE + 1) || '0'),
                 count: Constants.PAGE_SIZE,
                 mode: 2
             };
+            if (this.obj) {
+                wsParams.obj = this.obj;
+            } else {
+                wsParams.gql = Constants.GQL_LIST[this.gql];
+            }
             if (this.orderby !== 'obj') {
                 wsParams.orderby = this.orderby;
             }
@@ -55,7 +52,8 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 'desc': this.desc,
                 'prepage': this.page - 1,
                 'nextpage': this.page + 1,
-                'lastpage': 10
+                'lastpage': 10,
+                'isSelected': this.obj ? true : false
             };
             this.$el.html(this.template(result));
             return this;
@@ -129,7 +127,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         dispose: function() {
             this.remove();
-            window.dynaDataStore && window.dynaDataStore._close();
+            window.dynaDataStore && window.dynaDataStore.reset();
         }
     });
 

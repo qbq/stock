@@ -1,12 +1,14 @@
 'use strict'
 
 define([
+    'Constants',
     'text!stock/StockContainerTpl.html',
     'stock/StockCollection',
     'price/PriceView',
     'search/SearchView',
     'search/SearchModel'
 ], function(
+    Constants,
     StockContainerTpl,
     StockCollection,
     PriceView,
@@ -22,38 +24,67 @@ define([
         },
 
         initialize: function (options) {
-            _.bindAll(this, 'render', 'dispose', 'filterStocks', 'renderSearch', 'renderStocks');
+            _.bindAll(this, 'render', 'dispose', 'filterStocks', 'renderSearch', 'renderStocks', 'processSelected');
             this.options = options || {};
+            this.options.gql = this.options.gql || 'quanbuagu';
         },
 
         render: function () {
         	this.$el.html(this.template());
             this.renderSearch();
             $('#' + this.options.gql).addClass('active');
-            this.filterStocks();
+
+            if (this.options.gql === 'wodezixuan') {
+                this.fetchSelected();
+            } else {
+                this.options.obj = '';
+                this.renderStocks(this.options);
+            }
+
             return this;
         },
 
         filterStocks: function(e) {
-            $('.btn-primary.btn-sm.active').removeClass('active');
+            var gql = 'quanbuagu';
             if (e) {
                 var btn = $(e.target);
                 btn.addClass('active');
-                this.options.gql = btn.prop('id');
-            } else {
-                this.$el.find('#' + (this.options.gql || 'quanbuagu')).addClass('active');
+                gql = btn.prop('id');
             }
+            location.hash = '/stockPrice/gql/' + gql;
+            // $('.btn-primary.btn-sm.active').removeClass('active');
+            // if (e) {
+            //     var btn = $(e.target);
+            //     btn.addClass('active');
+            //     this.options.gql = btn.prop('id');
+            // } else {
+            //     this.$el.find('#' + (this.options.gql || 'quanbuagu')).addClass('active');
+            // }
 
-            if (this.priceView) {
-                this.priceView.dispose();
-                this.$('.panel').append('<div class="table-responsive price-table-container"/>')
-            }
-            this.renderStocks();
+            // if (this.priceView) {
+            //     this.priceView.dispose();
+            //     this.$('.panel').append('<div class="table-responsive price-table-container"/>')
+            // }
         },
 
-        renderStocks: function() {
+        fetchSelected: function() {
+            $.getJSON({
+                url: Constants.QUERY_SELECTED_URL,
+                success: this.processSelected,
+                error: function() {
+                    alert('Failed to fetch selected stocks.');
+                }
+            });
+        },
+
+        processSelected: function(data) {
+            this.options.obj = data.RepQuerySelRsp[0].StkSelectedList.join(',');
+            this.renderStocks(this.options);
+        },
+
+        renderStocks: function(options) {
             this.options.collection = new StockCollection();
-            this.priceView = new PriceView(this.options).render();
+            this.priceView = new PriceView(options).render();
         },
 
         dispose: function() {

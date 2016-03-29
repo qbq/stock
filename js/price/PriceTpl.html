@@ -73,7 +73,7 @@
                 <%=(orderby === 'HuanShou' ? orderIconTag : '')%>
             </a>
         </th>
-        <th>加自选</th>
+        <th>自选</th>
     </thead>
     <tbody>
         <%  var index = 0;
@@ -95,7 +95,11 @@
                 <td><%=stock.ChengJiaoE / 10000%></td>
                 <td><%=stock.HuanShou%>%</td>
                 <td>
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                    <%if (isSelected) {%>
+                    <button class="btn btn-default" type="button" id="removeSelected"><span class="glyphicon glyphicon-remove"></span></button>
+                    <%} else {%>
+                    <button class="btn btn-default" type="button" id="addSelected"><span class="glyphicon glyphicon-plus"></span></button>
+                    <%}%>
                 </td>
             </tr>
         <%})%>

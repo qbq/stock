@@ -54,6 +54,10 @@ define(['env'], function(env) {
     QUERY_DEAL_URIS = {
         'dev': 'data/querydeal.json',
         'prod': 'counter/querydeal/'
+    },
+    QUERY_SELECTED_URIS = {
+        'dev': 'data/queryselected.json',
+        'prod': 'counter/queryselected/'
     };
 
     return {
@@ -71,6 +75,7 @@ define(['env'], function(env) {
         QUERY_HOLD_URL: TRADE_HTTP_ADDRESS + QUERY_HOLD_URIS[env.trade],
         QUERY_ORDER_URL: TRADE_HTTP_ADDRESS + QUERY_ORDER_URIS[env.trade],
         QUERY_DEAL_URL: TRADE_HTTP_ADDRESS + QUERY_DEAL_URIS[env.trade],
+        QUERY_SELECTED_URL: TRADE_HTTP_ADDRESS + QUERY_SELECTED_URIS[env.trade],
 
     	ACCESS_TOKEN: '00000014:1489067403:f9558817839d4489f4bbcb154e84b2d2bfc3dda9',
 

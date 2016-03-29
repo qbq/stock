@@ -8,17 +8,15 @@ define([], function () {
         'deal/:type': 'js/deal/DealController.js',
         'order/:type': 'js/order/OrderController.js',
         'rank': 'js/rank/RankController.js',
-        'focus': 'js/focus/FocusController.js',
         'kline/:code(/:name)': 'js/kline/KlineContainerController.js',
-        // 'module2(/:name)': 'module2/controller2.js',
-        '*actions': 'defaultAction'
+        '*actions': 'DefaultAction'
     };
 
     var Router = Backbone.Router.extend({
 
         routes: routesMap,
 
-        defaultAction: function () {
+        DefaultAction: function () {
             // 未定义hash，跳转到首页
             location.hash = 'stockPrice';
         }

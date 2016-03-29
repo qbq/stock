@@ -1,0 +1,13 @@
+{
+    "Id": 666,
+    "RepQuerySelRsp": [
+        {
+            "RspNo": 0,
+            "RspDesc": "OK",
+            "StkSelectedList": [
+                "SH601519",
+                "SZ002415"
+            ]
+        }
+    ]
+}
