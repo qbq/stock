@@ -20,14 +20,18 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             this.page = parseInt(params.page, 0) || 1;
 
             // 默认属性
-            this.precisionMap = {'FX': 4};
-            this.precision = this.precisionMap[this.gql.substr(0, 2)] || 2;
+            // this.precisionMap = {'FX': 4};
+            // this.precision = this.precisionMap[this.gql.substr(0, 2)] || 2;
 
             // 初始化DataStore
-            this.dynaDataStore = new DataStore({
+            // this.dynaDataStore = new DataStore({
+            //     serviceUrl: '/stkdata',
+            //     fields: Constants.HANGQING_FIELDS
+            // });
+            window.dynaDataStore.reset({
                 serviceUrl: '/stkdata',
                 fields: Constants.HANGQING_FIELDS
-            });
+            })
             var wsParams = {
                 gql: Constants.GQL_LIST[this.gql],
                 desc: this.desc,
@@ -38,7 +42,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             if (this.orderby !== 'obj') {
                 wsParams.orderby = this.orderby;
             }
-            this.dynaDataStore.subscribe(wsParams, {
+            window.dynaDataStore.subscribe(wsParams, {
                 partial: false
             }, this.refresh);
         },
@@ -125,8 +129,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         dispose: function() {
             this.remove();
-            this.dynaDataStore && this.dynaDataStore._close();
-            this.dynaDataStore = null;
+            window.dynaDataStore && window.dynaDataStore._close();
         }
     });
 

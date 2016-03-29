@@ -104,6 +104,12 @@
         DataStore.dataType = 'pb';
         window.DataStore = DataStore;
 
+        // 初始化DataStore
+        window.dynaDataStore = new DataStore({
+            serviceUrl: '/stkdata',
+            fields: Constants.HANGQING_FIELDS
+        });
+
         var app = new App();
     });
 
