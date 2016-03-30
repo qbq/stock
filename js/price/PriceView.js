@@ -25,6 +25,12 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
                 fields: Constants.HANGQING_FIELDS
             });
 
+            // 初始化DataStore
+            // this.dynaDataStore = new DataStore({
+            //     serviceUrl: '/stkdata',
+            //     fields: Constants.HANGQING_FIELDS
+            // });
+
             var wsParams = {
                 desc: this.desc,
                 start: (((this.page - 1) * Constants.PAGE_SIZE + 1) || '0'),
@@ -41,26 +47,34 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
             }
             window.dynaDataStore.subscribe(wsParams, {
                 partial: false
-            }, this.refresh);
+            }, this.render);
         },
 
         render: function (data) {
-            var result = {
-                'stocks': data,
-                'gql': this.gql,
-                'orderby': this.orderby,
-                'desc': this.desc,
-                'prepage': this.page - 1,
-                'nextpage': this.page + 1,
-                'lastpage': 10,
-                'isSelected': this.obj ? true : false
-            };
-            this.$el.html(this.template(result));
+            console.log(data);
+            if(this.rows && this.rows.length > 0) {
+                this.updatingRowIndex = 0;
+                $.each(data, this.refreshRow);
+            } else {
+                var result = {
+                    'stocks': data,
+                    'gql': this.gql,
+                    'orderby': this.orderby,
+                    'desc': this.desc,
+                    'prepage': this.page - 1,
+                    'nextpage': this.page + 1,
+                    'lastpage': 10,
+                    'isSelected': this.obj ? true : false
+                };
+                this.$el.html(this.template(result));
+                this.rows = this.$('tbody tr');
+            }
+
             return this;
         },
 
         refresh: function(data) {
-            // console.log(data);
+            console.log(data);
             if(this.rows && this.rows.length > 0) {
                 this.updatingRowIndex = 0;
                 $.each(data, this.refreshRow);
@@ -127,7 +141,7 @@ define(['text!price/PriceTpl.html', 'Constants'], function(PriceTpl, Constants) 
 
         dispose: function() {
             this.remove();
-            window.dynaDataStore && window.dynaDataStore.reset();
+            window.dynaDataStore && window.dynaDataStore.cancel();
         }
     });
 

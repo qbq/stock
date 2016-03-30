@@ -84,7 +84,7 @@ define([
 
         renderStocks: function(options) {
             this.options.collection = new StockCollection();
-            this.priceView = new PriceView(options).render();
+            this.priceView = new PriceView(options);
         },
 
         dispose: function() {

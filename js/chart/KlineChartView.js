@@ -95,10 +95,10 @@ define([
             // });
             if (this.stkCode) {
                 this.$el.html(this.template());
-            if (this.chart) {
-                this.chart.destroy();
-                this.$el.find('#klineChartContainer').highcharts().destroy();
-            }
+                if (this.chart) {
+                    this.chart.destroy();
+                    this.$el.find('#klineChartContainer').highcharts().destroy();
+                }
                 
                 this.precision = precisionMap[this.stkCode.substr(0, 2)] || 2;
                 dynaDataStore.subscribe({

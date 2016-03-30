@@ -51,7 +51,11 @@ define([
             this.precision = this.precisionMap[this.code.substr(0, 2)] || 2;
 
             // 初始化DataStore
-            this.dynaDataStore = new DataStore({
+            // this.dynaDataStore = new DataStore({
+            //     serviceUrl: '/stkdata',
+            //     fields: Constants.KLINE_DATASTORE_FIELDS.concat(Constants.TRADE_INFO_FIELDS)
+            // });
+            window.dynaDataStore.reset({
                 serviceUrl: '/stkdata',
                 fields: Constants.KLINE_DATASTORE_FIELDS.concat(Constants.TRADE_INFO_FIELDS)
             });
@@ -81,7 +85,7 @@ define([
 
         renderKlineChart: function(data) {
             // 订阅行情
-            this.dynaDataStore.subscribe({
+            window.dynaDataStore.subscribe({
                 obj: this.code
             }, {}, this.refreshQuote);
 
@@ -161,7 +165,7 @@ define([
 
         dispose: function() {
             this.quoteView && this.quoteView.remove();
-            this.dynaDataStore && this.dynaDataStore._close();
+            window.dynaDataStore && window.dynaDataStore.cancel();
             this.dataProvider && this.dataProvider.close();
             // TODO 未提供destroy方法， 多次切换有内存泄露
             // this.chart && this.chart.destroy();
